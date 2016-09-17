@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package minichat;
+package logic;
 
 import "google/protobuf/wrappers.proto";
 import "google/protobuf/empty.proto";
@@ -118,7 +118,7 @@ message SendMsgResponse {
     repeated MsgResponse msg = 1;
 }
 
-service MiniChat
+service Logic
 {
     rpc Auth( MiniRequest ) returns( MiniResponse ) {
         option( phxrpc.CmdID ) = 1;

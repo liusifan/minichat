@@ -1,20 +1,18 @@
 
 #pragma once
 
-#include "minichat.pb.h"
+#include "logic.pb.h"
 
 #include <string>
-
-#include "minichat.pb.h"
 
 class CgiBase {
 public:
     CgiBase();
     virtual ~CgiBase();
 
-    int Execute( const minichat::MiniRequest & req, minichat::MiniResponse * resp );
+    int Execute( const logic::MiniRequest & req, logic::MiniResponse * resp );
 
-    virtual int Process( const minichat::ReqHead & head,
+    virtual int Process( const logic::ReqHead & head,
             const std::string & req_buff, std::string * resp_buff ) = 0;
 };
 

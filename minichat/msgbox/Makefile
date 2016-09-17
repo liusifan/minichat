@@ -89,4 +89,5 @@ clean:
 	@($(RM) $(TARGETS))
 	@($(RM) *.o)
 	@($(RM) phxrpc_*)
+	@($(RM) *.pb.*)
 

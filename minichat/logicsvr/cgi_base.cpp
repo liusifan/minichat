@@ -9,7 +9,7 @@ CgiBase :: ~CgiBase()
 {
 }
 
-int CgiBase :: Execute( const minichat::MiniRequest & req, minichat::MiniResponse * resp )
+int CgiBase :: Execute( const logic::MiniRequest & req, logic::MiniResponse * resp )
 {
     int ret = 0;
 

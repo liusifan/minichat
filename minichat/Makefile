@@ -1,5 +1,5 @@
 
-DIRS = common msgbox
+DIRS = common msgbox seq logicsvr
 
 all:
 	for d in $(DIRS); do \
