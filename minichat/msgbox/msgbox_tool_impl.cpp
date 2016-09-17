@@ -39,10 +39,19 @@ int MsgBoxToolImpl :: PHXEcho( phxrpc::OptMap & opt_map )
 int MsgBoxToolImpl :: Add( phxrpc::OptMap & opt_map )
 {
     msgbox::MsgIndex req;
-    google::protobuf::UInt64Value resp;
+    msgbox::AddMsgResp resp;
 
     //TODO: fill req from opt_map
 
+    if( NULL == opt_map.Get( 's' ) || NULL == opt_map.Get( 't' )
+            || NULL == opt_map.Get( 'm' ) ) {
+        return -1;
+    }
+
+    req.set_from( opt_map.Get( 's' ) );
+    req.set_to( opt_map.Get( 't' ) );
+    req.set_content( opt_map.Get( 'm' ) );
+    req.set_seq( time( NULL ) );
 
     MsgBoxClient client;
     int ret = client.Add( req, &resp );
@@ -59,6 +68,10 @@ int MsgBoxToolImpl :: GetBySeq( phxrpc::OptMap & opt_map )
 
     //TODO: fill req from opt_map
 
+    if( NULL == opt_map.Get( 'u' ) || NULL == opt_map.Get( 's' ) ) return -1;
+
+    req.set_userid( opt_map.Get( 'u' ) );
+    req.set_seq( atoi( opt_map.Get( 's' ) ) );
 
     MsgBoxClient client;
     int ret = client.GetBySeq( req, &resp );
@@ -75,6 +88,9 @@ int MsgBoxToolImpl :: GetAll( phxrpc::OptMap & opt_map )
 
     //TODO: fill req from opt_map
 
+    if( NULL == opt_map.Get( 'u' ) ) return -1;
+
+    req.set_value( opt_map.Get( 'u' ) );
 
     MsgBoxClient client;
     int ret = client.GetAll( req, &resp );

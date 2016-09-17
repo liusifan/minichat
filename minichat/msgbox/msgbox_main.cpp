@@ -16,7 +16,7 @@
 #include "phxrpc/http.h"
 #include "phxrpc/file.h"
 
-#include "common/redis_utils.h"
+#include "common/redis_client_factory.h"
 
 using namespace std;
 
@@ -37,7 +37,7 @@ void HttpDispatch( const phxrpc::HttpRequest & request, phxrpc::HttpResponse * r
 
 void showUsage( const char * program ) {
     printf( "\n" );
-    printf( "Usage: %s [-c <config>] [-v]\n", program );
+    printf( "Usage: %s [-c <config>] [-d] [-v]\n", program );
     printf( "\n" );
 
     exit( 0 );
@@ -49,16 +49,20 @@ void LogImpl(int priority, const char * format, va_list args) {
 
 int main( int argc, char * argv[] ) {
     const char * config_file = NULL;
+    bool daemonize = false;;
     extern char *optarg ;
     int c ;
-    while( ( c = getopt( argc, argv, "c:v" ) ) != EOF ) {
+    while( ( c = getopt( argc, argv, "c:vd" ) ) != EOF ) {
         switch ( c ) {
             case 'c' : config_file = optarg; break;
+            case 'd' : daemonize = true; break;
 
             case 'v' :
             default: showUsage( argv[ 0 ] ); break;
         }
     }
+
+    if( daemonize ) phxrpc::ServerUtils::Daemonize();
 
     assert(signal(SIGPIPE, SIG_IGN) != SIG_ERR);
 
@@ -66,13 +70,16 @@ int main( int argc, char * argv[] ) {
     //phxrpc::setvlog(LogImpl);
     //phxrpc::MonitorFactory::SetFactory( new YourSelfsMonitorFactory() );
 
+    openlog( "msgbox_main", LOG_CONS | LOG_PID, 0 );
+    setlogmask( LOG_UPTO( LOG_DEBUG ) );
+
     if( NULL == config_file ) showUsage( argv[0] );
     MsgBoxServerConfig config;
     if( ! config.Read( config_file ) ) showUsage( argv[0] );
 
     ServiceArgs_t service_args;
     service_args.config = &config;
-    service_args.client = RedisUtils::CreateClient( "~/minichat/etc/client/redis_client.conf" );
+    service_args.factory = new RedisClientFactory( "~/minichat/etc/client/redis_client.conf" );
 
     phxrpc::HshaServer server( config.GetHshaServerConfig(), HttpDispatch, &service_args );
     server.RunForever();

@@ -98,7 +98,7 @@ int MsgBoxClient :: PhxBatchEcho( const google::protobuf::StringValue & req,
 }
 
 int MsgBoxClient :: Add( const msgbox::MsgIndex & req,
-        google::protobuf::UInt64Value * resp )
+        msgbox::AddMsgResp * resp )
 {
     const phxrpc::Endpoint_t * ep = global_msgboxclient_config_.GetRandom();
 

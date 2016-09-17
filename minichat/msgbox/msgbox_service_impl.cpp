@@ -11,6 +11,8 @@
 
 #include "msgbox_dao.h"
 
+#include "common/redis_client_factory.h"
+
 MsgBoxServiceImpl :: MsgBoxServiceImpl( ServiceArgs_t & args )
     : args_( args )
 {
@@ -28,26 +30,31 @@ int MsgBoxServiceImpl :: PHXEcho( const google::protobuf::StringValue & req,
 }
 
 int MsgBoxServiceImpl :: Add( const msgbox::MsgIndex & req,
-        google::protobuf::UInt64Value * resp )
+        msgbox::AddMsgResp * resp )
 {
-  MsgBoxDAO dao( * args_.client );
+    if( req.seq() <= 0 ) {
+        phxrpc::log( LOG_ERR, "ERROR: invalid req, seq %u", req.seq() );
+        return -1 * EINVAL;
+    }
 
-  return dao.Add( req, resp );
+    MsgBoxDAO dao( args_.factory->Get() );
+
+    return dao.Add( req, resp );
 }
 
 int MsgBoxServiceImpl :: GetBySeq( const msgbox::GetBySeqReq & req,
         msgbox::MsgIndexList * resp )
 {
-  MsgBoxDAO dao( * args_.client );
+    MsgBoxDAO dao( args_.factory->Get() );
 
-  return dao.GetBySeq( req, resp );
+    return dao.GetBySeq( req, resp );
 }
 
 int MsgBoxServiceImpl :: GetAll( const google::protobuf::StringValue & req,
         msgbox::MsgIndexList * resp )
 {
-  MsgBoxDAO dao( * args_.client );
+    MsgBoxDAO dao( args_.factory->Get() );
 
-  return dao.GetAll( req, resp );
+    return dao.GetAll( req, resp );
 }
 

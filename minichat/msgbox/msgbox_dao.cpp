@@ -6,6 +6,8 @@
 #include <string>
 #include <sys/time.h>
 
+#include "phxrpc/file.h"
+
 MsgBoxDAO :: MsgBoxDAO( r3c::CRedisClient & client )
 : client_( client )
 {
@@ -16,7 +18,7 @@ MsgBoxDAO ::  ~MsgBoxDAO()
 }
 
 int MsgBoxDAO :: Add( const msgbox::MsgIndex & req,
-                     google::protobuf::UInt64Value * resp )
+        msgbox::AddMsgResp * resp )
 {
     struct timeval tv;
     gettimeofday( &tv, NULL );
@@ -30,17 +32,21 @@ int MsgBoxDAO :: Add( const msgbox::MsgIndex & req,
     std::string value;
     tmp.SerializeToString( &value );
 
-    std::pair< std::string, uint16_t > which;
+    std::vector< std::string > list;
+    list.push_back( value );
 
-    int ret = client_.rpush( key, value, &which );
+    int ret = client_.rpush( key, list, NULL );
 
-    if( 0 == ret ) resp->set_value( tmp.id() );
+    if( ret >= 0 ) {
+        resp->set_id( tmp.id() );
+        resp->set_newcount( ret );
+    }
 
-    return ret;
+    return ret >= 0 ? 0 : -1;
 }
 
 int MsgBoxDAO :: GetBySeq( const msgbox::GetBySeqReq & req,
-                          msgbox::MsgIndexList * resp )
+        msgbox::MsgIndexList * resp )
 {
     char key[ 128 ] = { 0 };
     snprintf( key, sizeof( key ), "msg_%s", req.userid().c_str() );
@@ -64,13 +70,13 @@ int MsgBoxDAO :: GetBySeq( const msgbox::GetBySeqReq & req,
     resp->mutable_msg()->RemoveLast();
 
     // TODO: delete msg by seq
-    client_.ltrim( key, 0, -1 );
+    client_.ltrim( key, 1, 0 );
 
-    return ret;
+    return ret >= 0 ? 0 : -1;
 }
 
 int MsgBoxDAO :: GetAll( const google::protobuf::StringValue & req,
-                        msgbox::MsgIndexList * resp )
+        msgbox::MsgIndexList * resp )
 {
     char key[ 128 ] = { 0 };
     snprintf( key, sizeof( key ), "msg_%s", req.value().c_str() );
@@ -83,6 +89,6 @@ int MsgBoxDAO :: GetAll( const google::protobuf::StringValue & req,
         resp->add_msg()->ParseFromString( list[i] );
     }
 
-    return ret;
+    return ret >= 0 ? 0 : -1;
 }
 

@@ -12,7 +12,7 @@ class MsgBoxDAO {
   ~MsgBoxDAO();
 
   int Add( const msgbox::MsgIndex & req,
-          google::protobuf::UInt64Value * resp );
+          msgbox::AddMsgResp * resp );
 
   int GetBySeq( const msgbox::GetBySeqReq & req,
                msgbox::MsgIndexList * resp );

@@ -1,5 +1,5 @@
 
-DIRS = common msgbox
+DIRS = third_party minichat
 
 all:
 	for d in $(DIRS); do \

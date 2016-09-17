@@ -12,7 +12,7 @@ CFLAGS += $(REDIS_CLIENT_INCLUDE) -I$(MINICHAT_ROOT)/minichat
 
 LDFLAGS := -L$(PHXRPC_ROOT)/lib -lphxrpc \
 	$(LDFLAGS) \
-	-L$(MINICHAT_ROOT)/lib -lcommon \
+	-L$(MINICHAT_ROOT)/minichat/common -lcommon \
 	$(REDIS_CLIENT_LIBRARY)
 
 #choose to use boost for network

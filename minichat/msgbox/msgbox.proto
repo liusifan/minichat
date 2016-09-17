@@ -8,49 +8,54 @@ import "google/protobuf/empty.proto";
 import "phxrpc/rpc/phxrpc.proto";
 
 enum MsgType {
-  NONE = 0;
-  TEXT  = 1;
-  IMAGE = 2;
-  VIDEO = 3;
+    NONE = 0;
+    TEXT  = 1;
+    IMAGE = 2;
+    VIDEO = 3;
 }
 
 message MsgIndex {
-  uint64 id = 1;
-  string from = 2;
-  string to = 3;
-  string uuid = 4;
-  MsgType type = 5;
-  bytes  content = 6;
-  uint32 createtime = 7;
-  uint32 seq = 8;
+    uint64 id = 1;
+    string from = 2;
+    string to = 3;
+    string uuid = 4;
+    MsgType type = 5;
+    bytes  content = 6;
+    uint32 createtime = 7;
+    uint32 seq = 8;
+}
+
+message AddMsgResp {
+    uint64 id = 1;
+    uint32 newcount = 2;
 }
 
 message MsgIndexList {
-  repeated MsgIndex msg = 1;
+    repeated MsgIndex msg = 1;
 }
 
 message GetBySeqReq {
-  string userid = 1;
-  uint32 seq = 2;
+    string userid = 1;
+    uint32 seq = 2;
 }
 
 service MsgBox {
-  rpc Add( MsgIndex ) returns ( google.protobuf.UInt64Value ) {
-    option( phxrpc.CmdID ) = 1;
-    option( phxrpc.OptString ) = "f:c";
-    option( phxrpc.Usage ) = "-f <from> -c <context>";
-  }
+    rpc Add( MsgIndex ) returns ( AddMsgResp ) {
+        option( phxrpc.CmdID ) = 1;
+        option( phxrpc.OptString ) = "s:t:m:";
+        option( phxrpc.Usage ) = "-s <sender> -t <to> -m <msg>";
+    }
 
-  rpc GetBySeq( GetBySeqReq ) returns ( MsgIndexList ) {
-    option( phxrpc.CmdID ) = 2;
-    option( phxrpc.OptString ) = "u:s:";
-    option( phxrpc.Usage ) = "-u <user> -s <seq>";
-  }
+    rpc GetBySeq( GetBySeqReq ) returns ( MsgIndexList ) {
+        option( phxrpc.CmdID ) = 2;
+        option( phxrpc.OptString ) = "u:s";
+        option( phxrpc.Usage ) = "-u <userid> -s <seq>";
+    }
 
-  rpc GetAll( google.protobuf.StringValue ) returns ( MsgIndexList ) {
-    option( phxrpc.CmdID ) = 3;
-    option( phxrpc.OptString ) = "u:";
-    option( phxrpc.Usage ) = "-u <user>";
-  }
+    rpc GetAll( google.protobuf.StringValue ) returns ( MsgIndexList ) {
+        option( phxrpc.CmdID ) = 3;
+        option( phxrpc.OptString ) = "u:";
+        option( phxrpc.Usage ) = "-u <user>";
+    }
 }
 
