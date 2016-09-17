@@ -55,14 +55,11 @@ int MsgBoxDAO :: GetBySeq( const msgbox::GetBySeqReq & req,
 
     int ret = client_.lrange( key, 0, -1, &list );
 
-    bool has_msg = false;
     ::msgbox::MsgIndex * msg = resp->add_msg();
 
     for( size_t i = 0; i < list.size(); i++ ) {
         msg->ParseFromString( list[i] );
-
         if( msg->seq() > req.seq() ) {
-            has_msg = true;
             msg = resp->add_msg();
         }
     }
