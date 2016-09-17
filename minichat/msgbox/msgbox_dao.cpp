@@ -24,7 +24,7 @@ int MsgBoxDAO :: Add( const msgbox::MsgIndex & req,
     gettimeofday( &tv, NULL );
 
     msgbox::MsgIndex tmp = req;
-    tmp.set_id( tv.tv_sec << 32 | tv.tv_usec );
+    tmp.set_id( ((uint64_t)tv.tv_sec) << 32 | tv.tv_usec );
 
     char key[ 128 ] = { 0 };
     snprintf( key, sizeof( key ), "msg_%s", req.to().c_str() );

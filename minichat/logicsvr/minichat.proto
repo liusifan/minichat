@@ -1,0 +1,141 @@
+syntax = "proto3";
+
+package minichat;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+import "phxrpc/rpc/phxrpc.proto";
+
+enum EncAlgo {
+    ENC_NONE = 0;
+    ENC_RSA  = 1;
+    ENC_AES  = 2;
+}
+
+message ReqHead {
+    string username = 1;
+    EncAlgo enc_algo = 2;
+}
+
+message MiniRequest {
+    ReqHead head = 1;
+    bytes req_buff = 2;
+}
+
+enum ErrCode {
+    ERR_OK = 0;
+    ERR_SYS = -1;
+    ERR_ARG = -2;
+    ERR_PASSWORD = -3;
+    ERR_NOUSER = -4;
+    ERR_USER_EXISTS = -5;
+    ERR_SESSION_TIMEOUT = -6;
+    ERR_USER_LOCKED = -7;
+    ERR_NEED_UPDATE = -8;
+}
+
+message MiniResponse {
+    sint32 ret = 1;
+    string err_msg = 2;
+    bytes  resp_buff = 3;
+}
+
+message SyncKey {
+    uint32 contact_seq = 1;
+    uint32 msg_seq = 2;
+};
+
+message AuthRequest {
+    string pwd_md5 = 1;
+    string rand_key = 2;
+}
+
+message AuthResponse {
+    string username = 1;
+    string nickname = 2;
+    string session_key = 3;
+}
+
+enum CmdType {
+    CMD_NONE = 0;
+    CMD_MOD_CONTACT = 1;
+    CMD_DEL_CONTACT = 2;
+    CMD_ADD_MSG = 10;
+    CMD_MOD_MSG = 11;
+    CMD_DEL_MSG = 12;
+}
+
+message CmdItem {
+    CmdType type = 1;
+    bytes   buff = 2;
+}
+
+message SyncRequest {
+    string sync_key = 1;
+}
+
+message SyncResponse {
+    string new_sync_key = 1;
+    repeated CmdItem oplog = 2;
+}
+
+message CmdModContact {
+    string username = 1;
+    string nickname = 2;
+}
+
+message CmdDelContact {
+    repeated string username = 1;
+}
+
+message CmdAddMsg {
+    uint64 id = 1;
+    string from = 2;
+    string to = 3;
+    string content = 4;
+    uint32 createtime = 5;
+}
+
+message MsgRequest {
+    string to = 1;
+    string content = 2;
+    uint32 createtime = 3;
+    string uuid = 4;
+}
+
+message SendMsgRequest {
+    repeated MsgRequest msg = 1;
+}
+
+message MsgResponse {
+    string uuid = 1;
+    sint32 ret = 2;
+    uint64 id = 3;
+}
+
+message SendMsgResponse {
+    repeated MsgResponse msg = 1;
+}
+
+service MiniChat
+{
+    rpc Auth( MiniRequest ) returns( MiniResponse ) {
+        option( phxrpc.CmdID ) = 1;
+        option( phxrpc.OptString ) = "u:p:";
+        option( phxrpc.Usage ) = "-u <user> -p <pwd>";
+    }
+
+    rpc Sync( MiniRequest ) returns( MiniResponse ) {
+        option( phxrpc.CmdID ) = 2;
+        option( phxrpc.OptString ) = "u:s:";
+        option( phxrpc.Usage ) = "-u <user> -s <synckey>";
+    }
+
+    rpc SendMsg( MiniRequest ) returns( MiniResponse ) {
+        option( phxrpc.CmdID ) = 3;
+        option( phxrpc.OptString ) = "s:t:m:";
+        option( phxrpc.Usage ) = "-s <sender> -t <to> -m <msg>";
+    }
+};
+
