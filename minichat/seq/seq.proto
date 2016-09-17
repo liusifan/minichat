@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package seq;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+import "phxrpc/rpc/phxrpc.proto";
+
+enum SeqType {
+    TYPE_NONE = 0;
+    TYPE_CONTACT = 1;
+    TYPE_MSG = 2;
+}
+
+message AllocReq {
+    string username = 1;
+    int32 type = 2;
+}
+
+message SyncKey {
+    uint32 contact_seq = 1;
+    uint32 msg_seq = 2;
+}
+
+service Seq {
+    rpc Alloc( AllocReq ) returns ( google.protobuf.UInt32Value ) {
+        option( phxrpc.CmdID ) = 1;
+        option( phxrpc.OptString ) = "u:t:";
+        option( phxrpc.Usage ) = "-u <user> -t <type>";
+    }
+
+    rpc Get( google.protobuf.StringValue ) returns ( SyncKey ) {
+        option( phxrpc.CmdID ) = 2;
+        option( phxrpc.OptString ) = "u:";
+        option( phxrpc.Usage ) = "-u <user>";
+    }
+}
+
