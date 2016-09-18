@@ -12,6 +12,7 @@ CFLAGS += -I$(MINICHAT_ROOT)/minichat
 LDFLAGS := -L$(PHXRPC_ROOT)/lib \
 	-L$(MINICHAT_ROOT)/minichat/msgbox -lmsgbox_client \
 	-L$(MINICHAT_ROOT)/minichat/seq -lseq_client \
+	-L$(MINICHAT_ROOT)/minichat/account -laccount_client \
 	-lphxrpc $(LDFLAGS)
 
 #choose to use boost for network
