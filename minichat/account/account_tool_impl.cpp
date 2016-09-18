@@ -43,13 +43,33 @@ int AccountToolImpl :: Add( phxrpc::OptMap & opt_map )
 
     // fill req from opt_map
 
+    if( NULL == opt_map.Get( 'u' ) ) return -1;
+
+    req.set_username( opt_map.Get( 'u' ) );
+    req.set_createtime( time( NULL ) );
+
+    AccountClient client;
+    int ret = client.Add( req, &resp );
+    printf( "%s return %d\n", __func__, ret );
+    printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
+
+    return ret;
+}
+
+int AccountToolImpl :: SetPwd( phxrpc::OptMap & opt_map )
+{
+    account::PwdReq req;
+    google::protobuf::Empty resp;
+
+    // fill req from opt_map
+
     if( NULL == opt_map.Get( 'u' ) || NULL == opt_map.Get( 'p' ) ) return -1;
 
     req.set_username( opt_map.Get( 'u' ) );
     req.set_pwd_md5( opt_map.Get( 'p' ) );
 
     AccountClient client;
-    int ret = client.Add( req, &resp );
+    int ret = client.SetPwd( req, &resp );
     printf( "%s return %d\n", __func__, ret );
     printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
 
@@ -77,7 +97,7 @@ int AccountToolImpl :: Get( phxrpc::OptMap & opt_map )
 
 int AccountToolImpl :: Auth( phxrpc::OptMap & opt_map )
 {
-    account::AuthReq req;
+    account::PwdReq req;
     google::protobuf::Empty resp;
 
     // fill req from opt_map

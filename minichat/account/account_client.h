@@ -29,10 +29,13 @@ public:
     int Add( const account::User & req,
         google::protobuf::Empty * resp );
 
+    int SetPwd( const account::PwdReq & req,
+        google::protobuf::Empty * resp );
+
     int Get( const google::protobuf::StringValue & req,
         account::User * resp );
 
-    int Auth( const account::AuthReq & req,
+    int Auth( const account::PwdReq & req,
         google::protobuf::Empty * resp );
 
 

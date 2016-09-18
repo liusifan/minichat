@@ -31,10 +31,13 @@ public:
     virtual int Add( const account::User & req,
         google::protobuf::Empty * resp );
 
+    virtual int SetPwd( const account::PwdReq & req,
+        google::protobuf::Empty * resp );
+
     virtual int Get( const google::protobuf::StringValue & req,
         account::User * resp );
 
-    virtual int Auth( const account::AuthReq & req,
+    virtual int Auth( const account::PwdReq & req,
         google::protobuf::Empty * resp );
 
 private:

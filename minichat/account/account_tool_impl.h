@@ -23,6 +23,8 @@ public:
 
     virtual int Add( phxrpc::OptMap & opt_map );
 
+    virtual int SetPwd( phxrpc::OptMap & bigmap );
+
     virtual int Get( phxrpc::OptMap & opt_map );
 
     virtual int Auth( phxrpc::OptMap & opt_map );

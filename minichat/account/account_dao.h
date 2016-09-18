@@ -14,9 +14,11 @@ public:
 
     int Add( const account::User & req );
 
+    int SetPwd( const account::PwdReq & req );
+
     int Get( const char * username, account::User * resp );
 
-    int Auth( const account::AuthReq & req );
+    int Auth( const account::PwdReq & req );
 
 private:
     r3c::CRedisClient & client_;

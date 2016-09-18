@@ -23,7 +23,18 @@ int AccountDAO :: Add( const account::User & req )
     std::string buff;
     req.SerializeToString( &buff );
 
-    client_.set( key, buff );
+    int ret = client_.setnx( key, buff );
+
+    return ret == 1 ? 0 : -2;
+}
+
+int AccountDAO :: SetPwd( const account::PwdReq & req )
+{
+    char key[ 128 ] = { 0 };
+
+    snprintf( key, sizeof( key ), "pwd_md5_%s", req.username().c_str() );
+
+    client_.set( key, req.pwd_md5() );
 
     return 0;
 }
@@ -43,14 +54,20 @@ int AccountDAO :: Get( const char * username, account::User * resp )
     return ret ? 0 : -1;
 }
 
-int AccountDAO :: Auth( const account::AuthReq & req )
+int AccountDAO :: Auth( const account::PwdReq & req )
 {
-    account::User user;
+    char key[ 128 ] = { 0 };
 
-    int ret = Get( req.username().c_str(), &user );
+    snprintf( key, sizeof( key ), "pwd_md5_%s", req.username().c_str() );
 
-    if( 0 == ret ) {
-        if( 0 != strcasecmp( req.pwd_md5().c_str(), user.pwd_md5().c_str() ) ) {
+    std::string buff;
+
+    int ret = -1;
+
+    if( client_.get( key, &buff ) ) {
+        if( 0 == strcasecmp( req.pwd_md5().c_str(), buff.c_str() ) ) {
+            ret = 0;
+        } else {
             ret = -99;
         }
     }

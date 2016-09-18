@@ -9,11 +9,11 @@ import "phxrpc/rpc/phxrpc.proto";
 
 message User {
     string username = 1;
-    string pwd_md5 = 10;
-    uint32 createtime = 11;
+    uint32 status = 2;
+    uint32 createtime = 10;
 }
 
-message AuthReq {
+message PwdReq {
     string username = 1;
     string pwd_md5 = 10;
 }
@@ -25,14 +25,20 @@ service Account {
         option( phxrpc.Usage ) = "-u <user> -p <pwd>";
     }
 
-    rpc Get( google.protobuf.StringValue ) returns ( User ) {
+    rpc SetPwd( PwdReq ) returns ( google.protobuf.Empty ) {
         option( phxrpc.CmdID ) = 2;
+        option( phxrpc.OptString ) = "u:p:";
+        option( phxrpc.Usage ) = "-u <user> -p <pwd>";
+    }
+
+    rpc Get( google.protobuf.StringValue ) returns ( User ) {
+        option( phxrpc.CmdID ) = 3;
         option( phxrpc.OptString ) = "u:";
         option( phxrpc.Usage ) = "-u <user>";
     }
 
-    rpc Auth( AuthReq ) returns ( google.protobuf.Empty ) {
-        option( phxrpc.CmdID ) = 3;
+    rpc Auth( PwdReq ) returns ( google.protobuf.Empty ) {
+        option( phxrpc.CmdID ) = 4;
         option( phxrpc.OptString ) = "u:p:";
         option( phxrpc.Usage ) = "-u <user> -p <pwd>";
     }

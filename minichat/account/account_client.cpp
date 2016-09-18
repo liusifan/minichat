@@ -118,6 +118,27 @@ int AccountClient :: Add( const account::User & req,
     return -1;
 }
 
+int AccountClient :: SetPwd( const account::PwdReq & req,
+        google::protobuf::Empty * resp )
+{
+    const phxrpc::Endpoint_t * ep = global_accountclient_config_.GetRandom();
+
+    if(ep != nullptr) {
+        phxrpc::BlockTcpStream socket;
+        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
+                    global_accountclient_config_.GetConnectTimeoutMS(), NULL, 0, 
+                    *(global_accountclient_monitor_.get()));
+        if ( open_ret ) {
+            socket.SetTimeout(global_accountclient_config_.GetSocketTimeoutMS());
+
+            AccountStub stub(socket, *(global_accountclient_monitor_.get()));
+            return stub.SetPwd(req, resp);
+        } 
+    }
+
+    return -1;
+}
+
 int AccountClient :: Get( const google::protobuf::StringValue & req,
         account::User * resp )
 {
@@ -139,7 +160,7 @@ int AccountClient :: Get( const google::protobuf::StringValue & req,
     return -1;
 }
 
-int AccountClient :: Auth( const account::AuthReq & req,
+int AccountClient :: Auth( const account::PwdReq & req,
         google::protobuf::Empty * resp )
 {
     const phxrpc::Endpoint_t * ep = global_accountclient_config_.GetRandom();

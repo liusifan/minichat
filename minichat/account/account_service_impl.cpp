@@ -36,6 +36,14 @@ int AccountServiceImpl :: Add( const account::User & req,
     return dao.Add( req );;
 }
 
+int AccountServiceImpl :: SetPwd( const account::PwdReq & req,
+        google::protobuf::Empty * resp )
+{
+    AccountDAO dao( args_.factory->Get() );
+
+    return dao.SetPwd( req );
+}
+
 int AccountServiceImpl :: Get( const google::protobuf::StringValue & req,
         account::User * resp )
 {
@@ -44,7 +52,7 @@ int AccountServiceImpl :: Get( const google::protobuf::StringValue & req,
     return dao.Get( req.value().c_str(), resp );
 }
 
-int AccountServiceImpl :: Auth( const account::AuthReq & req,
+int AccountServiceImpl :: Auth( const account::PwdReq & req,
         google::protobuf::Empty * resp )
 {
     AccountDAO dao( args_.factory->Get() );
