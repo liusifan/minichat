@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package account;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+import "phxrpc/rpc/phxrpc.proto";
+
+message User {
+    string username = 1;
+    string pwd_md5 = 10;
+    uint32 createtime = 11;
+}
+
+message AuthReq {
+    string username = 1;
+    string pwd_md5 = 10;
+}
+
+service Account {
+    rpc Add( User ) returns ( google.protobuf.Empty ) {
+        option( phxrpc.CmdID ) = 1;
+        option( phxrpc.OptString ) = "u:p:";
+        option( phxrpc.Usage ) = "-u <user> -p <pwd>";
+    }
+
+    rpc Get( google.protobuf.StringValue ) returns ( User ) {
+        option( phxrpc.CmdID ) = 2;
+        option( phxrpc.OptString ) = "u:";
+        option( phxrpc.Usage ) = "-u <user>";
+    }
+
+    rpc Auth( AuthReq ) returns ( google.protobuf.Empty ) {
+        option( phxrpc.CmdID ) = 3;
+        option( phxrpc.OptString ) = "u:p:";
+        option( phxrpc.Usage ) = "-u <user> -p <pwd>";
+    }
+}
+
