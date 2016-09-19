@@ -92,7 +92,7 @@ int LogicToolImpl :: SendMsg( phxrpc::OptMap & opt_map )
 
         std::random_device rd;
         std::stringstream fmt;
-        fmt << rd();
+        fmt << rd() << rd();
         msg->set_uuid( fmt.str() );
     }
 

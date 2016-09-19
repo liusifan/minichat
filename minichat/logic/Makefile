@@ -13,6 +13,7 @@ LDFLAGS := -L$(PHXRPC_ROOT)/lib \
 	-L$(MINICHAT_ROOT)/minichat/msgbox -lmsgbox_client \
 	-L$(MINICHAT_ROOT)/minichat/seq -lseq_client \
 	-L$(MINICHAT_ROOT)/minichat/account -laccount_client \
+	-L$(MINICHAT_ROOT)/minichat/addrbook -laddrbook_client \
 	-lphxrpc $(LDFLAGS)
 
 #choose to use boost for network

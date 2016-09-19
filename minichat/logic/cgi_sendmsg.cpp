@@ -6,12 +6,14 @@
 #include "msgbox/msgbox_client.h"
 #include "seq/seq_client.h"
 #include "account/account_client.h"
+#include "addrbook/addrbook_client.h"
 
 CgiSendMsg :: CgiSendMsg()
 {
     MsgBoxClient::Init( "~/minichat/etc/client/msgbox_client.conf" );
     SeqClient::Init( "~/minichat/etc/client/seq_client.conf" );
     AccountClient::Init( "~/minichat/etc/client/account_client.conf" );
+    AddrbookClient::Init( "~/minichat/etc/client/addrbook_client.conf" );
 }
 
 CgiSendMsg :: ~CgiSendMsg()
@@ -23,20 +25,35 @@ static int AddOneMsg( const logic::ReqHead & head, const logic::MsgRequest & msg
 {
     int ret = 0;
 
+    // 1. check receiver
     AccountClient acct_client;
+    {
+        google::protobuf::StringValue username;
+        username.set_value( msg.to() );
 
-    google::protobuf::StringValue username;
-    username.set_value( msg.to() );
+        account::User user;
+        ret = acct_client.Get( username, &user );
 
-    account::User user;
-    ret = acct_client.Get( username, &user );
+        if( 0 != ret ) return -2;
+    }
 
-    if( 0 != ret ) return -2;
+    // 2. check relation
+    AddrbookClient addr_client;
+    {
+        addrbook::Contact contact;
 
-    // TODO: check req_obj.from is friend of req_obj.to
+        addrbook::GetOneReq one_req;
+        one_req.set_username( msg.to() );
+        one_req.set_contact( head.username() );
+
+        ret = addr_client.GetOne( one_req, &contact );
+
+        if( 0 != ret ) return -3;
+    }
 
     msgbox::MsgIndex index;
 
+    // 3. alloc seq
     SeqClient seq_client;
     {
         seq::AllocReq seq_req;
@@ -50,7 +67,7 @@ static int AddOneMsg( const logic::ReqHead & head, const logic::MsgRequest & msg
         index.set_seq( seq_resp.value() );
     }
 
-    // fill index by msg
+    // 4. fill index by msg, add to msgbox
     index.set_from( head.username() );
     index.set_to( msg.to() );
     index.set_content( msg.content() );

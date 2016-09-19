@@ -37,8 +37,6 @@ int MsgBoxDAO :: Add( const msgbox::MsgIndex & req,
 
     int ret = client_.rpush( key, list, NULL );
 
-printf( "rpush %d\n", ret );
-
     if( ret >= 0 ) {
         resp->set_id( tmp.id() );
         resp->set_newcount( ret );
