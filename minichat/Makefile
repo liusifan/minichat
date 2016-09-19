@@ -1,5 +1,5 @@
 
-DIRS = common account addrbook msgbox seq logicsvr
+DIRS = common account addrbook msgbox seq logic
 
 all:
 	for d in $(DIRS); do \
