@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package addrbook;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+import "phxrpc/rpc/phxrpc.proto";
+
+enum ContactType {
+    TYPE_NONE = 0;
+    TYPE_FRIEND = 1;
+    TYPE_BLACKLIST = 2;
+}
+
+message Contact {
+    string username = 1;
+    bytes remark = 2;
+    ContactType type = 3;
+    uint32 createtime = 4;
+    uint32 updatetime = 5;
+    uint32 seq = 6;
+}
+
+message ContactList {
+    repeated Contact contact = 1;
+}
+
+message ContactReq {
+    string username = 1;
+    Contact contact = 2;
+}
+
+message GetOneReq {
+    string username = 1;
+    string contact = 2;
+}
+
+service Addrbook {
+    rpc Add( ContactReq ) returns ( google.protobuf.Empty ) {
+        option( phxrpc.CmdID ) = 1;
+        option( phxrpc.OptString ) = "u:t:";
+        option( phxrpc.Usage ) = "-u <user> -t <contact>";
+    }
+
+    rpc GetAll( google.protobuf.StringValue ) returns ( ContactList ) {
+        option( phxrpc.CmdID ) = 2;
+        option( phxrpc.OptString ) = "u:";
+        option( phxrpc.Usage ) = "-u <user>";
+    }
+
+    rpc GetOne( GetOneReq ) returns ( Contact ) {
+        option( phxrpc.CmdID ) = 3;
+        option( phxrpc.OptString ) = "u:t:";
+        option( phxrpc.Usage ) = "-u <user> -t <contact>";
+    }
+}
+
