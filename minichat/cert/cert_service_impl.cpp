@@ -33,10 +33,17 @@ int CertServiceImpl :: RSADecrypt( const cert::CodecBuff & req,
     return CertCodec::GetDefault()->RSADecrypt( req, resp );
 }
 
+int CertServiceImpl :: AESEncrypt( const cert::CodecBuff & req,
+        google::protobuf::BytesValue * resp )
+{
+    return CertCodec::GetDefault()->AESEncrypt( req, resp );
+}
+
+
 int CertServiceImpl :: AESDecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp )
 {
-    return -1;
+    return CertCodec::GetDefault()->AESDecrypt( req, resp );
 }
 
 

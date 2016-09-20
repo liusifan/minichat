@@ -6,6 +6,7 @@
 #include "phxrpc/file.h"
 
 #include <random>     // random_device, uniform_int_distribution
+#include <sstream>
 
 PresenceDAO :: PresenceDAO( r3c::CRedisClient & client )
     : client_( client )
@@ -23,11 +24,11 @@ int PresenceDAO :: Create( const char * username, presence::Session * session )
     snprintf( key, sizeof( key ), "session_%s", username );
 
     std::random_device rd;
-
-    uint64_t sk = ((uint64_t)rd() << 32 ) | rd();
+    std::stringstream fmt;
+    fmt << rd() << rd();
 
     session->set_username( username );
-    session->set_session_key( &sk, sizeof( sk ) );
+    session->set_session_key( fmt.str() );
     session->set_createtime( time( NULL ) );
     session->set_updatetime( time( NULL ) );
 

@@ -20,6 +20,9 @@ public:
     int RSADecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp );
 
+    int AESEncrypt( const cert::CodecBuff & req,
+        google::protobuf::BytesValue * resp );
+
     int AESDecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp );
 

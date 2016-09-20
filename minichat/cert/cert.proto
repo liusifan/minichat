@@ -15,7 +15,7 @@ message CodecBuff {
 service Cert {
     rpc RSADecrypt( CodecBuff ) returns ( google.protobuf.BytesValue ) {
         option( phxrpc.CmdID ) = 1;
-        option( phxrpc.OptString ) = "-s <size>";
+        option( phxrpc.OptString ) = "s:";
         option( phxrpc.Usage ) = "-s <size>";
     }
 

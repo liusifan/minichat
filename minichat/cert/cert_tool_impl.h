@@ -23,6 +23,8 @@ public:
 
     virtual int RSADecrypt( phxrpc::OptMap & opt_map );
 
+    virtual int AESEncrypt( phxrpc::OptMap & opt_map );
+
     virtual int AESDecrypt( phxrpc::OptMap & opt_map );
 
 };

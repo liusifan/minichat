@@ -71,6 +71,23 @@ int CertToolImpl :: RSADecrypt( phxrpc::OptMap & opt_map )
     return ret;
 }
 
+int CertToolImpl :: AESEncrypt( phxrpc::OptMap & opt_map )
+{
+    cert::CodecBuff req;
+    google::protobuf::BytesValue resp;
+
+    //TODO: fill req from opt_map
+
+    req.set_buff( "Hello Cert!" );
+
+    CertClient client;
+    int ret = client.AESDecrypt( req, &resp );
+    printf( "%s return %d\n", __func__, ret );
+    printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
+
+    return ret;
+}
+
 int CertToolImpl :: AESDecrypt( phxrpc::OptMap & opt_map )
 {
     cert::CodecBuff req;
@@ -78,9 +95,17 @@ int CertToolImpl :: AESDecrypt( phxrpc::OptMap & opt_map )
 
     //TODO: fill req from opt_map
 
+    req.set_buff( "Hello Cert!" );
 
     CertClient client;
-    int ret = client.AESDecrypt( req, &resp );
+    int ret = client.AESEncrypt( req, &resp );
+
+    printf( "AESEncrypt return %d\n", ret );
+    printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
+
+    req.set_buff( resp.value() );
+    ret = client.AESDecrypt( req, &resp );
+
     printf( "%s return %d\n", __func__, ret );
     printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
 

@@ -28,6 +28,9 @@ public:
     virtual int RSADecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp );
 
+    virtual int AESEncrypt( const cert::CodecBuff & req,
+        google::protobuf::BytesValue * resp );
+
     virtual int AESDecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp );
 
