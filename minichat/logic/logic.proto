@@ -53,8 +53,9 @@ message AuthRequest {
 
 message AuthResponse {
     string username = 1;
-    string nickname = 2;
-    string session_key = 3;
+    bytes session_key = 2;
+    string nickname = 3;
+    string avatar = 4;
 }
 
 enum CmdType {
@@ -123,7 +124,7 @@ service Logic
     rpc Auth( MiniRequest ) returns( MiniResponse ) {
         option( phxrpc.CmdID ) = 1;
         option( phxrpc.OptString ) = "u:p:";
-        option( phxrpc.Usage ) = "-u <user> -p <pwd>";
+        option( phxrpc.Usage ) = "-u <user> -p <pwd_md5>";
     }
 
     rpc Sync( MiniRequest ) returns( MiniResponse ) {

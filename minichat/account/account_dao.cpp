@@ -72,6 +72,8 @@ int AccountDAO :: Auth( const account::PwdReq & req )
         }
     }
 
+    printf( "DEBUG: Auth %d\n", ret );
+
     return ret;
 }
 

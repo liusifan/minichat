@@ -10,7 +10,8 @@ import "phxrpc/rpc/phxrpc.proto";
 message Setting {
     string username = 1;
     string avatar = 2;
-    uint32 push_without_detail = 3;
+    string nickname = 3;
+    uint32 push_without_detail = 4;
 }
 
 service Profile {

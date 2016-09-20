@@ -1,5 +1,5 @@
 
-DIRS="account addrbook seq msgbox logic"
+DIRS="cert presence account profile addrbook seq msgbox logic"
 
 for d in $DIRS; do
 

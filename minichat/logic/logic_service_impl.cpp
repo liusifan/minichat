@@ -10,6 +10,7 @@
 #include "phxrpc/file.h"
 
 #include "cgi_sendmsg.h"
+#include "cgi_auth.h"
 
 LogicServiceImpl :: LogicServiceImpl( ServiceArgs_t * app_args )
     : config_( *(app_args->config) )
@@ -30,7 +31,9 @@ int LogicServiceImpl :: PHXEcho( const google::protobuf::StringValue & req,
 int LogicServiceImpl :: Auth( const logic::MiniRequest & req,
         logic::MiniResponse * resp )
 {
-    return -1;
+    CgiAuth cgi;
+
+    return cgi.Execute( req, resp );
 }
 
 int LogicServiceImpl :: Sync( const logic::MiniRequest & req,
@@ -43,8 +46,6 @@ int LogicServiceImpl :: SendMsg( const logic::MiniRequest & req,
         logic::MiniResponse * resp )
 {
     CgiSendMsg cgi;
-
-    printf( "%s\n", req.DebugString().c_str() );
 
     return cgi.Execute( req, resp );
 }

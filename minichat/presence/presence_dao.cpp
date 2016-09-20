@@ -31,14 +31,12 @@ int PresenceDAO :: Create( const char * username, presence::Session * session )
     session->set_createtime( time( NULL ) );
     session->set_updatetime( time( NULL ) );
 
-std::cout << sk << std::endl;
-
     std::string buff;
     session->SerializeToString( &buff );
 
-    int ret = client_.setnx( key, buff );
+    client_.set( key, buff );
 
-    return ret == 1 ? 0 : -2;
+    return 0;
 }
 
 int PresenceDAO :: Get( const char * username, presence::Session * resp )

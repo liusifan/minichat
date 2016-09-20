@@ -12,6 +12,11 @@
 #include <random>     // random_device, uniform_int_distribution
 #include <sstream>
 
+#include "cert/pem_file.h"
+#include "taocrypt/include/config.h"
+#include "taocrypt/include/rsa.hpp"
+#include "taocrypt/include/aes.hpp"
+
 using namespace phxrpc;
 
 LogicToolImpl:: LogicToolImpl()
@@ -46,11 +51,61 @@ int LogicToolImpl :: Auth( phxrpc::OptMap & opt_map )
 
     //TODO: fill req from opt_map
 
+    if( NULL == opt_map.Get( 'u' ) || NULL == opt_map.Get( 'p' ) ) {
+        return -1;
+    }
+
+    logic::AuthRequest req_obj;
+    {
+        req.mutable_head()->set_username( opt_map.Get( 'u' ) );
+        req.mutable_head()->set_enc_algo( logic::ENC_RSA );
+
+        req_obj.set_pwd_md5( opt_map.Get( 'p' ) );
+
+        std::random_device rd;
+        std::stringstream fmt;
+        fmt << rd() << rd();
+        req_obj.set_rand_key( fmt.str() );
+    }
+
+    {
+        std::string req_buff;
+        req_obj.SerializeToString( &req_buff );
+
+        TaoCrypt::RSA_PublicKey pub;
+        PemFileUtils::LoadPubKey( "~/minichat/etc/client/minichat_pubkey.pem", &pub );
+
+        TaoCrypt::RandomNumberGenerator rng;
+        TaoCrypt::RSAES_Encryptor enc( pub );
+
+        req.mutable_req_buff()->resize( pub.FixedCiphertextLength() );
+
+        enc.Encrypt( (unsigned char*)req_buff.c_str(), req_buff.size(),
+                (unsigned char*)req.req_buff().data(), rng);
+    }
 
     LogicClient client;
     int ret = client.Auth( req, &resp );
     printf( "%s return %d\n", __func__, ret );
     printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
+
+    logic::AuthResponse resp_obj;
+    if( 0 == ret ) {
+        req_obj.mutable_rand_key()->resize( 16 );
+
+        std::string tmp_buff;
+        tmp_buff.resize( resp.resp_buff().size() );
+
+        TaoCrypt::AES_ECB_Decryption dec;
+        dec.SetKey( (unsigned char*)req_obj.rand_key().c_str(), req_obj.rand_key().size() );
+
+        dec.Process( (unsigned char*)tmp_buff.c_str(),
+                (unsigned char*)resp.resp_buff().c_str(), resp.resp_buff().size() );
+
+        resp_obj.ParseFromString( tmp_buff );
+
+        printf( "resp: {\n%s}\n", resp_obj.DebugString().c_str() );
+    }
 
     return ret;
 }
@@ -85,8 +140,10 @@ int LogicToolImpl :: SendMsg( phxrpc::OptMap & opt_map )
 
     logic::SendMsgRequest req_obj;
     {
-        logic::MsgRequest * msg = req_obj.add_msg();
         req.mutable_head()->set_username( opt_map.Get( 's' ) );
+        req.mutable_head()->set_enc_algo( logic::ENC_NONE );
+
+        logic::MsgRequest * msg = req_obj.add_msg();
         msg->set_to( opt_map.Get( 't' ) );
         msg->set_content( opt_map.Get( 'm' ) );
 

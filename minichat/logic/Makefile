@@ -7,19 +7,24 @@
 include ../../comm.mk
 include ../../phxrpc/phxrpc.mk
 
-CFLAGS += -I$(MINICHAT_ROOT)/minichat
+CFLAGS += -I$(MINICHAT_ROOT)/minichat \
+		  -I$(MINICHAT_ROOT)/third_party/yassl -DUSE_SYS_STL
 
 LDFLAGS := -L$(PHXRPC_ROOT)/lib \
+	-L$(MINICHAT_ROOT)/minichat/cert -lcert_client \
+	-L$(MINICHAT_ROOT)/minichat/profile -lprofile_client \
+	-L$(MINICHAT_ROOT)/minichat/account -laccount_client \
+	-L$(MINICHAT_ROOT)/minichat/presence -lpresence_client \
 	-L$(MINICHAT_ROOT)/minichat/msgbox -lmsgbox_client \
 	-L$(MINICHAT_ROOT)/minichat/seq -lseq_client \
-	-L$(MINICHAT_ROOT)/minichat/account -laccount_client \
 	-L$(MINICHAT_ROOT)/minichat/addrbook -laddrbook_client \
+	-L$(MINICHAT_ROOT)/third_party/yassl/lib -ltaocrypt \
 	-lphxrpc $(LDFLAGS)
 
 #choose to use boost for network
 #LDFLAGS := $(PLUGIN_BOOST_LDFLAGS) $(LDFLAGS)
 
-CGI_OBJS = cgi_base.o cgi_sendmsg.o
+CGI_OBJS = cgi_base.o cgi_auth.o cgi_sendmsg.o
 
 SVR_OBJS = logic.pb.o \
 		   logic_service_impl.o \

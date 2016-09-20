@@ -22,13 +22,13 @@ service Account {
     rpc Add( User ) returns ( google.protobuf.Empty ) {
         option( phxrpc.CmdID ) = 1;
         option( phxrpc.OptString ) = "u:p:";
-        option( phxrpc.Usage ) = "-u <user> -p <pwd>";
+        option( phxrpc.Usage ) = "-u <user> -p <pwd_md5>";
     }
 
     rpc SetPwd( PwdReq ) returns ( google.protobuf.Empty ) {
         option( phxrpc.CmdID ) = 2;
         option( phxrpc.OptString ) = "u:p:";
-        option( phxrpc.Usage ) = "-u <user> -p <pwd>";
+        option( phxrpc.Usage ) = "-u <user> -p <pwd_md5>";
     }
 
     rpc Get( google.protobuf.StringValue ) returns ( User ) {
@@ -40,7 +40,7 @@ service Account {
     rpc Auth( PwdReq ) returns ( google.protobuf.Empty ) {
         option( phxrpc.CmdID ) = 4;
         option( phxrpc.OptString ) = "u:p:";
-        option( phxrpc.Usage ) = "-u <user> -p <pwd>";
+        option( phxrpc.Usage ) = "-u <user> -p <pwd_md5>";
     }
 }
 
