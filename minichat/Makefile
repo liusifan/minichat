@@ -1,5 +1,5 @@
 
-DIRS = common cert presence account addrbook msgbox seq logic
+DIRS = common cert presence account profile addrbook msgbox seq logic
 
 all:
 	for d in $(DIRS); do \

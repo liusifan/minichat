@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package profile;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+import "phxrpc/rpc/phxrpc.proto";
+
+message Setting {
+    string username = 1;
+    string avatar = 2;
+    uint32 push_without_detail = 3;
+}
+
+service Profile {
+    rpc Set( Setting ) returns ( google.protobuf.Empty ) {
+        option( phxrpc.CmdID ) = 1;
+        option( phxrpc.OptString ) = "u:a:";
+        option( phxrpc.Usage ) = "-u <user> -a <avatar>";
+    }
+
+    rpc Get( google.protobuf.StringValue ) returns ( Setting ) {
+        option( phxrpc.CmdID ) = 2;
+        option( phxrpc.OptString ) = "u:";
+        option( phxrpc.Usage ) = "-u <user>";
+    }
+}
+
