@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package presence;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+import "phxrpc/rpc/phxrpc.proto";
+
+message Session {
+    string username = 1;
+    bytes session_key = 2;
+    uint32 createtime = 3;
+    uint32 updatetime = 4;
+}
+
+service Presence {
+    rpc Create( google.protobuf.StringValue ) returns ( Session ) {
+        option( phxrpc.CmdID ) = 1;
+        option( phxrpc.OptString ) = "u:";
+        option( phxrpc.Usage ) = "-u <user>";
+    }
+
+    rpc Get( google.protobuf.StringValue ) returns ( Session ) {
+        option( phxrpc.CmdID ) = 2;
+        option( phxrpc.OptString ) = "u:";
+        option( phxrpc.Usage ) = "-u <user>";
+    }
+
+    rpc Remove( google.protobuf.StringValue ) returns ( Session ) {
+        option( phxrpc.CmdID ) = 3;
+        option( phxrpc.OptString ) = "u:";
+        option( phxrpc.Usage ) = "-u <user>";
+    }
+}
+

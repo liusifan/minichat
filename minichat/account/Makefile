@@ -16,8 +16,6 @@ LDFLAGS := \
 	$(LDFLAGS) \
 	$(REDIS_CLIENT_LIBRARY)
 
-LDFLAGS := -L$(PHXRPC_ROOT)/lib -lphxrpc $(LDFLAGS)
-
 #choose to use boost for network
 #LDFLAGS := $(PLUGIN_BOOST_LDFLAGS) $(LDFLAGS)
 
