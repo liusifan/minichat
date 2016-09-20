@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package cert;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+import "phxrpc/rpc/phxrpc.proto";
+
+message EncBuff {
+    uint32 key_version = 1;
+    bytes  enc_buff = 2;
+}
+
+service Cert {
+    rpc RSADecrypt( EncBuff ) returns ( google.protobuf.BytesValue ) {
+        option( phxrpc.CmdID ) = 1;
+        option( phxrpc.OptString ) = "-s <size>";
+        option( phxrpc.Usage ) = "-s <size>";
+    }
+
+    rpc AESDecrypt( EncBuff ) returns ( google.protobuf.BytesValue ) {
+        option( phxrpc.CmdID ) = 2;
+        option( phxrpc.OptString ) = "s:";
+        option( phxrpc.Usage ) = "-s <size>";
+    }
+}
+

@@ -82,6 +82,23 @@ if [ ! -f $MINICHAT_ROOT/phxrpc/lib/libphxrpc.a ]; then
     cd $MINICHAT_ROOT
 fi
 
+if [ ! -f $MINICHAT_ROOT/third_party/yassl/lib/libyassl.a ]; then
+    cd $MINICHAT_ROOT/third_party
+
+    if [ ! -f yassl/autogen.sh ]; then
+        git clone https://github.com/yassl/yassl.git
+    fi
+
+    cd yassl
+
+    ./autogen.sh
+    ./configure
+    make
+
+    cp src/.libs/libyassl.a lib
+    cp taocrypt/src/.libs/libyassl.a lib
+fi
+
 cd $MINICHAT_ROOT/minichat
 
 make
