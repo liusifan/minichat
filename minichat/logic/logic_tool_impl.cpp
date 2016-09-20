@@ -55,22 +55,23 @@ int LogicToolImpl :: Auth( phxrpc::OptMap & opt_map )
         return -1;
     }
 
-    logic::AuthRequest req_obj;
+    logic::ManualAuthReq manual_auth_req;;
     {
         req.mutable_head()->set_username( opt_map.Get( 'u' ) );
-        req.mutable_head()->set_enc_algo( logic::ENC_RSA );
+        req.mutable_head()->set_enc_algo( logic::ENC_NONE );
 
-        req_obj.set_pwd_md5( opt_map.Get( 'p' ) );
+        manual_auth_req.set_pwd_md5( opt_map.Get( 'p' ) );
 
         std::random_device rd;
         std::stringstream fmt;
         fmt << rd() << rd();
-        req_obj.set_rand_key( fmt.str() );
+        manual_auth_req.set_rand_key( fmt.str() );
     }
 
+    logic::AuthRequest req_obj;
     {
-        std::string req_buff;
-        req_obj.SerializeToString( &req_buff );
+        std::string tmp_buff;
+        manual_auth_req.SerializeToString( &tmp_buff );
 
         TaoCrypt::RSA_PublicKey pub;
         PemFileUtils::LoadPubKey( "~/minichat/etc/client/minichat_pubkey.pem", &pub );
@@ -78,10 +79,12 @@ int LogicToolImpl :: Auth( phxrpc::OptMap & opt_map )
         TaoCrypt::RandomNumberGenerator rng;
         TaoCrypt::RSAES_Encryptor enc( pub );
 
-        req.mutable_req_buff()->resize( pub.FixedCiphertextLength() );
+        req_obj.mutable_manual_auth_req()->resize( pub.FixedCiphertextLength() );
 
-        enc.Encrypt( (unsigned char*)req_buff.c_str(), req_buff.size(),
-                (unsigned char*)req.req_buff().data(), rng);
+        enc.Encrypt( (unsigned char*)tmp_buff.c_str(), tmp_buff.size(),
+                (unsigned char*)req_obj.manual_auth_req().data(), rng);
+
+        req_obj.SerializeToString( req.mutable_req_buff() );
     }
 
     LogicClient client;
@@ -91,13 +94,14 @@ int LogicToolImpl :: Auth( phxrpc::OptMap & opt_map )
 
     logic::AuthResponse resp_obj;
     if( 0 == ret ) {
-        req_obj.mutable_rand_key()->resize( 16 );
+        manual_auth_req.mutable_rand_key()->resize( 16 );
 
         std::string tmp_buff;
         tmp_buff.resize( resp.resp_buff().size() );
 
         TaoCrypt::AES_ECB_Decryption dec;
-        dec.SetKey( (unsigned char*)req_obj.rand_key().c_str(), req_obj.rand_key().size() );
+        dec.SetKey( (unsigned char*)manual_auth_req.rand_key().c_str(),
+                manual_auth_req.rand_key().size() );
 
         dec.Process( (unsigned char*)tmp_buff.c_str(),
                 (unsigned char*)resp.resp_buff().c_str(), resp.resp_buff().size() );

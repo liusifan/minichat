@@ -21,7 +21,7 @@ bool CertServerConfig :: Read( const char * config_file )
 
     if ( strlen( ep_server_config_.GetPackageName() ) == 0 ) {
         ep_server_config_.SetPackageName( 
-cert::EncBuff::default_instance().GetDescriptor()->file()->package().c_str() );
+            cert::CodecBuff::default_instance().GetDescriptor()->file()->package().c_str() );
     }
 
     return ret;

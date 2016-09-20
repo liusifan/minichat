@@ -42,7 +42,7 @@ int CertToolImpl :: PHXEcho( phxrpc::OptMap & opt_map )
 
 int CertToolImpl :: RSADecrypt( phxrpc::OptMap & opt_map )
 {
-    cert::EncBuff req;
+    cert::CodecBuff req;
     google::protobuf::BytesValue resp;
 
     //TODO: fill req from opt_map
@@ -56,11 +56,11 @@ int CertToolImpl :: RSADecrypt( phxrpc::OptMap & opt_map )
         TaoCrypt::RandomNumberGenerator rng;
         TaoCrypt::RSAES_Encryptor enc( pub );
 
-        req.mutable_enc_buff()->resize( pub.FixedCiphertextLength() );
+        req.mutable_buff()->resize( pub.FixedCiphertextLength() );
 
         TaoCrypt::byte message[] = "Everyone gets Friday off.";
         const TaoCrypt::word32 len = (TaoCrypt::word32)strlen((char*)message);
-        enc.Encrypt( message, len, (unsigned char*)req.enc_buff().data(), rng);
+        enc.Encrypt( message, len, (unsigned char*)req.buff().data(), rng);
     }
 
     CertClient client;
@@ -73,7 +73,7 @@ int CertToolImpl :: RSADecrypt( phxrpc::OptMap & opt_map )
 
 int CertToolImpl :: AESDecrypt( phxrpc::OptMap & opt_map )
 {
-    cert::EncBuff req;
+    cert::CodecBuff req;
     google::protobuf::BytesValue resp;
 
     //TODO: fill req from opt_map

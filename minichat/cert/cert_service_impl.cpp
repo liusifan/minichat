@@ -27,13 +27,13 @@ int CertServiceImpl :: PHXEcho( const google::protobuf::StringValue & req,
     return 0;
 }
 
-int CertServiceImpl :: RSADecrypt( const cert::EncBuff & req,
+int CertServiceImpl :: RSADecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp )
 {
     return CertCodec::GetDefault()->RSADecrypt( req, resp );
 }
 
-int CertServiceImpl :: AESDecrypt( const cert::EncBuff & req,
+int CertServiceImpl :: AESDecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp )
 {
     return -1;

@@ -26,10 +26,13 @@ public:
     int PhxBatchEcho( const google::protobuf::StringValue & req,
         google::protobuf::StringValue * resp );
 
-    int RSADecrypt( const cert::EncBuff & req,
+    int RSADecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp );
 
-    int AESDecrypt( const cert::EncBuff & req,
+    int AESEncrypt( const cert::CodecBuff & req,
+        google::protobuf::BytesValue * resp );
+
+    int AESDecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp );
 
 

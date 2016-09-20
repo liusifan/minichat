@@ -33,10 +33,10 @@ bool CertCodec :: InitRSA( const char * priv_key_file )
     return PemFileUtils::LoadPrivKey( priv_key_file, priv_key_ );
 }
 
-int CertCodec :: RSADecrypt( const cert::EncBuff & req,
+int CertCodec :: RSADecrypt( const cert::CodecBuff & req,
     google::protobuf::BytesValue * resp )
 {
-    if( req.enc_buff().size() != priv_key_->FixedCiphertextLength() ) {
+    if( req.buff().size() != priv_key_->FixedCiphertextLength() ) {
         return -2;
     }
 
@@ -46,7 +46,7 @@ int CertCodec :: RSADecrypt( const cert::EncBuff & req,
 
     resp->mutable_value()->resize( priv_key_->FixedCiphertextLength() );
 
-    int len = dec.Decrypt( (unsigned char*)req.enc_buff().data(), req.enc_buff().size(),
+    int len = dec.Decrypt( (unsigned char*)req.buff().data(), req.buff().size(),
             (unsigned char*)resp->mutable_value()->data(), rng );
 
     resp->mutable_value()->resize( len );
@@ -54,7 +54,7 @@ int CertCodec :: RSADecrypt( const cert::EncBuff & req,
     return 0;
 }
 
-int CertCodec :: AESDecrypt( const cert::EncBuff & req,
+int CertCodec :: AESDecrypt( const cert::CodecBuff & req,
     google::protobuf::BytesValue * resp )
 {
     return 0;

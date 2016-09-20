@@ -17,10 +17,10 @@ public:
 
     bool InitRSA( const char * priv_key_file );
 
-    int RSADecrypt( const cert::EncBuff & req,
+    int RSADecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp );
 
-    int AESDecrypt( const cert::EncBuff & req,
+    int AESDecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp );
 
 private:

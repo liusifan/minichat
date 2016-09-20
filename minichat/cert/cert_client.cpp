@@ -97,7 +97,7 @@ int CertClient :: PhxBatchEcho( const google::protobuf::StringValue & req,
     return ret;
 }
 
-int CertClient :: RSADecrypt( const cert::EncBuff & req,
+int CertClient :: RSADecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp )
 {
     const phxrpc::Endpoint_t * ep = global_certclient_config_.GetRandom();
@@ -118,7 +118,28 @@ int CertClient :: RSADecrypt( const cert::EncBuff & req,
     return -1;
 }
 
-int CertClient :: AESDecrypt( const cert::EncBuff & req,
+int CertClient :: AESEncrypt( const cert::CodecBuff & req,
+        google::protobuf::BytesValue * resp )
+{
+    const phxrpc::Endpoint_t * ep = global_certclient_config_.GetRandom();
+
+    if(ep != nullptr) {
+        phxrpc::BlockTcpStream socket;
+        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
+                    global_certclient_config_.GetConnectTimeoutMS(), NULL, 0, 
+                    *(global_certclient_monitor_.get()));
+        if ( open_ret ) {
+            socket.SetTimeout(global_certclient_config_.GetSocketTimeoutMS());
+
+            CertStub stub(socket, *(global_certclient_monitor_.get()));
+            return stub.AESEncrypt(req, resp);
+        } 
+    }
+
+    return -1;
+}
+
+int CertClient :: AESDecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp )
 {
     const phxrpc::Endpoint_t * ep = global_certclient_config_.GetRandom();

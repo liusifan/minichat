@@ -25,10 +25,10 @@ public:
     virtual int PHXEcho( const google::protobuf::StringValue & req,
         google::protobuf::StringValue * resp );
 
-    virtual int RSADecrypt( const cert::EncBuff & req,
+    virtual int RSADecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp );
 
-    virtual int AESDecrypt( const cert::EncBuff & req,
+    virtual int AESDecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp );
 
 private:

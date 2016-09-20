@@ -46,9 +46,24 @@ message SyncKey {
     uint32 msg_seq = 2;
 };
 
-message AuthRequest {
+message ManualAuthReq {
     string pwd_md5 = 1;
     string rand_key = 2;
+}
+
+message AutoAuthReq {
+    bytes ticket = 1;
+    string rand_key = 2;
+}
+
+message AutoAuthTicket {
+    string username = 1;
+    uint32 createtime = 2;
+}
+
+message AuthRequest {
+    bytes manual_auth_req = 1;
+    bytes auto_auth_req = 2;
 }
 
 message AuthResponse {
@@ -56,6 +71,7 @@ message AuthResponse {
     bytes session_key = 2;
     string nickname = 3;
     string avatar = 4;
+    bytes auto_auth_ticket = 5;
 }
 
 enum CmdType {
