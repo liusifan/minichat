@@ -96,7 +96,7 @@ if [ ! -f $MINICHAT_ROOT/third_party/yassl/lib/libyassl.a ]; then
     make
 
     cp src/.libs/libyassl.a lib
-    cp taocrypt/src/.libs/libyassl.a lib
+    cp taocrypt/src/.libs/libtaocrypt.a lib
 fi
 
 cd $MINICHAT_ROOT/minichat
