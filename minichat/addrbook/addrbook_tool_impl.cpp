@@ -36,7 +36,7 @@ int AddrbookToolImpl :: PHXEcho( phxrpc::OptMap & opt_map )
     return ret;
 }
 
-int AddrbookToolImpl :: Add( phxrpc::OptMap & opt_map )
+int AddrbookToolImpl :: Set( phxrpc::OptMap & opt_map )
 {
     addrbook::ContactReq req;
     google::protobuf::Empty resp;
@@ -50,7 +50,7 @@ int AddrbookToolImpl :: Add( phxrpc::OptMap & opt_map )
     req.mutable_contact()->set_remark( opt_map.Get( 't' ) );
 
     AddrbookClient client;
-    int ret = client.Add( req, &resp );
+    int ret = client.Set( req, &resp );
     printf( "%s return %d\n", __func__, ret );
     printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
 
@@ -90,6 +90,26 @@ int AddrbookToolImpl :: GetOne( phxrpc::OptMap & opt_map )
 
     AddrbookClient client;
     int ret = client.GetOne( req, &resp );
+    printf( "%s return %d\n", __func__, ret );
+    printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
+
+    return ret;
+}
+
+int AddrbookToolImpl :: GetBySeq( phxrpc::OptMap & opt_map )
+{
+    addrbook::GetBySeqReq req;
+    addrbook::ContactList resp;
+
+    // fill req from opt_map
+
+    if( NULL == opt_map.Get( 'u' ) || NULL == opt_map.Get( 's' ) ) return -1;
+
+    req.set_username( opt_map.Get( 'u' ) );
+    req.set_seq( atoi( opt_map.Get( 's' ) ) );
+
+    AddrbookClient client;
+    int ret = client.GetBySeq( req, &resp );
     printf( "%s return %d\n", __func__, ret );
     printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
 

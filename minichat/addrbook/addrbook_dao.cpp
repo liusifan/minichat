@@ -5,25 +5,46 @@
 
 #include "addrbook.pb.h"
 
+#include "seq/seq_client.h"
+
 AddrbookDAO :: AddrbookDAO( r3c::CRedisClient & client )
     : client_( client )
 {
+    SeqClient::Init( "~/minichat/etc/client/seq_client.conf" );
 }
 
 AddrbookDAO :: ~AddrbookDAO()
 {
 }
 
-int AddrbookDAO :: Add( const addrbook::ContactReq & req,
+int AddrbookDAO :: Set( const addrbook::ContactReq & req,
     google::protobuf::Empty * resp )
 {
     char key[ 128 ] = { 0 };
     snprintf( key, sizeof( key ), "addrbook_%s", req.username().c_str() );
 
-    std::string value;
-    req.contact().SerializeToString( &value );
+    addrbook::Contact contact = req.contact();
 
-    client_.hset( key, req.contact().username(), value, NULL );
+    SeqClient seq_client;
+    {
+        seq::AllocReq alloc_req;
+        google::protobuf::UInt32Value seq;
+
+        alloc_req.set_username( req.username() );
+        alloc_req.set_type( seq::TYPE_CONTACT );
+
+        int ret = seq_client.Alloc( alloc_req, &seq );
+
+        if( 0 != ret ) return ret;
+
+        contact.set_seq( seq.value() );
+        contact.set_updatetime( time( NULL ) );
+    }
+
+    std::string value;
+    contact.SerializeToString( &value );
+
+    client_.hset( key, contact.username(), value, NULL );
 
     return 0;
 }
@@ -58,5 +79,30 @@ int AddrbookDAO :: GetOne( const addrbook::GetOneReq & req,
     if( ret ) resp->ParseFromString( value );
 
     return ret ? 0 : -2;
+}
+
+int AddrbookDAO :: GetBySeq( const addrbook::GetBySeqReq & req,
+    addrbook::ContactList * resp )
+{
+    char key[ 128 ] = { 0 };
+    snprintf( key, sizeof( key ), "addrbook_%s", req.username().c_str() );
+
+    std::map< std::string, std::string > list;
+
+    int ret = client_.hgetall( key, &list, NULL );
+
+    addrbook::Contact * contact = resp->add_contact();
+
+    std::map< std::string, std::string >::iterator it = list.begin();
+    for( ; list.end() != it; ++it ) {
+        contact->ParseFromString( it->second );
+        if( contact->seq() > req.seq() ) {
+            contact = resp->add_contact();
+        }
+    }
+
+    resp->mutable_contact()->RemoveLast();
+
+    return ret >= 0 ? 0 : -1;
 }
 

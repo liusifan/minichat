@@ -89,21 +89,21 @@ message CmdItem {
 }
 
 message SyncRequest {
-    string sync_key = 1;
+    bytes sync_key = 1;
 }
 
 message SyncResponse {
-    string new_sync_key = 1;
+    bytes new_sync_key = 1;
     repeated CmdItem oplog = 2;
 }
 
 message CmdModContact {
     string username = 1;
-    string nickname = 2;
+    uint32 updatetime = 2;
 }
 
 message CmdDelContact {
-    repeated string username = 1;
+    string username = 1;
 }
 
 message CmdAddMsg {

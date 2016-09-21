@@ -20,6 +20,7 @@ message Contact {
     uint32 createtime = 4;
     uint32 updatetime = 5;
     uint32 seq = 6;
+    bool is_deleted = 7;
 }
 
 message ContactList {
@@ -36,8 +37,13 @@ message GetOneReq {
     string contact = 2;
 }
 
+message GetBySeqReq {
+    string username = 1;
+    uint32 seq = 2;
+}
+
 service Addrbook {
-    rpc Add( ContactReq ) returns ( google.protobuf.Empty ) {
+    rpc Set( ContactReq ) returns ( google.protobuf.Empty ) {
         option( phxrpc.CmdID ) = 1;
         option( phxrpc.OptString ) = "u:t:";
         option( phxrpc.Usage ) = "-u <user> -t <contact>";
@@ -53,6 +59,12 @@ service Addrbook {
         option( phxrpc.CmdID ) = 3;
         option( phxrpc.OptString ) = "u:t:";
         option( phxrpc.Usage ) = "-u <user> -t <contact>";
+    }
+
+    rpc GetBySeq( GetBySeqReq ) returns ( ContactList ) {
+        option( phxrpc.CmdID ) = 4;
+        option( phxrpc.OptString ) = "u:s:";
+        option( phxrpc.Usage ) = "-u <user> -s <seq>";
     }
 }
 

@@ -29,12 +29,12 @@ int AddrbookServiceImpl :: PHXEcho( const google::protobuf::StringValue & req,
     return 0;
 }
 
-int AddrbookServiceImpl :: Add( const addrbook::ContactReq & req,
+int AddrbookServiceImpl :: Set( const addrbook::ContactReq & req,
         google::protobuf::Empty * resp )
 {
     AddrbookDAO dao( args_.factory->Get() );
 
-    return dao.Add( req, resp );
+    return dao.Set( req, resp );
 }
 
 int AddrbookServiceImpl :: GetAll( const google::protobuf::StringValue & req,
@@ -53,4 +53,12 @@ int AddrbookServiceImpl :: GetOne( const addrbook::GetOneReq & req,
     return dao.GetOne( req, resp );
 }
 
+
+int AddrbookServiceImpl :: GetBySeq( const addrbook::GetBySeqReq & req,
+        addrbook::ContactList * resp )
+{
+    AddrbookDAO dao( args_.factory->Get() );
+
+    return dao.GetBySeq( req, resp );;
+}
 

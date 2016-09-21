@@ -24,7 +24,7 @@ LDFLAGS := -L$(PHXRPC_ROOT)/lib \
 #choose to use boost for network
 #LDFLAGS := $(PLUGIN_BOOST_LDFLAGS) $(LDFLAGS)
 
-CGI_OBJS = cgi_base.o cgi_auth.o cgi_sendmsg.o
+CGI_OBJS = cgi_base.o cgi_auth.o cgi_sendmsg.o cgi_sync.o
 
 SVR_OBJS = logic.pb.o \
 		   logic_service_impl.o \

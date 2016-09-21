@@ -21,11 +21,13 @@ public:
 
     virtual int PHXEcho( phxrpc::OptMap & opt_map );
 
-    virtual int Add( phxrpc::OptMap & opt_map );
+    virtual int Set( phxrpc::OptMap & opt_map );
 
     virtual int GetAll( phxrpc::OptMap & opt_map );
 
     virtual int GetOne( phxrpc::OptMap & opt_map );
+
+    virtual int GetBySeq( phxrpc::OptMap & opt_map );
 
 };
 

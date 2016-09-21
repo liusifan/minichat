@@ -26,7 +26,7 @@ public:
     int PhxBatchEcho( const google::protobuf::StringValue & req,
         google::protobuf::StringValue * resp );
 
-    int Add( const addrbook::ContactReq & req,
+    int Set( const addrbook::ContactReq & req,
         google::protobuf::Empty * resp );
 
     int GetAll( const google::protobuf::StringValue & req,
@@ -34,6 +34,9 @@ public:
 
     int GetOne( const addrbook::GetOneReq & req,
         addrbook::Contact * resp );
+
+    int GetBySeq( const addrbook::GetBySeqReq & req,
+        addrbook::ContactList * resp );
 
 
 };

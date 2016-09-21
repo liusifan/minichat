@@ -70,7 +70,7 @@ int MsgBoxToolImpl :: GetBySeq( phxrpc::OptMap & opt_map )
 
     if( NULL == opt_map.Get( 'u' ) || NULL == opt_map.Get( 's' ) ) return -1;
 
-    req.set_userid( opt_map.Get( 'u' ) );
+    req.set_username( opt_map.Get( 'u' ) );
     req.set_seq( atoi( opt_map.Get( 's' ) ) );
 
     MsgBoxClient client;

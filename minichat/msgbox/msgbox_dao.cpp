@@ -49,7 +49,7 @@ int MsgBoxDAO :: GetBySeq( const msgbox::GetBySeqReq & req,
         msgbox::MsgIndexList * resp )
 {
     char key[ 128 ] = { 0 };
-    snprintf( key, sizeof( key ), "msg_%s", req.userid().c_str() );
+    snprintf( key, sizeof( key ), "msg_%s", req.username().c_str() );
 
     std::vector< std::string > list;
 

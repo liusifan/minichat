@@ -27,7 +27,7 @@ public:
     virtual int PHXEcho( const google::protobuf::StringValue & req,
         google::protobuf::StringValue * resp );
 
-    virtual int Add( const addrbook::ContactReq & req,
+    virtual int Set( const addrbook::ContactReq & req,
         google::protobuf::Empty * resp );
 
     virtual int GetAll( const google::protobuf::StringValue & req,
@@ -35,6 +35,9 @@ public:
 
     virtual int GetOne( const addrbook::GetOneReq & req,
         addrbook::Contact * resp );
+
+    virtual int GetBySeq( const addrbook::GetBySeqReq & req,
+        addrbook::ContactList * resp );
 
 private:
     ServiceArgs_t & args_;

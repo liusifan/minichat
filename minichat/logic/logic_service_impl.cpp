@@ -11,6 +11,7 @@
 
 #include "cgi_sendmsg.h"
 #include "cgi_auth.h"
+#include "cgi_sync.h"
 
 LogicServiceImpl :: LogicServiceImpl( ServiceArgs_t * app_args )
     : config_( *(app_args->config) )
@@ -39,7 +40,9 @@ int LogicServiceImpl :: Auth( const logic::MiniRequest & req,
 int LogicServiceImpl :: Sync( const logic::MiniRequest & req,
         logic::MiniResponse * resp )
 {
-    return -1;
+    CgiSync cgi;
+
+    return cgi.Execute( req, resp );
 }
 
 int LogicServiceImpl :: SendMsg( const logic::MiniRequest & req,
