@@ -97,7 +97,7 @@ int AccountClient :: PhxBatchEcho( const google::protobuf::StringValue & req,
     return ret;
 }
 
-int AccountClient :: Add( const account::User & req,
+int AccountClient :: Set( const account::User & req,
         google::protobuf::Empty * resp )
 {
     const phxrpc::Endpoint_t * ep = global_accountclient_config_.GetRandom();
@@ -111,7 +111,7 @@ int AccountClient :: Add( const account::User & req,
             socket.SetTimeout(global_accountclient_config_.GetSocketTimeoutMS());
 
             AccountStub stub(socket, *(global_accountclient_monitor_.get()));
-            return stub.Add(req, resp);
+            return stub.Set(req, resp);
         } 
     }
 

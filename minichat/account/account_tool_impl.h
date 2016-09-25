@@ -21,7 +21,7 @@ public:
 
     virtual int PHXEcho( phxrpc::OptMap & opt_map );
 
-    virtual int Add( phxrpc::OptMap & opt_map );
+    virtual int Set( phxrpc::OptMap & opt_map );
 
     virtual int SetPwd( phxrpc::OptMap & bigmap );
 

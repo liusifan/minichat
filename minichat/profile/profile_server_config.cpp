@@ -27,7 +27,7 @@ profile::Setting::default_instance().GetDescriptor()->file()->package().c_str() 
     return ret;
 }
 
-const phxrpc::HshaServerConfig & ProfileServerConfig :: GetHshaServerConfig()
+phxrpc::HshaServerConfig & ProfileServerConfig :: GetHshaServerConfig()
 {
     return ep_server_config_;
 }

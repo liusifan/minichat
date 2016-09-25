@@ -26,7 +26,7 @@ public:
     int PhxBatchEcho( const google::protobuf::StringValue & req,
         google::protobuf::StringValue * resp );
 
-    int Add( const account::User & req,
+    int Set( const account::User & req,
         google::protobuf::Empty * resp );
 
     int SetPwd( const account::PwdReq & req,

@@ -27,7 +27,7 @@ logic::MiniRequest::default_instance().GetDescriptor()->file()->package().c_str(
     return ret;
 }
 
-const phxrpc::HshaServerConfig & LogicServerConfig :: GetHshaServerConfig()
+phxrpc::HshaServerConfig & LogicServerConfig :: GetHshaServerConfig()
 {
     return ep_server_config_;
 }

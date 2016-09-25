@@ -11,7 +11,7 @@ include ../../phxrpc/phxrpc.mk
 CFLAGS += $(REDIS_CLIENT_INCLUDE) -I$(MINICHAT_ROOT)/minichat \
 		  -I$(MINICHAT_ROOT)/third_party/yassl -DUSE_SYS_STL
 
-LDFLAGS := \
+LDFLAGS :=  $(PLUGIN_ELPP_LDFLAGS) \
 	-L$(MINICHAT_ROOT)/third_party/yassl/lib -ltaocrypt \
 	-L$(PHXRPC_ROOT)/lib -lphxrpc \
 	$(LDFLAGS) \

@@ -27,7 +27,7 @@ seq::AllocReq::default_instance().GetDescriptor()->file()->package().c_str() );
     return ret;
 }
 
-const phxrpc::HshaServerConfig & SeqServerConfig :: GetHshaServerConfig()
+phxrpc::HshaServerConfig & SeqServerConfig :: GetHshaServerConfig()
 {
     return ep_server_config_;
 }

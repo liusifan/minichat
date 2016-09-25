@@ -27,7 +27,7 @@ presence::Session::default_instance().GetDescriptor()->file()->package().c_str()
     return ret;
 }
 
-const phxrpc::HshaServerConfig & PresenceServerConfig :: GetHshaServerConfig()
+phxrpc::HshaServerConfig & PresenceServerConfig :: GetHshaServerConfig()
 {
     return ep_server_config_;
 }

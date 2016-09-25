@@ -10,7 +10,7 @@ include ../../phxrpc/phxrpc.mk
 
 CFLAGS += $(REDIS_CLIENT_INCLUDE) -I$(MINICHAT_ROOT)/minichat
 
-LDFLAGS := \
+LDFLAGS := $(PLUGIN_ELPP_LDFLAGS) \
 	-L$(MINICHAT_ROOT)/minichat/common -lcommon \
 	-L$(PHXRPC_ROOT)/lib -lphxrpc \
 	$(LDFLAGS) \

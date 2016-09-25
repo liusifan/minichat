@@ -13,8 +13,8 @@
 #include "cgi_auth.h"
 #include "cgi_sync.h"
 
-LogicServiceImpl :: LogicServiceImpl( ServiceArgs_t * app_args )
-    : config_( *(app_args->config) )
+LogicServiceImpl :: LogicServiceImpl( ServiceArgs_t & args )
+    : args_( args )
 {
 }
 

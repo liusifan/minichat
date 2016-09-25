@@ -14,7 +14,7 @@ AccountDAO :: ~AccountDAO()
 {
 }
 
-int AccountDAO :: Add( const account::User & req )
+int AccountDAO :: Set( const account::User & req )
 {
     char key[ 128 ] = { 0 };
 
@@ -23,9 +23,9 @@ int AccountDAO :: Add( const account::User & req )
     std::string buff;
     req.SerializeToString( &buff );
 
-    int ret = client_.setnx( key, buff );
+    client_.set( key, buff );
 
-    return ret == 1 ? 0 : -2;
+    return 0;
 }
 
 int AccountDAO :: SetPwd( const account::PwdReq & req )

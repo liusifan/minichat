@@ -28,7 +28,7 @@ public:
     virtual int PHXEcho( const google::protobuf::StringValue & req,
         google::protobuf::StringValue * resp );
 
-    virtual int Add( const account::User & req,
+    virtual int Set( const account::User & req,
         google::protobuf::Empty * resp );
 
     virtual int SetPwd( const account::PwdReq & req,

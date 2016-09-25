@@ -32,11 +32,6 @@ int MsgBoxServiceImpl :: PHXEcho( const google::protobuf::StringValue & req,
 int MsgBoxServiceImpl :: Add( const msgbox::MsgIndex & req,
         msgbox::AddMsgResp * resp )
 {
-    if( req.seq() <= 0 ) {
-        phxrpc::log( LOG_ERR, "ERROR: invalid req, seq %u", req.seq() );
-        return -1 * EINVAL;
-    }
-
     MsgBoxDAO dao( args_.factory->Get() );
 
     return dao.Add( req, resp );

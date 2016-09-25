@@ -27,7 +27,7 @@ bool AddrbookServerConfig :: Read( const char * config_file )
     return ret;
 }
 
-const phxrpc::HshaServerConfig & AddrbookServerConfig :: GetHshaServerConfig()
+phxrpc::HshaServerConfig & AddrbookServerConfig :: GetHshaServerConfig()
 {
     return ep_server_config_;
 }

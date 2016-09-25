@@ -12,7 +12,7 @@ public:
     AccountDAO( r3c::CRedisClient & client );
     ~AccountDAO();
 
-    int Add( const account::User & req );
+    int Set( const account::User & req );
 
     int SetPwd( const account::PwdReq & req );
 

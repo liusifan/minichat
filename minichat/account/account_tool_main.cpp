@@ -77,11 +77,15 @@ int main( int argc, char * argv[] )
 
     if( ! opt_map.Parse( argc, argv ) ) showUsage( argv[0] );
 
+    phxrpc::openlog( argv[0], "~/log", 7 );
+
     AccountTool::ToolFunc_t targefunc = target->func;
 
     AccountToolImpl tool;
 
     if( 0 != ( tool.*targefunc ) ( opt_map ) ) showUsage( argv[0] );
+
+    phxrpc::closelog();
 
     return 0;
 }

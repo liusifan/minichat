@@ -19,7 +19,7 @@ typedef struct tagServiceArgs {
 class CertServiceImpl : public CertService
 {
 public:
-    CertServiceImpl( ServiceArgs_t * app_args );
+    CertServiceImpl( ServiceArgs_t & args );
     virtual ~CertServiceImpl();
 
     virtual int PHXEcho( const google::protobuf::StringValue & req,
@@ -35,6 +35,6 @@ public:
         google::protobuf::BytesValue * resp );
 
 private:
-    const CertServerConfig & config_;
+    ServiceArgs_t & args_;
 };
 

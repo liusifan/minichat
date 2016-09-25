@@ -36,7 +36,7 @@ int AccountToolImpl :: PHXEcho( phxrpc::OptMap & opt_map )
     return ret;
 }
 
-int AccountToolImpl :: Add( phxrpc::OptMap & opt_map )
+int AccountToolImpl :: Set( phxrpc::OptMap & opt_map )
 {
     account::User req;
     google::protobuf::Empty resp;
@@ -49,7 +49,7 @@ int AccountToolImpl :: Add( phxrpc::OptMap & opt_map )
     req.set_createtime( time( NULL ) );
 
     AccountClient client;
-    int ret = client.Add( req, &resp );
+    int ret = client.Set( req, &resp );
     printf( "%s return %d\n", __func__, ret );
     printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
 

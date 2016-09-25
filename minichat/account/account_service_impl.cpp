@@ -28,12 +28,12 @@ int AccountServiceImpl :: PHXEcho( const google::protobuf::StringValue & req,
     return 0;
 }
 
-int AccountServiceImpl :: Add( const account::User & req,
+int AccountServiceImpl :: Set( const account::User & req,
         google::protobuf::Empty * resp )
 {
     AccountDAO dao( args_.factory->Get() );
 
-    return dao.Add( req );;
+    return dao.Set( req );;
 }
 
 int AccountServiceImpl :: SetPwd( const account::PwdReq & req,

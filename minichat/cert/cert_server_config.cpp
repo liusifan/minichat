@@ -27,7 +27,7 @@ bool CertServerConfig :: Read( const char * config_file )
     return ret;
 }
 
-const phxrpc::HshaServerConfig & CertServerConfig :: GetHshaServerConfig()
+phxrpc::HshaServerConfig & CertServerConfig :: GetHshaServerConfig()
 {
     return ep_server_config_;
 }

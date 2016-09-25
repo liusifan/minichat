@@ -8,9 +8,13 @@
 
 #include "phxrpc/file.h"
 
+#include "seq/seq_client.h"
+
+
 MsgBoxDAO :: MsgBoxDAO( r3c::CRedisClient & client )
 : client_( client )
 {
+    SeqClient::Init( "~/minichat/etc/client/seq_client.conf" );
 }
 
 MsgBoxDAO ::  ~MsgBoxDAO()
@@ -20,10 +24,26 @@ MsgBoxDAO ::  ~MsgBoxDAO()
 int MsgBoxDAO :: Add( const msgbox::MsgIndex & req,
         msgbox::AddMsgResp * resp )
 {
+    msgbox::MsgIndex tmp = req;
+
+    SeqClient seq_client;
+    {
+        seq::AllocReq alloc_req;
+        google::protobuf::UInt32Value seq;
+
+        alloc_req.set_username( req.to() );
+        alloc_req.set_type( seq::TYPE_MSG );
+
+        int ret = seq_client.Alloc( alloc_req, &seq );
+
+        if( 0 != ret ) return ret;
+
+        tmp.set_seq( seq.value() );
+        tmp.set_createtime( time( NULL ) );
+    }
+
     struct timeval tv;
     gettimeofday( &tv, NULL );
-
-    msgbox::MsgIndex tmp = req;
     tmp.set_id( ((uint64_t)tv.tv_sec) << 32 | tv.tv_usec );
 
     char key[ 128 ] = { 0 };

@@ -25,26 +25,29 @@ int AddrbookDAO :: Set( const addrbook::ContactReq & req,
 
     addrbook::Contact contact = req.contact();
 
-    SeqClient seq_client;
-    {
-        seq::AllocReq alloc_req;
-        google::protobuf::UInt32Value seq;
+    // TODO: use transaction commands, watch/multi/exec
+    for( int i = 0; i < 1; i++ ) {
+        SeqClient seq_client;
+        {
+            seq::AllocReq alloc_req;
+            google::protobuf::UInt32Value seq;
 
-        alloc_req.set_username( req.username() );
-        alloc_req.set_type( seq::TYPE_CONTACT );
+            alloc_req.set_username( req.username() );
+            alloc_req.set_type( seq::TYPE_CONTACT );
 
-        int ret = seq_client.Alloc( alloc_req, &seq );
+            int ret = seq_client.Alloc( alloc_req, &seq );
 
-        if( 0 != ret ) return ret;
+            if( 0 != ret ) return ret;
 
-        contact.set_seq( seq.value() );
-        contact.set_updatetime( time( NULL ) );
+            contact.set_seq( seq.value() );
+            contact.set_updatetime( time( NULL ) );
+        }
+
+        std::string value;
+        contact.SerializeToString( &value );
+
+        client_.hset( key, contact.username(), value, NULL );
     }
-
-    std::string value;
-    contact.SerializeToString( &value );
-
-    client_.hset( key, contact.username(), value, NULL );
 
     return 0;
 }

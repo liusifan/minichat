@@ -22,7 +22,7 @@ void HttpDispatch( const phxrpc::HttpRequest & request, phxrpc::HttpResponse * r
 
     ServiceArgs_t * service_args = (ServiceArgs_t *)(args->service_args);
 
-    CertServiceImpl service( service_args );
+    CertServiceImpl service( * service_args );
     CertDispatcher dispatcher( service, args );
 
     phxrpc::HttpDispatcher<CertDispatcher> http_dispatcher(
@@ -35,25 +35,23 @@ void HttpDispatch( const phxrpc::HttpRequest & request, phxrpc::HttpResponse * r
 
 void showUsage( const char * program ) {
     printf( "\n" );
-    printf( "Usage: %s [-c <config>] [-d] [-v]\n", program );
+    printf( "Usage: %s [-c <config>] [-d] [-l <log level>] [-v]\n", program );
     printf( "\n" );
 
     exit( 0 );
 }
 
-void LogImpl(int priority, const char * format, va_list args) {
-    //or implement your logmode here
-}
-
 int main( int argc, char * argv[] ) {
     const char * config_file = NULL;
     bool daemonize = false;;
+    int log_level = -1;
     extern char *optarg ;
     int c ;
-    while( ( c = getopt( argc, argv, "c:vd" ) ) != EOF ) {
+    while( ( c = getopt( argc, argv, "c:vl:d" ) ) != EOF ) {
         switch ( c ) {
             case 'c' : config_file = optarg; break;
             case 'd' : daemonize = true; break;
+            case 'l' : log_level = atoi( optarg ); break;
 
             case 'v' :
             default: showUsage( argv[ 0 ] ); break;
@@ -64,18 +62,27 @@ int main( int argc, char * argv[] ) {
 
     assert(signal(SIGPIPE, SIG_IGN) != SIG_ERR);
 
-    //set your logfunc
-    //phxrpc::setvlog(LogImpl);
+    //set customize log/monitor
+    //phxrpc::setlog(openlog, closelog, vlog);
     //phxrpc::MonitorFactory::SetFactory( new YourSelfsMonitorFactory() );
 
     if( NULL == config_file ) showUsage( argv[0] );
+
     CertServerConfig config;
     if( ! config.Read( config_file ) ) showUsage( argv[0] );
+
+    if( log_level > 0 ) config.GetHshaServerConfig().SetLogLevel( log_level );
+
+    phxrpc::openlog( argv[0], config.GetHshaServerConfig().GetLogDir(),
+            config.GetHshaServerConfig().GetLogLevel() );
 
     ServiceArgs_t service_args;
     service_args.config = &config;
 
     phxrpc::HshaServer server( config.GetHshaServerConfig(), HttpDispatch, &service_args );
     server.RunForever();
+
+    phxrpc::closelog();
+
     return 0;
 }

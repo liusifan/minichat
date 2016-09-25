@@ -81,7 +81,7 @@ int CertToolImpl :: AESEncrypt( phxrpc::OptMap & opt_map )
     req.set_buff( "Hello Cert!" );
 
     CertClient client;
-    int ret = client.AESDecrypt( req, &resp );
+    int ret = client.AESEncrypt( req, &resp );
     printf( "%s return %d\n", __func__, ret );
     printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
 

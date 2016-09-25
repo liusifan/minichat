@@ -19,10 +19,10 @@ message PwdReq {
 }
 
 service Account {
-    rpc Add( User ) returns ( google.protobuf.Empty ) {
+    rpc Set( User ) returns ( google.protobuf.Empty ) {
         option( phxrpc.CmdID ) = 1;
-        option( phxrpc.OptString ) = "u:p:";
-        option( phxrpc.Usage ) = "-u <user> -p <pwd_md5>";
+        option( phxrpc.OptString ) = "u:";
+        option( phxrpc.Usage ) = "-u <user>";
     }
 
     rpc SetPwd( PwdReq ) returns ( google.protobuf.Empty ) {

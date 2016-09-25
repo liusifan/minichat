@@ -51,23 +51,8 @@ static int AddOneMsg( const logic::ReqHead & head, const logic::MsgRequest & msg
         if( 0 != ret ) return -3;
     }
 
+    // 3. fill index by msg, add to msgbox
     msgbox::MsgIndex index;
-
-    // 3. alloc seq
-    SeqClient seq_client;
-    {
-        seq::AllocReq seq_req;
-        google::protobuf::UInt32Value seq_resp;
-
-        seq_req.set_username( head.username() );
-        seq_req.set_type( seq::TYPE_MSG );
-
-        seq_client.Alloc( seq_req, &seq_resp );
-
-        index.set_seq( seq_resp.value() );
-    }
-
-    // 4. fill index by msg, add to msgbox
     index.set_from( head.username() );
     index.set_to( msg.to() );
     index.set_content( msg.content() );

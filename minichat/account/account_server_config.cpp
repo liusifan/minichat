@@ -27,7 +27,7 @@ account::User::default_instance().GetDescriptor()->file()->package().c_str() );
     return ret;
 }
 
-const phxrpc::HshaServerConfig & AccountServerConfig :: GetHshaServerConfig()
+phxrpc::HshaServerConfig & AccountServerConfig :: GetHshaServerConfig()
 {
     return ep_server_config_;
 }

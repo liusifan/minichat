@@ -10,7 +10,7 @@ include ../../phxrpc/phxrpc.mk
 CFLAGS += -I$(MINICHAT_ROOT)/minichat \
 		  -I$(MINICHAT_ROOT)/third_party/yassl -DUSE_SYS_STL
 
-LDFLAGS := -L$(PHXRPC_ROOT)/lib \
+LDFLAGS := $(PLUGIN_ELPP_LDFLAGS) \
 	-L$(MINICHAT_ROOT)/minichat/cert -lcert_client \
 	-L$(MINICHAT_ROOT)/minichat/profile -lprofile_client \
 	-L$(MINICHAT_ROOT)/minichat/account -laccount_client \
@@ -19,7 +19,7 @@ LDFLAGS := -L$(PHXRPC_ROOT)/lib \
 	-L$(MINICHAT_ROOT)/minichat/seq -lseq_client \
 	-L$(MINICHAT_ROOT)/minichat/addrbook -laddrbook_client \
 	-L$(MINICHAT_ROOT)/third_party/yassl/lib -ltaocrypt \
-	-lphxrpc $(LDFLAGS)
+	-L$(PHXRPC_ROOT)/lib -lphxrpc $(LDFLAGS)
 
 #choose to use boost for network
 #LDFLAGS := $(PLUGIN_BOOST_LDFLAGS) $(LDFLAGS)

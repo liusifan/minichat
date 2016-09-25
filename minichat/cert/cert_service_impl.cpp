@@ -11,8 +11,8 @@
 
 #include "cert_codec.h"
 
-CertServiceImpl :: CertServiceImpl( ServiceArgs_t * app_args )
-    : config_( *(app_args->config) )
+CertServiceImpl :: CertServiceImpl( ServiceArgs_t & args )
+    : args_( args )
 {
 }
 

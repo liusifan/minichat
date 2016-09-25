@@ -27,7 +27,7 @@ msgbox::MsgIndex::default_instance().GetDescriptor()->file()->package().c_str() 
     return ret;
 }
 
-const phxrpc::HshaServerConfig & MsgBoxServerConfig :: GetHshaServerConfig()
+phxrpc::HshaServerConfig & MsgBoxServerConfig :: GetHshaServerConfig()
 {
     return ep_server_config_;
 }

@@ -19,7 +19,7 @@ typedef struct tagServiceArgs {
 class LogicServiceImpl : public LogicService
 {
 public:
-    LogicServiceImpl( ServiceArgs_t * app_args );
+    LogicServiceImpl( ServiceArgs_t & args );
     virtual ~LogicServiceImpl();
 
     virtual int PHXEcho( const google::protobuf::StringValue & req,
@@ -35,6 +35,6 @@ public:
         logic::MiniResponse * resp );
 
 private:
-    const LogicServerConfig & config_;
+    ServiceArgs_t & args_;
 };
 

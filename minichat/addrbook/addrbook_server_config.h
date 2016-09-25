@@ -17,7 +17,7 @@ public:
 
     bool Read( const char * config_file );
 
-    const phxrpc::HshaServerConfig & GetHshaServerConfig();
+    phxrpc::HshaServerConfig & GetHshaServerConfig();
 
 private:
     phxrpc::HshaServerConfig ep_server_config_;
