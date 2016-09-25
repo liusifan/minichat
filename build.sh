@@ -65,23 +65,6 @@ if [ ! -f $MINICHAT_ROOT/third_party/protobuf/bin/protoc ]; then
     cd $MINICHAT_ROOT
 fi
 
-if [ ! -f $MINICHAT_ROOT/phxrpc/lib/libphxrpc.a ]; then
-    cd $MINICHAT_ROOT/
-
-    if [ ! -f phxrpc/phxrpc.mk ]; then
-        git clone https://github.com/liusifan/phxrpc.git
-    fi
-
-    cd phxrpc
-
-    rm -rf third_party
-    ln -s ../third_party .
-
-    make debug=y
-
-    cd $MINICHAT_ROOT
-fi
-
 if [ ! -f $MINICHAT_ROOT/third_party/yassl/lib/libyassl.a ]; then
     cd $MINICHAT_ROOT/third_party
 
@@ -126,6 +109,24 @@ if [ ! -f $MINICHAT_ROOT/third_party/easyloggingpp/easylogging++.h ]; then
 
     cp easyloggingpp-9.84/src/easylogging++.h  easyloggingpp
 fi
+
+if [ ! -f $MINICHAT_ROOT/phxrpc/lib/libphxrpc.a ]; then
+    cd $MINICHAT_ROOT/
+
+    if [ ! -f phxrpc/phxrpc.mk ]; then
+        git clone https://github.com/liusifan/phxrpc.git
+    fi
+
+    cd phxrpc
+
+    rm -rf third_party
+    ln -s ../third_party .
+
+    make debug=y
+
+    cd $MINICHAT_ROOT
+fi
+
 
 cd $MINICHAT_ROOT/minichat
 
