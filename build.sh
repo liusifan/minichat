@@ -99,6 +99,34 @@ if [ ! -f $MINICHAT_ROOT/third_party/yassl/lib/libyassl.a ]; then
     cp taocrypt/src/.libs/libtaocrypt.a lib
 fi
 
+if [ ! -f $MINICHAT_ROOT/third_party/easyloggingpp/easylogging++.h ]; then
+    cd $MINICHAT_ROOT/third_party
+
+    if [ ! -f 9.84.tar.gz ]; then
+        wget https://github.com/easylogging/easyloggingpp/archive/9.84.tar.gz
+    fi
+
+    tar zxvf 9.84.tar.gz
+
+    mkdir -p easyloggingpp
+
+    cp easyloggingpp-9.84/src/easylogging++.h  easyloggingpp
+fi
+
+if [ ! -f $MINICHAT_ROOT/third_party/easyloggingpp/easylogging++.h ]; then
+    cd $MINICHAT_ROOT/third_party
+
+    if [ ! -f 9.84.tar.gz ]; then
+        wget https://github.com/easylogging/easyloggingpp/archive/9.84.tar.gz
+    fi
+
+    tar zxvf 9.84.tar.gz
+
+    mkdir -p easyloggingpp
+
+    cp easyloggingpp-9.84/src/easylogging++.h  easyloggingpp
+fi
+
 cd $MINICHAT_ROOT/minichat
 
 make
