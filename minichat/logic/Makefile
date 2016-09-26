@@ -18,6 +18,7 @@ LDFLAGS := $(PLUGIN_ELPP_LDFLAGS) \
 	-L$(MINICHAT_ROOT)/minichat/msgbox -lmsgbox_client \
 	-L$(MINICHAT_ROOT)/minichat/seq -lseq_client \
 	-L$(MINICHAT_ROOT)/minichat/addrbook -laddrbook_client \
+	-L$(MINICHAT_ROOT)/minichat/crypt -lminicrypt \
 	-L$(MINICHAT_ROOT)/third_party/yassl/lib -ltaocrypt \
 	-L$(PHXRPC_ROOT)/lib -lphxrpc $(LDFLAGS)
 
@@ -36,7 +37,8 @@ SVR_OBJS = logic.pb.o \
 
 CLI_OBJS = logic.pb.o \
 		   logic_client.o \
-		   phxrpc_logic_stub.o
+		   phxrpc_logic_stub.o \
+		   minichat_api.o
 
 TARGETS = liblogic_client.a logic_main logic_tool_main
 

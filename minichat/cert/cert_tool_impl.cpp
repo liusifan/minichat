@@ -11,7 +11,8 @@
 
 #include "taocrypt/include/config.h"
 #include "taocrypt/include/rsa.hpp"
-#include "pem_file.h"
+
+#include "crypt/pem_file.h"
 
 using namespace phxrpc;
 

@@ -14,6 +14,7 @@ CFLAGS += $(REDIS_CLIENT_INCLUDE) -I$(MINICHAT_ROOT)/minichat \
 LDFLAGS :=  $(PLUGIN_ELPP_LDFLAGS) \
 	-L$(MINICHAT_ROOT)/third_party/yassl/lib -ltaocrypt \
 	-L$(PHXRPC_ROOT)/lib -lphxrpc \
+	-L$(MINICHAT_ROOT)/minichat/crypt -lminicrypt \
 	$(LDFLAGS) \
 	$(REDIS_CLIENT_LIBRARY)
 
@@ -26,13 +27,11 @@ SVR_OBJS = cert.pb.o \
 		   phxrpc_cert_dispatcher.o \
 		   cert_server_config.o \
 		   cert_main.o \
-		   pem_file.o \
 		   cert_codec.o
 
 CLI_OBJS = cert.pb.o \
 		   cert_client.o \
-		   phxrpc_cert_stub.o \
-		   pem_file.o
+		   phxrpc_cert_stub.o
 
 TARGETS = libcert_client.a cert_main cert_tool_main
 

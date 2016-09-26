@@ -9,13 +9,7 @@
 
 #include "phxrpc/file.h"
 
-#include <random>     // random_device, uniform_int_distribution
-#include <sstream>
-
-#include "cert/pem_file.h"
-#include "taocrypt/include/config.h"
-#include "taocrypt/include/rsa.hpp"
-#include "taocrypt/include/aes.hpp"
+#include "minichat_api.h"
 
 using namespace phxrpc;
 
@@ -46,146 +40,54 @@ int LogicToolImpl :: PHXEcho( phxrpc::OptMap & opt_map )
 
 int LogicToolImpl :: Auth( phxrpc::OptMap & opt_map )
 {
-    logic::MiniRequest req;
-    logic::MiniResponse resp;
-
-    //TODO: fill req from opt_map
-
     if( NULL == opt_map.Get( 'u' ) || NULL == opt_map.Get( 'p' ) ) {
         return -1;
     }
 
-    logic::ManualAuthReq manual_auth_req;;
-    {
-        req.mutable_head()->set_username( opt_map.Get( 'u' ) );
-        req.mutable_head()->set_enc_algo( logic::ENC_NONE );
-
-        manual_auth_req.set_pwd_md5( opt_map.Get( 'p' ) );
-
-        std::random_device rd;
-        std::stringstream fmt;
-        fmt << rd() << rd();
-        manual_auth_req.set_rand_key( fmt.str() );
-    }
-
-    logic::AuthRequest req_obj;
-    {
-        std::string tmp_buff;
-        manual_auth_req.SerializeToString( &tmp_buff );
-
-        TaoCrypt::RSA_PublicKey pub;
-        PemFileUtils::LoadPubKey( "~/minichat/etc/client/minichat_pubkey.pem", &pub );
-
-        TaoCrypt::RandomNumberGenerator rng;
-        TaoCrypt::RSAES_Encryptor enc( pub );
-
-        req_obj.mutable_manual_auth_req()->resize( pub.FixedCiphertextLength() );
-
-        enc.Encrypt( (unsigned char*)tmp_buff.c_str(), tmp_buff.size(),
-                (unsigned char*)req_obj.manual_auth_req().data(), rng);
-
-        req_obj.SerializeToString( req.mutable_req_buff() );
-    }
-
-    LogicClient client;
-    int ret = client.Auth( req, &resp );
-    printf( "%s return %d\n", __func__, ret );
-    printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
+    MiniChatAPI api;
 
     logic::AuthResponse resp_obj;
-    if( 0 == ret ) {
-        manual_auth_req.mutable_rand_key()->resize( 16 );
 
-        std::string tmp_buff;
-        tmp_buff.resize( resp.resp_buff().size() );
+    int ret = api.Auth( opt_map.Get( 'u' ), opt_map.Get( 'p' ), &resp_obj );
 
-        TaoCrypt::AES_ECB_Decryption dec;
-        dec.SetKey( (unsigned char*)manual_auth_req.rand_key().c_str(),
-                manual_auth_req.rand_key().size() );
-
-        dec.Process( (unsigned char*)tmp_buff.c_str(),
-                (unsigned char*)resp.resp_buff().c_str(), resp.resp_buff().size() );
-
-        resp_obj.ParseFromString( tmp_buff );
-
-        printf( "resp: {\n%s}\n", resp_obj.DebugString().c_str() );
-    }
+    printf( "%s return %d\n", __func__, ret );
+    printf( "resp: {\n%s}\n", resp_obj.DebugString().c_str() );
 
     return ret;
 }
 
 int LogicToolImpl :: Sync( phxrpc::OptMap & opt_map )
 {
-    logic::MiniRequest req;
-    logic::MiniResponse resp;
-
-    //TODO: fill req from opt_map
-
     if( NULL == opt_map.Get( 'u' ) ) return -1;
 
-    req.mutable_head()->set_username( opt_map.Get( 'u' ) );
-    req.mutable_head()->set_enc_algo( logic::ENC_NONE );
-
-    logic::SyncKey sync_key;
-    sync_key.SerializeToString( req.mutable_req_buff() );
-
-    LogicClient client;
-    int ret = client.Sync( req, &resp );
-    printf( "%s return %d\n", __func__, ret );
-    printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
+    MiniChatAPI api;
 
     logic::SyncResponse resp_obj;
-    resp_obj.ParseFromString( resp.resp_buff() );
 
-    sync_key.ParseFromString( resp_obj.new_sync_key() );
-
+    int ret = api.Sync( opt_map.Get( 'u' ), &resp_obj );
+    
+    printf( "%s return %d\n", __func__, ret );
     printf( "resp_obj: {\n%s}\n", resp_obj.DebugString().c_str() );
-    printf( "sync_key: {\n%s}\n", sync_key.DebugString().c_str() );
 
     return ret;
 }
 
 int LogicToolImpl :: SendMsg( phxrpc::OptMap & opt_map )
 {
-    logic::MiniRequest req;
-    logic::MiniResponse resp;
-
-    // fill req from opt_map
-
     if( NULL == opt_map.Get( 's' ) || NULL == opt_map.Get( 't' )
             || NULL == opt_map.Get( 'm' ) ) {
         return -1;
     }
 
-    logic::SendMsgRequest req_obj;
-    {
-        req.mutable_head()->set_username( opt_map.Get( 's' ) );
-        req.mutable_head()->set_enc_algo( logic::ENC_NONE );
+    MiniChatAPI api;
 
-        logic::MsgRequest * msg = req_obj.add_msg();
-        msg->set_to( opt_map.Get( 't' ) );
-        msg->set_content( opt_map.Get( 'm' ) );
+    logic::SendMsgResponse resp_obj;
 
-        std::random_device rd;
-        std::stringstream fmt;
-        fmt << rd() << rd();
-        msg->set_uuid( fmt.str() );
-    }
-
-    req_obj.SerializeToString( req.mutable_req_buff() );
-
-    LogicClient client;
-    int ret = client.SendMsg( req, &resp );
+    int ret = api.SendMsg( opt_map.Get( 's' ), opt_map.Get( 't' ),
+            opt_map.Get( 'm' ), &resp_obj );
 
     printf( "%s return %d\n", __func__, ret );
-    printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
-
-    if( 0 == ret && 0 == resp.ret() ) {
-        logic::SendMsgResponse resp_obj;
-        resp_obj.ParseFromString( resp.resp_buff() );
-
-        printf( "result: {\n%s\n}\n", resp_obj.DebugString().c_str() );
-    }
+    printf( "resp_obj: {\n%s\n}\n", resp_obj.DebugString().c_str() );
 
     return ret;
 }

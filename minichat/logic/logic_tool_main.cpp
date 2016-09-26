@@ -12,7 +12,7 @@
 #include "phxrpc_logic_tool.h"
 #include "logic_tool_impl.h"
 
-#include "logic_client.h"
+#include "minichat_api.h"
 
 #include "phxrpc/file.h"
 
@@ -54,7 +54,7 @@ int main( int argc, char * argv[] )
 
     if( NULL == func ) showUsage( argv[0] );
 
-    if( NULL != config ) LogicClient::Init( config );
+    if( NULL != config ) MiniChatAPI::Init( config );
 
     LogicTool::Name2Func_t * target = NULL;
 

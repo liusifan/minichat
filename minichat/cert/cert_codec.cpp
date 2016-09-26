@@ -3,10 +3,9 @@
 
 #include "taocrypt/include/config.h"
 #include "taocrypt/include/rsa.hpp"
-#include "taocrypt/include/file.hpp"
-#include "taocrypt/include/aes.hpp"
 
-#include "pem_file.h"
+#include "crypt/pem_file.h"
+#include "crypt/crypt_utils.h"
 
 CertCodec * CertCodec :: GetDefault()
 {
@@ -60,40 +59,14 @@ static const char * aes_key_for_auto_auth_ticker_ = "minichat//ticket";
 int CertCodec :: AESEncrypt( const cert::CodecBuff & req,
     google::protobuf::BytesValue * resp )
 {
-    std::string key( aes_key_for_auto_auth_ticker_ );
-    key.resize( 16 );
-
-    TaoCrypt::AES_ECB_Encryption enc;
-
-    enc.SetKey( (unsigned char*)key.c_str(), key.size() );
-
-    const int bs(TaoCrypt::AES::BLOCK_SIZE);
-    resp->mutable_value()->resize( bs * ( ( req.buff().size() + bs - 1 ) / bs ) );
-
-    std::string tmp = req.buff();
-    tmp.resize( resp->value().size() );
-
-    enc.Process( (unsigned char*)resp->value().c_str(), (unsigned char*)tmp.c_str(), tmp.size() );
-
-    return 0;
+    return CryptUtils::AES128Encrypt( aes_key_for_auto_auth_ticker_,
+            req.buff(), resp->mutable_value() );
 }
 
 int CertCodec :: AESDecrypt( const cert::CodecBuff & req,
     google::protobuf::BytesValue * resp )
 {
-    std::string key( aes_key_for_auto_auth_ticker_ );
-    key.resize( 16 );
-
-    TaoCrypt::AES_ECB_Decryption dec;
-
-    dec.SetKey( (unsigned char*)key.c_str(), key.size() );
-
-    const int bs(TaoCrypt::AES::BLOCK_SIZE);
-    resp->mutable_value()->resize( bs * ( ( req.buff().size() + bs - 1 ) / bs ) );
-
-    dec.Process( (unsigned char*)resp->value().c_str(),
-            (unsigned char*)req.buff().c_str(), req.buff().size() );
-
-    return 0;
+    return CryptUtils::AES128Decrypt( aes_key_for_auto_auth_ticker_,
+            req.buff(), resp->mutable_value() );
 }
 

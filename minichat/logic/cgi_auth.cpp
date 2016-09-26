@@ -10,8 +10,7 @@
 
 #include "phxrpc/file.h"
 
-#include "taocrypt/include/config.h"
-#include "taocrypt/include/aes.hpp"
+#include "crypt/crypt_utils.h"
 
 CgiAuth :: CgiAuth()
 {
@@ -142,22 +141,12 @@ int CgiAuth :: Process( const logic::ReqHead & head,
         }
     }
 
+    // 6. encrypt resp buff
     {
-        rand_key.resize( 16 );
-
         std::string tmp_buff;
         resp_obj.SerializeToString( &tmp_buff );
 
-        TaoCrypt::AES_ECB_Encryption enc;
-
-        enc.SetKey( (unsigned char*)rand_key.c_str(), rand_key.size() );
-
-        const int bs(TaoCrypt::AES::BLOCK_SIZE);
-        resp_buff->resize( bs * ( ( tmp_buff.size() + bs - 1 ) / bs ) );
-        tmp_buff.resize( resp_buff->size() );
-
-        enc.Process( (unsigned char*)resp_buff->c_str(),
-                (unsigned char*)tmp_buff.c_str(), tmp_buff.size() );
+        CryptUtils::AES128Encrypt( rand_key.c_str(), tmp_buff, resp_buff );
     }
 
     return ret;
