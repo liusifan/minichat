@@ -56,6 +56,29 @@ int LogicToolImpl :: Auth( phxrpc::OptMap & opt_map )
     return ret;
 }
 
+static void PrintSyncResp( logic::SyncResponse & resp )
+{
+    printf( "optlog %d\n", resp.oplog_size() );
+
+    for( int i = 0; i < resp.oplog_size(); i++ ) {
+        const logic::CmdItem & item = resp.oplog( i );
+
+        if( item.type() == logic::CMD_ADD_MSG ) {
+            logic::CmdAddMsg cmd;
+            cmd.ParseFromString( item.buff() );
+
+            printf( "#%d\n%s\n", i, cmd.DebugString().c_str() );
+        }
+
+        if( item.type() == logic::CMD_MOD_CONTACT ) {
+            logic::CmdModContact cmd;
+            cmd.ParseFromString( item.buff() );
+
+            printf( "#%d\n%s\n", i, cmd.DebugString().c_str() );
+        }
+    }
+}
+
 int LogicToolImpl :: Sync( phxrpc::OptMap & opt_map )
 {
     if( NULL == opt_map.Get( 'u' ) ) return -1;
@@ -68,6 +91,8 @@ int LogicToolImpl :: Sync( phxrpc::OptMap & opt_map )
     
     printf( "%s return %d\n", __func__, ret );
     printf( "resp_obj: {\n%s}\n", resp_obj.DebugString().c_str() );
+
+    PrintSyncResp( resp_obj );
 
     return ret;
 }
@@ -88,6 +113,48 @@ int LogicToolImpl :: SendMsg( phxrpc::OptMap & opt_map )
 
     printf( "%s return %d\n", __func__, ret );
     printf( "resp_obj: {\n%s\n}\n", resp_obj.DebugString().c_str() );
+
+    return ret;
+}
+
+int LogicToolImpl :: FakeDoAll( phxrpc::OptMap & opt_map )
+{
+    int ret = -1;
+
+    if( NULL == opt_map.Get( 'u' ) || NULL == opt_map.Get( 'p' ) ) {
+        return -1;
+    }
+
+    const char * username = opt_map.Get( 'u' );
+    const char * pwd_md5 = opt_map.Get( 'p' );
+
+    phxrpc::UThreadEpollScheduler scheduler( 64 * 1024, 10 );
+
+    for( int i = 0; i < 1; i++ ) {
+        phxrpc::__uthread( scheduler ) - [=,&scheduler,&ret]( void * ) {
+
+            MiniChatAPI api( &scheduler );
+
+            logic::AuthResponse auth_resp;
+            ret = api.Auth( username, pwd_md5, &auth_resp );
+            printf( "Auth %d\n", ret );
+            printf( "resp: {\n%s}\n", auth_resp.DebugString().c_str() );
+
+            logic::SendMsgResponse sendmsg_resp;
+            ret = api.SendMsg( username, username, "hello", &sendmsg_resp );
+            printf( "SendMsg %d\n", ret );
+            printf( "resp: {\n%s}\n", sendmsg_resp.DebugString().c_str() );
+
+            logic::SyncResponse sync_resp;
+            ret = api.Sync( username, &sync_resp );
+            printf( "Sync %d\n", ret );
+            printf( "resp: {\n%s}\n", sync_resp.DebugString().c_str() );
+
+            PrintSyncResp( sync_resp );
+        };
+    }
+
+    scheduler.Run();
 
     return ret;
 }

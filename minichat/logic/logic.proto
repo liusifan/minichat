@@ -154,5 +154,11 @@ service Logic
         option( phxrpc.OptString ) = "s:t:m:";
         option( phxrpc.Usage ) = "-s <sender> -t <to> -m <msg>";
     }
+
+    rpc FakeDoAll( MiniRequest ) returns( MiniResponse ) {
+        option( phxrpc.CmdID ) = 99;
+        option( phxrpc.OptString ) = "u:p:";
+        option( phxrpc.Usage ) = "-u  <user> -p <pwd_md5>";
+    }
 };
 

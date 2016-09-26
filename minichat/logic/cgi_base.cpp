@@ -18,6 +18,8 @@ CgiBase :: ~CgiBase()
 
 int CgiBase :: AESProcess( const logic::MiniRequest & req, logic::MiniResponse * resp )
 {
+    phxrpc::log( LOG_INFO, "Call AESProcess" );
+
     google::protobuf::StringValue username;
     presence::Session session;
 

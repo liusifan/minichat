@@ -27,5 +27,6 @@ public:
 
     virtual int SendMsg( phxrpc::OptMap & opt_map );
 
+    virtual int FakeDoAll( phxrpc::OptMap & bigmap );
 };
 
