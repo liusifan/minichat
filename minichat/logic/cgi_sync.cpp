@@ -142,6 +142,8 @@ int CgiSync :: Process( const logic::ReqHead & head,
     //4. return new_sync_key
     resp_sync_key.SerializeToString( resp_obj.mutable_new_sync_key() );
 
+    resp_obj.SerializeToString( resp_buff );
+
     return ret;
 }
 

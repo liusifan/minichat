@@ -121,11 +121,26 @@ int LogicToolImpl :: Sync( phxrpc::OptMap & opt_map )
 
     //TODO: fill req from opt_map
 
+    if( NULL == opt_map.Get( 'u' ) ) return -1;
+
+    req.mutable_head()->set_username( opt_map.Get( 'u' ) );
+    req.mutable_head()->set_enc_algo( logic::ENC_NONE );
+
+    logic::SyncKey sync_key;
+    sync_key.SerializeToString( req.mutable_req_buff() );
 
     LogicClient client;
     int ret = client.Sync( req, &resp );
     printf( "%s return %d\n", __func__, ret );
     printf( "resp: {\n%s}\n", resp.DebugString().c_str() );
+
+    logic::SyncResponse resp_obj;
+    resp_obj.ParseFromString( resp.resp_buff() );
+
+    sync_key.ParseFromString( resp_obj.new_sync_key() );
+
+    printf( "resp_obj: {\n%s}\n", resp_obj.DebugString().c_str() );
+    printf( "sync_key: {\n%s}\n", sync_key.DebugString().c_str() );
 
     return ret;
 }
