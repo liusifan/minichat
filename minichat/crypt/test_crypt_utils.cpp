@@ -13,6 +13,8 @@ void test()
 
     CryptUtils::AES128Decrypt( key, out1, &out2 );
 
+    printf( "%d\n", out1.size() );
+
     printf( "dec( enc( '%s', '%s' ) ) = '%s'\n", key, in.c_str(), out2.c_str() );
 }
 

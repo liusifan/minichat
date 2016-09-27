@@ -32,6 +32,9 @@ int PresenceDAO :: Create( const char * username, presence::Session * session )
     session->set_createtime( time( NULL ) );
     session->set_updatetime( time( NULL ) );
 
+    fmt << rd() << rd();
+    session->set_auto_auth_aes_key( fmt.str() );
+
     std::string buff;
     session->SerializeToString( &buff );
 

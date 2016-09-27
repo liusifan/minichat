@@ -12,6 +12,7 @@ message Session {
     bytes session_key = 2;
     uint32 createtime = 3;
     uint32 updatetime = 4;
+    bytes auto_auth_aes_key = 5;
 }
 
 service Presence {

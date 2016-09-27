@@ -98,14 +98,65 @@ int MiniChatAPI :: Auth( const char * username, const char * pwd_md5, logic::Aut
         resp_obj->ParseFromString( tmp );
 
         session_key_ = resp_obj->session_key();
-        username_ = username;
+        username_ = resp_obj->username();
+        auto_auth_ticket_ = resp_obj->auto_auth_ticket();
+        auto_auth_aes_key_ = resp_obj->auto_auth_aes_key();
+    }
+
+    return ret;
+}
+
+int MiniChatAPI :: AutoAuth( logic::AuthResponse * resp_obj )
+{
+    logic::MiniRequest req;
+    logic::MiniResponse resp;
+
+    logic::AutoAuthReq auth_req;
+    {
+        req.mutable_head()->set_username( username_ );
+        req.mutable_head()->set_enc_algo( logic::ENC_NONE );
+
+        auth_req.set_ticket( auto_auth_ticket_ );
+
+        std::random_device rd;
+        std::stringstream fmt;
+        fmt << rd() << rd();
+
+        auth_req.set_rand_key( fmt.str() );
+    }
+
+    logic::AuthRequest req_obj;
+    {
+        std::string tmp;
+        auth_req.SerializeToString( &tmp );
+
+        CryptUtils::AES128Encrypt( auto_auth_aes_key_.c_str(),
+                tmp, req_obj.mutable_auto_auth_req() );
+
+        req_obj.SerializeToString( req.mutable_req_buff() );
+    }
+
+    int ret = Call_L0( "/logic/Auth", 1, req, &resp );
+
+    if( 0 == ret ) {
+        std::string tmp;
+
+        CryptUtils::AES128Decrypt( auth_req.rand_key().c_str(),
+                resp.resp_buff(), &tmp );
+        
+        resp_obj->ParseFromString( tmp );
+
+        session_key_ = resp_obj->session_key();
+        username_ = resp_obj->username();
+        auto_auth_ticket_ = resp_obj->auto_auth_ticket();
+        auto_auth_aes_key_ = resp_obj->auto_auth_aes_key();
     }
 
     return ret;
 }
 
 int MiniChatAPI :: SendMsg( const char * username, const char * to,
-        const char * text, logic::SendMsgResponse * resp )
+        const char * text, logic::SendMsgResponse * resp_obj )
 {
     username_ = username;
 
@@ -121,7 +172,7 @@ int MiniChatAPI :: SendMsg( const char * username, const char * to,
         msg->set_uuid( fmt.str() );
     }
 
-    return Call_L1( "/logic/SendMsg", 3, req, resp );
+    return Call_L1( "/logic/SendMsg", 3, req, resp_obj );
 }
 
 int MiniChatAPI :: Sync( const char * username, logic::SyncResponse * resp_obj )

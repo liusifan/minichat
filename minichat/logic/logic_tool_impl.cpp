@@ -46,12 +46,17 @@ int LogicToolImpl :: Auth( phxrpc::OptMap & opt_map )
 
     MiniChatAPI api;
 
-    logic::AuthResponse resp_obj;
+    logic::AuthResponse resp_obj, auth_resp_obj;
 
     int ret = api.Auth( opt_map.Get( 'u' ), opt_map.Get( 'p' ), &resp_obj );
 
     printf( "%s return %d\n", __func__, ret );
     printf( "resp: {\n%s}\n", resp_obj.DebugString().c_str() );
+
+    ret = api.AutoAuth( &auth_resp_obj );
+
+    printf( "AutoAuth return %d\n", ret );
+    printf( "resp: {\n%s}\n", auth_resp_obj.DebugString().c_str() );
 
     return ret;
 }

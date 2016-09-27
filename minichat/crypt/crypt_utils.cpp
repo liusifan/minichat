@@ -15,8 +15,9 @@ int CryptUtils :: AES128Encrypt( const char * key, const std::string & in, std::
     std::string fixed_key( key );
     fixed_key.resize( bs );
 
+    int padding = bs - ( in.size() % bs );
     std::string fixed_in( in );
-    fixed_in.resize( bs * ( ( fixed_in.size() + bs - 1 ) / bs ) );
+    fixed_in.append( padding, padding );
 
     out->resize( fixed_in.size() );
 
@@ -46,6 +47,9 @@ int CryptUtils :: AES128Decrypt( const char * key, const std::string & in, std::
 
     dec.Process( (unsigned char*)out->c_str(),
             (unsigned char*)fixed_in.c_str(), fixed_in.size() );
+
+    int padding = *( out->rbegin() );
+    out->resize( out->size() - padding );
 
     return 0;
 }

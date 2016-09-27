@@ -72,6 +72,7 @@ message AuthResponse {
     string nickname = 3;
     string avatar = 4;
     bytes auto_auth_ticket = 5;
+    bytes auto_auth_aes_key = 6;
 }
 
 enum CmdType {
