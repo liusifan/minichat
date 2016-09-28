@@ -6,7 +6,7 @@ CFLAGS += $(REDIS_CLIENT_INCLUDE)
 
 LDFLAGS := -L$(PHXRPC_ROOT)/lib -lphxrpc $(LDFLAGS) $(REDIS_CLIENT_LIBRARY)
 
-LIBCOMMON_OBJS = redis_client_factory.o
+LIBCOMMON_OBJS = redis_client_ex.o redis_client_factory.o
 
 TARGETS = libcommon.a
 

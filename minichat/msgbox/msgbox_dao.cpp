@@ -10,6 +10,7 @@
 
 #include "seq/seq_client.h"
 
+#include "common/redis_client_ex.h"
 
 MsgBoxDAO :: MsgBoxDAO( r3c::CRedisClient & client )
 : client_( client )
@@ -24,45 +25,60 @@ MsgBoxDAO ::  ~MsgBoxDAO()
 int MsgBoxDAO :: Add( const msgbox::MsgIndex & req,
         msgbox::AddMsgResp * resp )
 {
-    msgbox::MsgIndex tmp = req;
+    int ret = -1;
 
-    SeqClient seq_client;
-    {
-        seq::AllocReq alloc_req;
-        google::protobuf::UInt32Value seq;
-
-        alloc_req.set_username( req.to() );
-        alloc_req.set_type( seq::TYPE_MSG );
-
-        int ret = seq_client.Alloc( alloc_req, &seq );
-
-        if( 0 != ret ) return ret;
-
-        tmp.set_seq( seq.value() );
-        tmp.set_createtime( time( NULL ) );
-    }
-
-    struct timeval tv;
-    gettimeofday( &tv, NULL );
-    tmp.set_id( ((uint64_t)tv.tv_sec) << 32 | tv.tv_usec );
+    RedisClientEx client_ex( client_ );
 
     char key[ 128 ] = { 0 };
     snprintf( key, sizeof( key ), "msg_%s", req.to().c_str() );
 
+    msgbox::MsgIndex tmp = req;
+    struct timeval tv;
+    gettimeofday( &tv, NULL );
+    tmp.set_id( ((uint64_t)tv.tv_sec) << 32 | tv.tv_usec );
+
     std::string value;
     tmp.SerializeToString( &value );
 
-    std::vector< std::string > list;
-    list.push_back( value );
+    for( int retry = 0; retry < 3; retry++ ) {
+        if( ! client_ex.RedisCommand( key, "WATCH", std::string(""), "OK" ) ) {
+            continue;
+        }
 
-    int ret = client_.rpush( key, list, NULL );
+        SeqClient seq_client;
+        {
+            seq::AllocReq alloc_req;
+            google::protobuf::UInt32Value seq;
 
-    if( ret >= 0 ) {
-        resp->set_id( tmp.id() );
-        resp->set_newcount( ret );
+            alloc_req.set_username( req.to() );
+            alloc_req.set_type( seq::TYPE_MSG );
+
+            int ret = seq_client.Alloc( alloc_req, &seq );
+
+            if( 0 != ret ) return ret;
+
+            tmp.set_seq( seq.value() );
+            tmp.set_createtime( time( NULL ) );
+        }
+
+        if( ! client_ex.RedisMulti( key ) ) continue;
+
+        if( ! client_ex.RedisCommand( key, "RPUSH", value, "QUEUED" ) ) {
+            continue;
+        }
+
+        if( client_ex.RedisExec( key ) ) {
+            resp->set_id( tmp.id() );
+            resp->set_newcount( ret );
+
+            ret = 0;
+            break;
+        } else {
+            continue;
+        }
     }
 
-    return ret >= 0 ? 0 : -1;
+    return ret;
 }
 
 int MsgBoxDAO :: GetBySeq( const msgbox::GetBySeqReq & req,
