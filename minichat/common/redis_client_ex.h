@@ -13,6 +13,9 @@ public:
     ~RedisClientEx();
 
     bool RedisCommand( const char * key, const char * cmd,
+            const char * cmd_line, const char * excepted_status );
+
+    bool RedisBinCommand( const char * key, const char * cmd,
             const std::string & value, const char * excepted_status );
 
     bool RedisMulti( const char * key );

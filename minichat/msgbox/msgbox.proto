@@ -48,7 +48,7 @@ service MsgBox {
 
     rpc GetBySeq( GetBySeqReq ) returns ( MsgIndexList ) {
         option( phxrpc.CmdID ) = 2;
-        option( phxrpc.OptString ) = "u:s";
+        option( phxrpc.OptString ) = "u:s:";
         option( phxrpc.Usage ) = "-u <user> -s <seq>";
     }
 

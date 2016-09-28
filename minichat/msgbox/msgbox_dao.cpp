@@ -37,11 +37,8 @@ int MsgBoxDAO :: Add( const msgbox::MsgIndex & req,
     gettimeofday( &tv, NULL );
     tmp.set_id( ((uint64_t)tv.tv_sec) << 32 | tv.tv_usec );
 
-    std::string value;
-    tmp.SerializeToString( &value );
-
     for( int retry = 0; retry < 3; retry++ ) {
-        if( ! client_ex.RedisCommand( key, "WATCH", std::string(""), "OK" ) ) {
+        if( ! client_ex.RedisBinCommand( key, "WATCH", "", "OK" ) ) {
             continue;
         }
 
@@ -63,7 +60,10 @@ int MsgBoxDAO :: Add( const msgbox::MsgIndex & req,
 
         if( ! client_ex.RedisMulti( key ) ) continue;
 
-        if( ! client_ex.RedisCommand( key, "RPUSH", value, "QUEUED" ) ) {
+        std::string value;
+        tmp.SerializeToString( &value );
+
+        if( ! client_ex.RedisBinCommand( key, "RPUSH", value, "QUEUED" ) ) {
             continue;
         }
 
@@ -84,28 +84,55 @@ int MsgBoxDAO :: Add( const msgbox::MsgIndex & req,
 int MsgBoxDAO :: GetBySeq( const msgbox::GetBySeqReq & req,
         msgbox::MsgIndexList * resp )
 {
-    char key[ 128 ] = { 0 };
+    int ret = -1;
+
+    RedisClientEx client_ex( client_ );
+
+    char key[ 128 ] = { 0 }, line[ 256 ] = { 0 };
     snprintf( key, sizeof( key ), "msg_%s", req.username().c_str() );
 
-    std::vector< std::string > list;
+    for( int i = 0; i < 3; i++ ) {
 
-    int ret = client_.lrange( key, 0, -1, &list );
+        if( ! client_ex.RedisBinCommand( key, "WATCH", "", "OK" ) ) {
+            continue;
+        }
 
-    ::msgbox::MsgIndex * msg = resp->add_msg();
+        std::vector< std::string > list;
 
-    for( size_t i = 0; i < list.size(); i++ ) {
-        msg->ParseFromString( list[i] );
-        if( msg->seq() > req.seq() ) {
-            msg = resp->add_msg();
+        client_.lrange( key, 0, -1, &list );
+
+        if( ! client_ex.RedisMulti( key ) ) continue;
+
+        resp->clear_msg();
+
+        ::msgbox::MsgIndex * msg = resp->add_msg();
+
+        for( size_t i = 0; i < list.size(); i++ ) {
+            msg->ParseFromString( list[i] );
+            if( msg->seq() > req.seq() ) {
+                msg = resp->add_msg();
+            } else {
+                snprintf( line, sizeof( line ), "LSET %s %zu Deleted", key, i );
+                if( ! client_ex.RedisCommand( key, "LSET", line, "QUEUED" ) ) {
+                    continue;
+                }
+            }
+        }
+
+        resp->mutable_msg()->RemoveLast();
+
+        snprintf( line, sizeof( line ), "LREM %s 0 Deleted", key );
+        if( ! client_ex.RedisCommand( key, "LREM", line, "QUEUED" ) ) {
+            continue;
+        }
+
+        if( client_ex.RedisExec( key ) ) {
+            ret = 0;
+            break;
         }
     }
 
-    resp->mutable_msg()->RemoveLast();
-
-    // TODO: delete msg by seq
-    client_.ltrim( key, 1, 0 );
-
-    return ret >= 0 ? 0 : -1;
+    return ret;
 }
 
 int MsgBoxDAO :: GetAll( const google::protobuf::StringValue & req,

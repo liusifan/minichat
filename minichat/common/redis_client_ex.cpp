@@ -13,6 +13,25 @@ RedisClientEx :: ~RedisClientEx()
 }
 
 bool RedisClientEx :: RedisCommand( const char * key, const char * cmd,
+        const char * cmd_line, const char * excepted_status )
+{
+    bool is_ok = false;
+
+    std::string key_str( key );
+    std::string cmd_line_str( cmd_line );
+
+    const redisReply * reply = client_.redis_command( REDIS_REPLY_STATUS, NULL,
+            &key_str, cmd, cmd_line_str );
+
+    if( NULL != reply ) {
+        is_ok = ( 0 == strcmp( reply->str, excepted_status ) );
+        freeReplyObject( (redisReply*)reply );
+    }
+
+    return is_ok;
+}
+
+bool RedisClientEx :: RedisBinCommand( const char * key, const char * cmd,
         const std::string & value, const char * excepted_status )
 {
     bool is_ok = false;

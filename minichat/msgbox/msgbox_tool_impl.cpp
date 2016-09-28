@@ -51,7 +51,6 @@ int MsgBoxToolImpl :: Add( phxrpc::OptMap & opt_map )
     req.set_from( opt_map.Get( 's' ) );
     req.set_to( opt_map.Get( 't' ) );
     req.set_content( opt_map.Get( 'm' ) );
-    req.set_seq( time( NULL ) );
 
     MsgBoxClient client;
     int ret = client.Add( req, &resp );
