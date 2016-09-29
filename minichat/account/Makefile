@@ -31,11 +31,11 @@ CLI_OBJS = account.pb.o \
 		   account_client.o \
 		   phxrpc_account_stub.o
 
-TARGETS = libaccount_client.a account_main account_tool_main
+TARGETS = libaccount_client.a account-main account_tool_main
 
 all: $(TARGETS)
 
-account_main: $(SVR_OBJS)
+account-main: $(SVR_OBJS)
 	$(LINKER) $^ $(LDFLAGS) -o $@
 
 libaccount_client.a: $(CLI_OBJS)

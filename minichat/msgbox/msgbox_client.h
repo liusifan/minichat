@@ -9,13 +9,15 @@
 #include "msgbox.pb.h"
 #include "phxrpc/rpc.h"
 
-class MsgBoxClient
+class MsgBoxClientRegister
 {
 public:
-    static bool Init( const char * config_file );
+    MsgBoxClientRegister();
+    ~MsgBoxClientRegister();
+};
 
-    static const char * GetPackageName();
-
+class MsgBoxClient
+{
 public:
     MsgBoxClient();
     ~MsgBoxClient();
@@ -35,5 +37,8 @@ public:
     int GetAll( const google::protobuf::StringValue & req,
         msgbox::MsgIndexList * resp );
 
+private:
+    std::string package_name_;
+    phxrpc::ClientConfig * config_;
 
 };

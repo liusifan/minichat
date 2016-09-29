@@ -9,13 +9,16 @@
 #include "seq.pb.h"
 #include "phxrpc/rpc.h"
 
-class SeqClient
+class SeqClientRegister
 {
 public:
-    static bool Init( const char * config_file );
+    SeqClientRegister();
+    ~SeqClientRegister();
+};
 
-    static const char * GetPackageName();
 
+class SeqClient
+{
 public:
     SeqClient();
     ~SeqClient();
@@ -32,5 +35,8 @@ public:
     int Get( const google::protobuf::StringValue & req,
         seq::SyncKey * resp );
 
+private:
+    std::string package_name_;
+    phxrpc::ClientConfig * config_;
 
 };

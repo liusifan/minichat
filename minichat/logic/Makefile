@@ -40,11 +40,11 @@ CLI_OBJS = logic.pb.o \
 		   phxrpc_logic_stub.o \
 		   minichat_api.o
 
-TARGETS = liblogic_client.a logic_main logic_tool_main
+TARGETS = liblogic_client.a logic-main logic_tool_main
 
 all: $(TARGETS)
 
-logic_main: $(SVR_OBJS)
+logic-main: $(SVR_OBJS)
 	$(LINKER) $^ $(LDFLAGS) -o $@
 
 liblogic_client.a: $(CLI_OBJS)

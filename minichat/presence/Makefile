@@ -31,11 +31,11 @@ CLI_OBJS = presence.pb.o \
 		   presence_client.o \
 		   phxrpc_presence_stub.o
 
-TARGETS = libpresence_client.a presence_main presence_tool_main
+TARGETS = libpresence_client.a presence-main presence_tool_main
 
 all: $(TARGETS)
 
-presence_main: $(SVR_OBJS)
+presence-main: $(SVR_OBJS)
 	$(LINKER) $^ $(LDFLAGS) -o $@
 
 libpresence_client.a: $(CLI_OBJS)

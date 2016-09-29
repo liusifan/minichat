@@ -12,34 +12,36 @@
 #include "msgbox_client.h"
 #include "phxrpc_msgbox_stub.h"
 
+#include "phxrpc/file.h"
 #include "phxrpc/rpc.h"
 
-static phxrpc::ClientConfig global_msgboxclient_config_;
 static phxrpc::ClientMonitorPtr global_msgboxclient_monitor_;
+static MsgBoxClientRegister g_msgboxclient_register;
 
-bool MsgBoxClient :: Init( const char * config_file )
-{
-    return global_msgboxclient_config_.Read( config_file );
+MsgBoxClientRegister::MsgBoxClientRegister() {
+    phxrpc::ClientConfigRegistry::GetDefault()->Register("msgbox");
 }
 
-const char * MsgBoxClient :: GetPackageName() {
-    const char * ret = global_msgboxclient_config_.GetPackageName();
-    if (strlen(ret) == 0) {
-        ret = "msgbox";
-    }
-    return ret;
+MsgBoxClientRegister::~MsgBoxClientRegister() {
+
 }
+
 
 MsgBoxClient :: MsgBoxClient()
 {
+    package_name_ = std::string("msgbox");
+    config_ = phxrpc::ClientConfigRegistry::GetDefault()->GetConfig("msgbox");
+    if(!config_) {
+        return;
+    }
     static std::mutex monitor_mutex;
     if ( !global_msgboxclient_monitor_.get() ) { 
         monitor_mutex.lock();
         if ( !global_msgboxclient_monitor_.get() ) {
             global_msgboxclient_monitor_ = phxrpc::MonitorFactory::GetFactory()
-                ->CreateClientMonitor( GetPackageName() );
+                ->CreateClientMonitor(package_name_.c_str());
         }
-        global_msgboxclient_config_.SetClientMonitor( global_msgboxclient_monitor_ );
+        config_->SetClientMonitor( global_msgboxclient_monitor_ );
         monitor_mutex.unlock();
     }
 }
@@ -51,17 +53,22 @@ MsgBoxClient :: ~MsgBoxClient()
 int MsgBoxClient :: PHXEcho( const google::protobuf::StringValue & req,
         google::protobuf::StringValue * resp )
 {
-    const phxrpc::Endpoint_t * ep = global_msgboxclient_config_.GetRandom();
+    if(!config_) {
+        phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
+        return -1;
+    }
+    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
     if(ep != nullptr) {
         phxrpc::BlockTcpStream socket;
         bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    global_msgboxclient_config_.GetConnectTimeoutMS(), NULL, 0, 
+                    config_->GetConnectTimeoutMS(), NULL, 0, 
                     *(global_msgboxclient_monitor_.get()));
         if ( open_ret ) {
-            socket.SetTimeout(global_msgboxclient_config_.GetSocketTimeoutMS());
+            socket.SetTimeout(config_->GetSocketTimeoutMS());
 
             MsgBoxStub stub(socket, *(global_msgboxclient_monitor_.get()));
+            stub.SetConfig(config_);
             return stub.PHXEcho(req, resp);
         } 
     }
@@ -72,18 +79,23 @@ int MsgBoxClient :: PHXEcho( const google::protobuf::StringValue & req,
 int MsgBoxClient :: PhxBatchEcho( const google::protobuf::StringValue & req,
         google::protobuf::StringValue * resp )
 {
+    if(!config_) {
+        phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
+        return -1;
+    }
     int ret = -1; 
     size_t echo_server_count = 2;
     uthread_begin;
     for (size_t i = 0; i < echo_server_count; i++) {
         uthread_t [=, &uthread_s, &ret](void *) {
-            const phxrpc::Endpoint_t * ep = global_msgboxclient_config_.GetByIndex(i);
+            const phxrpc::Endpoint_t * ep = config_->GetByIndex(i);
             if (ep != nullptr) {
                 phxrpc::UThreadTcpStream socket;
                 if(phxrpc::PhxrpcTcpUtils::Open(&uthread_s, &socket, ep->ip, ep->port,
-                            global_msgboxclient_config_.GetConnectTimeoutMS(), *(global_msgboxclient_monitor_.get()))) { 
-                    socket.SetTimeout(global_msgboxclient_config_.GetSocketTimeoutMS());
+                            config_->GetConnectTimeoutMS(), *(global_msgboxclient_monitor_.get()))) { 
+                    socket.SetTimeout(config_->GetSocketTimeoutMS());
                     MsgBoxStub stub(socket, *(global_msgboxclient_monitor_.get()));
+                    stub.SetConfig(config_);
                     int this_ret = stub.PHXEcho(req, resp);
                     if (this_ret == 0) {
                         ret = this_ret;
@@ -100,17 +112,22 @@ int MsgBoxClient :: PhxBatchEcho( const google::protobuf::StringValue & req,
 int MsgBoxClient :: Add( const msgbox::MsgIndex & req,
         msgbox::AddMsgResp * resp )
 {
-    const phxrpc::Endpoint_t * ep = global_msgboxclient_config_.GetRandom();
+    if(!config_) {
+        phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
+        return -1;
+    }
+    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
     if(ep != nullptr) {
         phxrpc::BlockTcpStream socket;
         bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    global_msgboxclient_config_.GetConnectTimeoutMS(), NULL, 0, 
+                    config_->GetConnectTimeoutMS(), NULL, 0, 
                     *(global_msgboxclient_monitor_.get()));
         if ( open_ret ) {
-            socket.SetTimeout(global_msgboxclient_config_.GetSocketTimeoutMS());
+            socket.SetTimeout(config_->GetSocketTimeoutMS());
 
             MsgBoxStub stub(socket, *(global_msgboxclient_monitor_.get()));
+            stub.SetConfig(config_);
             return stub.Add(req, resp);
         } 
     }
@@ -121,17 +138,22 @@ int MsgBoxClient :: Add( const msgbox::MsgIndex & req,
 int MsgBoxClient :: GetBySeq( const msgbox::GetBySeqReq & req,
         msgbox::MsgIndexList * resp )
 {
-    const phxrpc::Endpoint_t * ep = global_msgboxclient_config_.GetRandom();
+    if(!config_) {
+        phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
+        return -1;
+    }
+    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
     if(ep != nullptr) {
         phxrpc::BlockTcpStream socket;
         bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    global_msgboxclient_config_.GetConnectTimeoutMS(), NULL, 0, 
+                    config_->GetConnectTimeoutMS(), NULL, 0, 
                     *(global_msgboxclient_monitor_.get()));
         if ( open_ret ) {
-            socket.SetTimeout(global_msgboxclient_config_.GetSocketTimeoutMS());
+            socket.SetTimeout(config_->GetSocketTimeoutMS());
 
             MsgBoxStub stub(socket, *(global_msgboxclient_monitor_.get()));
+            stub.SetConfig(config_);
             return stub.GetBySeq(req, resp);
         } 
     }
@@ -142,17 +164,22 @@ int MsgBoxClient :: GetBySeq( const msgbox::GetBySeqReq & req,
 int MsgBoxClient :: GetAll( const google::protobuf::StringValue & req,
         msgbox::MsgIndexList * resp )
 {
-    const phxrpc::Endpoint_t * ep = global_msgboxclient_config_.GetRandom();
+    if(!config_) {
+        phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
+        return -1;
+    }
+    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
     if(ep != nullptr) {
         phxrpc::BlockTcpStream socket;
         bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    global_msgboxclient_config_.GetConnectTimeoutMS(), NULL, 0, 
+                    config_->GetConnectTimeoutMS(), NULL, 0, 
                     *(global_msgboxclient_monitor_.get()));
         if ( open_ret ) {
-            socket.SetTimeout(global_msgboxclient_config_.GetSocketTimeoutMS());
+            socket.SetTimeout(config_->GetSocketTimeoutMS());
 
             MsgBoxStub stub(socket, *(global_msgboxclient_monitor_.get()));
+            stub.SetConfig(config_);
             return stub.GetAll(req, resp);
         } 
     }

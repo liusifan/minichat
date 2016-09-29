@@ -32,11 +32,11 @@ CLI_OBJS = addrbook.pb.o \
 		   addrbook_client.o \
 		   phxrpc_addrbook_stub.o
 
-TARGETS = libaddrbook_client.a addrbook_main addrbook_tool_main
+TARGETS = libaddrbook_client.a addrbook-main addrbook_tool_main
 
 all: $(TARGETS)
 
-addrbook_main: $(SVR_OBJS)
+addrbook-main: $(SVR_OBJS)
 	$(LINKER) $^ $(LDFLAGS) -o $@
 
 libaddrbook_client.a: $(CLI_OBJS)

@@ -9,13 +9,16 @@
 #include "logic.pb.h"
 #include "phxrpc/rpc.h"
 
-class LogicClient
+class LogicClientRegister
 {
 public:
-    static bool Init( const char * config_file );
+    LogicClientRegister();
+    ~LogicClientRegister();
+};
 
-    static const char * GetPackageName();
 
+class LogicClient
+{
 public:
     LogicClient();
     ~LogicClient();
@@ -35,5 +38,8 @@ public:
     int SendMsg( const logic::MiniRequest & req,
         logic::MiniResponse * resp );
 
+private:
+    std::string package_name_;
+    phxrpc::ClientConfig * config_;
 
 };

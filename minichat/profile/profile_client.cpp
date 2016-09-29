@@ -12,34 +12,36 @@
 #include "profile_client.h"
 #include "phxrpc_profile_stub.h"
 
+#include "phxrpc/file.h"
 #include "phxrpc/rpc.h"
 
-static phxrpc::ClientConfig global_profileclient_config_;
 static phxrpc::ClientMonitorPtr global_profileclient_monitor_;
+static ProfileClientRegister g_profileclient_register;
 
-bool ProfileClient :: Init( const char * config_file )
-{
-    return global_profileclient_config_.Read( config_file );
+ProfileClientRegister::ProfileClientRegister() {
+    phxrpc::ClientConfigRegistry::GetDefault()->Register("profile");
 }
 
-const char * ProfileClient :: GetPackageName() {
-    const char * ret = global_profileclient_config_.GetPackageName();
-    if (strlen(ret) == 0) {
-        ret = "profile";
-    }
-    return ret;
+ProfileClientRegister::~ProfileClientRegister() {
+
 }
+
 
 ProfileClient :: ProfileClient()
 {
+    package_name_ = std::string("profile");
+    config_ = phxrpc::ClientConfigRegistry::GetDefault()->GetConfig("profile");
+    if(!config_) {
+        return;
+    }
     static std::mutex monitor_mutex;
     if ( !global_profileclient_monitor_.get() ) { 
         monitor_mutex.lock();
         if ( !global_profileclient_monitor_.get() ) {
             global_profileclient_monitor_ = phxrpc::MonitorFactory::GetFactory()
-                ->CreateClientMonitor( GetPackageName() );
+                ->CreateClientMonitor(package_name_.c_str());
         }
-        global_profileclient_config_.SetClientMonitor( global_profileclient_monitor_ );
+        config_->SetClientMonitor( global_profileclient_monitor_ );
         monitor_mutex.unlock();
     }
 }
@@ -51,17 +53,22 @@ ProfileClient :: ~ProfileClient()
 int ProfileClient :: PHXEcho( const google::protobuf::StringValue & req,
         google::protobuf::StringValue * resp )
 {
-    const phxrpc::Endpoint_t * ep = global_profileclient_config_.GetRandom();
+    if(!config_) {
+        phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
+        return -1;
+    }
+    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
     if(ep != nullptr) {
         phxrpc::BlockTcpStream socket;
         bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    global_profileclient_config_.GetConnectTimeoutMS(), NULL, 0, 
+                    config_->GetConnectTimeoutMS(), NULL, 0, 
                     *(global_profileclient_monitor_.get()));
         if ( open_ret ) {
-            socket.SetTimeout(global_profileclient_config_.GetSocketTimeoutMS());
+            socket.SetTimeout(config_->GetSocketTimeoutMS());
 
             ProfileStub stub(socket, *(global_profileclient_monitor_.get()));
+            stub.SetConfig(config_);
             return stub.PHXEcho(req, resp);
         } 
     }
@@ -72,18 +79,23 @@ int ProfileClient :: PHXEcho( const google::protobuf::StringValue & req,
 int ProfileClient :: PhxBatchEcho( const google::protobuf::StringValue & req,
         google::protobuf::StringValue * resp )
 {
+    if(!config_) {
+        phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
+        return -1;
+    }
     int ret = -1; 
     size_t echo_server_count = 2;
     uthread_begin;
     for (size_t i = 0; i < echo_server_count; i++) {
         uthread_t [=, &uthread_s, &ret](void *) {
-            const phxrpc::Endpoint_t * ep = global_profileclient_config_.GetByIndex(i);
+            const phxrpc::Endpoint_t * ep = config_->GetByIndex(i);
             if (ep != nullptr) {
                 phxrpc::UThreadTcpStream socket;
                 if(phxrpc::PhxrpcTcpUtils::Open(&uthread_s, &socket, ep->ip, ep->port,
-                            global_profileclient_config_.GetConnectTimeoutMS(), *(global_profileclient_monitor_.get()))) { 
-                    socket.SetTimeout(global_profileclient_config_.GetSocketTimeoutMS());
+                            config_->GetConnectTimeoutMS(), *(global_profileclient_monitor_.get()))) { 
+                    socket.SetTimeout(config_->GetSocketTimeoutMS());
                     ProfileStub stub(socket, *(global_profileclient_monitor_.get()));
+                    stub.SetConfig(config_);
                     int this_ret = stub.PHXEcho(req, resp);
                     if (this_ret == 0) {
                         ret = this_ret;
@@ -100,17 +112,22 @@ int ProfileClient :: PhxBatchEcho( const google::protobuf::StringValue & req,
 int ProfileClient :: Set( const profile::Setting & req,
         google::protobuf::Empty * resp )
 {
-    const phxrpc::Endpoint_t * ep = global_profileclient_config_.GetRandom();
+    if(!config_) {
+        phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
+        return -1;
+    }
+    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
     if(ep != nullptr) {
         phxrpc::BlockTcpStream socket;
         bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    global_profileclient_config_.GetConnectTimeoutMS(), NULL, 0, 
+                    config_->GetConnectTimeoutMS(), NULL, 0, 
                     *(global_profileclient_monitor_.get()));
         if ( open_ret ) {
-            socket.SetTimeout(global_profileclient_config_.GetSocketTimeoutMS());
+            socket.SetTimeout(config_->GetSocketTimeoutMS());
 
             ProfileStub stub(socket, *(global_profileclient_monitor_.get()));
+            stub.SetConfig(config_);
             return stub.Set(req, resp);
         } 
     }
@@ -121,17 +138,22 @@ int ProfileClient :: Set( const profile::Setting & req,
 int ProfileClient :: Get( const google::protobuf::StringValue & req,
         profile::Setting * resp )
 {
-    const phxrpc::Endpoint_t * ep = global_profileclient_config_.GetRandom();
+    if(!config_) {
+        phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
+        return -1;
+    }
+    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
     if(ep != nullptr) {
         phxrpc::BlockTcpStream socket;
         bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    global_profileclient_config_.GetConnectTimeoutMS(), NULL, 0, 
+                    config_->GetConnectTimeoutMS(), NULL, 0, 
                     *(global_profileclient_monitor_.get()));
         if ( open_ret ) {
-            socket.SetTimeout(global_profileclient_config_.GetSocketTimeoutMS());
+            socket.SetTimeout(config_->GetSocketTimeoutMS());
 
             ProfileStub stub(socket, *(global_profileclient_monitor_.get()));
+            stub.SetConfig(config_);
             return stub.Get(req, resp);
         } 
     }

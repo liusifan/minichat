@@ -9,13 +9,16 @@
 #include "cert.pb.h"
 #include "phxrpc/rpc.h"
 
-class CertClient
+class CertClientRegister
 {
 public:
-    static bool Init( const char * config_file );
+    CertClientRegister();
+    ~CertClientRegister();
+};
 
-    static const char * GetPackageName();
 
+class CertClient
+{
 public:
     CertClient();
     ~CertClient();
@@ -35,5 +38,8 @@ public:
     int AESDecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp );
 
+private:
+    std::string package_name_;
+    phxrpc::ClientConfig * config_;
 
 };

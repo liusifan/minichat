@@ -9,13 +9,15 @@
 #include "presence.pb.h"
 #include "phxrpc/rpc.h"
 
-class PresenceClient
+class PresenceClientRegister
 {
 public:
-    static bool Init( const char * config_file );
+    PresenceClientRegister();
+    ~PresenceClientRegister();
+};
 
-    static const char * GetPackageName();
-
+class PresenceClient
+{
 public:
     PresenceClient();
     ~PresenceClient();
@@ -35,5 +37,7 @@ public:
     int Remove( const google::protobuf::StringValue & req,
         presence::Session * resp );
 
-
+private:
+    std::string package_name_;
+    phxrpc::ClientConfig * config_;
 };

@@ -9,7 +9,7 @@
 
 CgiBase :: CgiBase()
 {
-    PresenceClient::Init( "~/minichat/etc/client/presence_client.conf" );
+    //PresenceClient::Init( "~/minichat/etc/client/presence_client.conf" );
 }
 
 CgiBase :: ~CgiBase()

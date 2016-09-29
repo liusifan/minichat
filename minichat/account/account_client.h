@@ -9,6 +9,14 @@
 #include "account.pb.h"
 #include "phxrpc/rpc.h"
 
+
+class AccountClientRegister
+{
+public:
+    AccountClientRegister();
+    ~AccountClientRegister();
+};
+
 class AccountClient
 {
 public:
@@ -38,5 +46,7 @@ public:
     int Auth( const account::PwdReq & req,
         google::protobuf::Empty * resp );
 
-
+private:
+    std::string package_name_;
+    phxrpc::ClientConfig * config_;
 };

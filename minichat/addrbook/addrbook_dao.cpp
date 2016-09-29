@@ -10,7 +10,7 @@
 AddrbookDAO :: AddrbookDAO( r3c::CRedisClient & client )
     : client_( client )
 {
-    SeqClient::Init( "~/minichat/etc/client/seq_client.conf" );
+    //SeqClient::Init( "~/minichat/etc/client/seq_client.conf" );
 }
 
 AddrbookDAO :: ~AddrbookDAO()

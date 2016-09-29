@@ -10,10 +10,10 @@
 
 CgiSendMsg :: CgiSendMsg()
 {
-    MsgBoxClient::Init( "~/minichat/etc/client/msgbox_client.conf" );
-    SeqClient::Init( "~/minichat/etc/client/seq_client.conf" );
-    AccountClient::Init( "~/minichat/etc/client/account_client.conf" );
-    AddrbookClient::Init( "~/minichat/etc/client/addrbook_client.conf" );
+    //MsgBoxClient::Init( "~/minichat/etc/client/msgbox_client.conf" );
+    //SeqClient::Init( "~/minichat/etc/client/seq_client.conf" );
+    //AccountClient::Init( "~/minichat/etc/client/account_client.conf" );
+    //AddrbookClient::Init( "~/minichat/etc/client/addrbook_client.conf" );
 }
 
 CgiSendMsg :: ~CgiSendMsg()
