@@ -9,13 +9,6 @@
 #include "profile.pb.h"
 #include "phxrpc/rpc.h"
 
-class ProfileClientRegister
-{
-public:
-    ProfileClientRegister();
-    ~ProfileClientRegister();
-};
-
 
 class ProfileClient
 {

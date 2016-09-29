@@ -9,13 +9,6 @@
 #include "msgbox.pb.h"
 #include "phxrpc/rpc.h"
 
-class MsgBoxClientRegister
-{
-public:
-    MsgBoxClientRegister();
-    ~MsgBoxClientRegister();
-};
-
 class MsgBoxClient
 {
 public:

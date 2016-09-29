@@ -1,8 +1,6 @@
 
 include ../../comm.mk
 
-include ../../phxrpc/phxrpc.mk
-
 CFLAGS += -I$(MINICHAT_ROOT)/third_party/yassl -DUSE_SYS_STL
 
 LDFLAGS += -L$(MINICHAT_ROOT)/third_party/yassl/lib -ltaocrypt

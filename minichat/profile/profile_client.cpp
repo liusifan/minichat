@@ -16,16 +16,19 @@
 #include "phxrpc/rpc.h"
 
 static phxrpc::ClientMonitorPtr global_profileclient_monitor_;
+
+class ProfileClientRegister
+{
+public:
+    ProfileClientRegister() {
+        phxrpc::ClientConfigRegistry::GetDefault()->Register("profile");
+    }
+    ~ProfileClientRegister() {
+
+    }
+};
+
 static ProfileClientRegister g_profileclient_register;
-
-ProfileClientRegister::ProfileClientRegister() {
-    phxrpc::ClientConfigRegistry::GetDefault()->Register("profile");
-}
-
-ProfileClientRegister::~ProfileClientRegister() {
-
-}
-
 
 ProfileClient :: ProfileClient()
 {

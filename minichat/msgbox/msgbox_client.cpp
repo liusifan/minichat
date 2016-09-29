@@ -16,16 +16,19 @@
 #include "phxrpc/rpc.h"
 
 static phxrpc::ClientMonitorPtr global_msgboxclient_monitor_;
+
+class MsgBoxClientRegister
+{
+public:
+    MsgBoxClientRegister() {
+        phxrpc::ClientConfigRegistry::GetDefault()->Register("msgbox");
+    }
+    ~MsgBoxClientRegister() {
+
+    }
+};
+
 static MsgBoxClientRegister g_msgboxclient_register;
-
-MsgBoxClientRegister::MsgBoxClientRegister() {
-    phxrpc::ClientConfigRegistry::GetDefault()->Register("msgbox");
-}
-
-MsgBoxClientRegister::~MsgBoxClientRegister() {
-
-}
-
 
 MsgBoxClient :: MsgBoxClient()
 {

@@ -6,16 +6,8 @@
 
 include ../../comm.mk
 
-include ../../phxrpc/phxrpc.mk
-
-CFLAGS += $(REDIS_CLIENT_INCLUDE) -I$(MINICHAT_ROOT)/minichat
-
-LDFLAGS := $(PLUGIN_ELPP_LDFLAGS) \
-	-L$(MINICHAT_ROOT)/minichat/common -lcommon \
-	-L$(MINICHAT_ROOT)/minichat/seq -lseq_client\
-	-L$(PHXRPC_ROOT)/lib -lphxrpc \
-	$(LDFLAGS) \
-	$(REDIS_CLIENT_LIBRARY)
+CFLAGS += $(ADDRBOOK_CFLAGS) 
+LDFLAGS += $(ADDRBOOK_LDFLAGS)
 
 #choose to use boost for network
 #LDFLAGS := $(PLUGIN_BOOST_LDFLAGS) $(LDFLAGS)

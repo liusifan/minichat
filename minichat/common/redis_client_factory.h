@@ -15,6 +15,6 @@ public:
     r3c::CRedisClient & Get();
 
 private:
-    std::string nodes;
+    std::string nodes_;
 };
 

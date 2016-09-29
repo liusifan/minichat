@@ -9,13 +9,6 @@
 #include "presence.pb.h"
 #include "phxrpc/rpc.h"
 
-class PresenceClientRegister
-{
-public:
-    PresenceClientRegister();
-    ~PresenceClientRegister();
-};
-
 class PresenceClient
 {
 public:

@@ -9,14 +9,6 @@
 #include "cert.pb.h"
 #include "phxrpc/rpc.h"
 
-class CertClientRegister
-{
-public:
-    CertClientRegister();
-    ~CertClientRegister();
-};
-
-
 class CertClient
 {
 public:

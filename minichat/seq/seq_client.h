@@ -9,14 +9,6 @@
 #include "seq.pb.h"
 #include "phxrpc/rpc.h"
 
-class SeqClientRegister
-{
-public:
-    SeqClientRegister();
-    ~SeqClientRegister();
-};
-
-
 class SeqClient
 {
 public:

@@ -17,16 +17,18 @@
 
 static phxrpc::ClientMonitorPtr global_addrbookclient_monitor_;
 
+class AddrbookClientRegister
+{
+public:
+    AddrbookClientRegister() {
+        phxrpc::ClientConfigRegistry::GetDefault()->Register("addrbook");
+    }
+    ~AddrbookClientRegister() {
+
+    }
+};
+
 static AddrbookClientRegister g_addrbookclient_register;
-
-AddrbookClientRegister::AddrbookClientRegister() {
-    phxrpc::ClientConfigRegistry::GetDefault()->Register("addrbook");
-}
-
-AddrbookClientRegister::~AddrbookClientRegister() {
-
-}
-
 
 AddrbookClient :: AddrbookClient()
 {

@@ -16,16 +16,19 @@
 #include "phxrpc/rpc.h"
 
 static phxrpc::ClientMonitorPtr global_presenceclient_monitor_;
+
+class PresenceClientRegister
+{
+public:
+    PresenceClientRegister() {
+        phxrpc::ClientConfigRegistry::GetDefault()->Register("presence");
+    }
+    ~PresenceClientRegister() {
+
+    }
+};
+
 static PresenceClientRegister g_presenceclient_register;
-
-PresenceClientRegister::PresenceClientRegister() {
-    phxrpc::ClientConfigRegistry::GetDefault()->Register("presence");
-}
-
-PresenceClientRegister::~PresenceClientRegister() {
-
-}
-
 
 PresenceClient :: PresenceClient()
 {

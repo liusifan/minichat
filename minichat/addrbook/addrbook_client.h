@@ -9,20 +9,8 @@
 #include "addrbook.pb.h"
 #include "phxrpc/rpc.h"
 
-class AddrbookClientRegister
-{
-public:
-    AddrbookClientRegister();
-    ~AddrbookClientRegister();
-};
-
 class AddrbookClient
 {
-public:
-    static bool Init( const char * config_file );
-
-    static const char * GetPackageName();
-
 public:
     AddrbookClient();
     ~AddrbookClient();

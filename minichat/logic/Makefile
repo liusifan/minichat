@@ -5,22 +5,9 @@
 #
 
 include ../../comm.mk
-include ../../phxrpc/phxrpc.mk
 
-CFLAGS += -I$(MINICHAT_ROOT)/minichat \
-		  -I$(MINICHAT_ROOT)/third_party/yassl -DUSE_SYS_STL
-
-LDFLAGS := $(PLUGIN_ELPP_LDFLAGS) \
-	-L$(MINICHAT_ROOT)/minichat/cert -lcert_client \
-	-L$(MINICHAT_ROOT)/minichat/profile -lprofile_client \
-	-L$(MINICHAT_ROOT)/minichat/account -laccount_client \
-	-L$(MINICHAT_ROOT)/minichat/presence -lpresence_client \
-	-L$(MINICHAT_ROOT)/minichat/msgbox -lmsgbox_client \
-	-L$(MINICHAT_ROOT)/minichat/seq -lseq_client \
-	-L$(MINICHAT_ROOT)/minichat/addrbook -laddrbook_client \
-	-L$(MINICHAT_ROOT)/minichat/crypt -lminicrypt \
-	-L$(MINICHAT_ROOT)/third_party/yassl/lib -ltaocrypt \
-	-L$(PHXRPC_ROOT)/lib -lphxrpc $(LDFLAGS)
+CFLAGS += $(LOGIC_CFLAGS) 
+LDFLAGS += $(LOGIC_LDFLAGS)
 
 #choose to use boost for network
 #LDFLAGS := $(PLUGIN_BOOST_LDFLAGS) $(LDFLAGS)

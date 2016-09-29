@@ -6,19 +6,12 @@
 
 include ../../comm.mk
 
-include ../../phxrpc/phxrpc.mk
-
-CFLAGS += $(REDIS_CLIENT_INCLUDE) -I$(MINICHAT_ROOT)/minichat
-
-LDFLAGS := $(PLUGIN_ELPP_LDFLAGS) \
-	-L$(MINICHAT_ROOT)/minichat/common -lcommon \
-	-L$(MINICHAT_ROOT)/minichat/seq -lseq_client \
-	-L$(PHXRPC_ROOT)/lib -lphxrpc \
-	$(LDFLAGS) \
-	$(REDIS_CLIENT_LIBRARY)
 
 #choose to use boost for network
 #LDFLAGS := $(PLUGIN_BOOST_LDFLAGS) $(LDFLAGS)
+
+CFLAGS += $(MSGBOX_CFLAGS) 
+LDFLAGS += $(MSGBOX_LDFLAGS)
 
 SVR_OBJS = msgbox.pb.o \
 	   msgbox_service_impl.o \

@@ -9,21 +9,8 @@
 #include "account.pb.h"
 #include "phxrpc/rpc.h"
 
-
-class AccountClientRegister
-{
-public:
-    AccountClientRegister();
-    ~AccountClientRegister();
-};
-
 class AccountClient
 {
-public:
-    static bool Init( const char * config_file );
-
-    static const char * GetPackageName();
-
 public:
     AccountClient();
     ~AccountClient();
