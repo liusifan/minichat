@@ -14,10 +14,10 @@
 
 CgiAuth :: CgiAuth()
 {
-    AccountClient::Init( "~/minichat/etc/client/account_client.conf" );
-    ProfileClient::Init( "~/minichat/etc/client/profile_client.conf" );
-    PresenceClient::Init( "~/minichat/etc/client/presence_client.conf" );
-    CertClient::Init( "~/minichat/etc/client/cert_client.conf" );
+    //AccountClient::Init( "~/minichat/etc/client/account_client.conf" );
+    //ProfileClient::Init( "~/minichat/etc/client/profile_client.conf" );
+    //PresenceClient::Init( "~/minichat/etc/client/presence_client.conf" );
+    //CertClient::Init( "~/minichat/etc/client/cert_client.conf" );
 }
 
 CgiAuth :: ~CgiAuth()

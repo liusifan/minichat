@@ -9,6 +9,13 @@
 #include "addrbook.pb.h"
 #include "phxrpc/rpc.h"
 
+class AddrbookClientRegister
+{
+public:
+    AddrbookClientRegister();
+    ~AddrbookClientRegister();
+};
+
 class AddrbookClient
 {
 public:
@@ -38,5 +45,8 @@ public:
     int GetBySeq( const addrbook::GetBySeqReq & req,
         addrbook::ContactList * resp );
 
+private:
+    std::string package_name_;
+    phxrpc::ClientConfig * config_;
 
 };

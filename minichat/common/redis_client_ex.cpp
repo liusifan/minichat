@@ -1,4 +1,5 @@
 
+#include <string.h>
 #include "redis_client_ex.h"
 
 #include "r3c/r3c.h"

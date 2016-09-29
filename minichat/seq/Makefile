@@ -31,11 +31,11 @@ CLI_OBJS = seq.pb.o \
 		   seq_client.o \
 		   phxrpc_seq_stub.o
 
-TARGETS = libseq_client.a seq_main seq_tool_main
+TARGETS = libseq_client.a seq-main seq_tool_main
 
 all: $(TARGETS)
 
-seq_main: $(SVR_OBJS)
+seq-main: $(SVR_OBJS)
 	$(LINKER) $^ $(LDFLAGS) -o $@
 
 libseq_client.a: $(CLI_OBJS)

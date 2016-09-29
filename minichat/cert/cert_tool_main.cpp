@@ -20,7 +20,7 @@ using namespace phxrpc;
 
 void showUsage( const char * program )
 {
-    printf( "\nUsage: %s [-c <config>] [-f <func>] [-v]\n", program );
+    printf( "\nUsage: %s [-f <func>] [-v]\n", program );
 
     CertTool::Name2Func_t * name2func = CertTool::GetName2Func();
 
@@ -38,12 +38,8 @@ void showUsage( const char * program )
 int main( int argc, char * argv[] )
 {
     const char * func = NULL;
-    const char * config = NULL;
 
     for( int i = 1; i < argc - 1; i++ ) {
-        if( 0 == strcmp( argv[i], "-c" ) ) {
-            config = argv[ ++i ];
-        }
         if( 0 == strcmp( argv[i], "-f" ) ) {
             func = argv[ ++i ];
         }
@@ -53,8 +49,6 @@ int main( int argc, char * argv[] )
     }
 
     if( NULL == func ) showUsage( argv[0] );
-
-    if( NULL != config ) CertClient::Init( config );
 
     CertTool::Name2Func_t * target = NULL;
 

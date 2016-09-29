@@ -9,13 +9,16 @@
 #include "profile.pb.h"
 #include "phxrpc/rpc.h"
 
-class ProfileClient
+class ProfileClientRegister
 {
 public:
-    static bool Init( const char * config_file );
+    ProfileClientRegister();
+    ~ProfileClientRegister();
+};
 
-    static const char * GetPackageName();
 
+class ProfileClient
+{
 public:
     ProfileClient();
     ~ProfileClient();
@@ -32,5 +35,8 @@ public:
     int Get( const google::protobuf::StringValue & req,
         profile::Setting * resp );
 
+private:
+    std::string package_name_;
+    phxrpc::ClientConfig * config_;
 
 };

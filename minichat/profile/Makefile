@@ -31,11 +31,11 @@ CLI_OBJS = profile.pb.o \
 		   profile_client.o \
 		   phxrpc_profile_stub.o
 
-TARGETS = libprofile_client.a profile_main profile_tool_main
+TARGETS = libprofile_client.a profile-main profile_tool_main
 
 all: $(TARGETS)
 
-profile_main: $(SVR_OBJS)
+profile-main: $(SVR_OBJS)
 	$(LINKER) $^ $(LDFLAGS) -o $@
 
 libprofile_client.a: $(CLI_OBJS)

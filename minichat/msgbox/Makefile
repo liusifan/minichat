@@ -32,11 +32,11 @@ CLI_OBJS = msgbox.pb.o \
 	   msgbox_client.o \
 	   phxrpc_msgbox_stub.o
 
-TARGETS = libmsgbox_client.a msgbox_main msgbox_tool_main
+TARGETS = libmsgbox_client.a msgbox-main msgbox_tool_main
 
 all: $(TARGETS)
 
-msgbox_main: $(SVR_OBJS)
+msgbox-main: $(SVR_OBJS)
 	$(LINKER) $^ $(LDFLAGS) -o $@
 
 libmsgbox_client.a: $(CLI_OBJS)
