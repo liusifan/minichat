@@ -6,17 +6,8 @@
 
 include ../../comm.mk
 
-include ../../phxrpc/phxrpc.mk
-
-CFLAGS += $(REDIS_CLIENT_INCLUDE) -I$(MINICHAT_ROOT)/minichat \
-		  -I$(MINICHAT_ROOT)/third_party/yassl -DUSE_SYS_STL
-
-LDFLAGS :=  $(PLUGIN_ELPP_LDFLAGS) \
-	-L$(PHXRPC_ROOT)/lib -lphxrpc \
-	-L$(MINICHAT_ROOT)/minichat/crypt -lminicrypt \
-	-L$(MINICHAT_ROOT)/third_party/yassl/lib -ltaocrypt \
-	$(LDFLAGS) \
-	$(REDIS_CLIENT_LIBRARY)
+CFLAGS += $(CERT_CFLAGS) 
+LDFLAGS += $(CERT_LDFLAGS)
 
 #choose to use boost for network
 #LDFLAGS := $(PLUGIN_BOOST_LDFLAGS) $(LDFLAGS)

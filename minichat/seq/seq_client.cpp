@@ -16,16 +16,19 @@
 #include "phxrpc/rpc.h"
 
 static phxrpc::ClientMonitorPtr global_seqclient_monitor_;
+
+class SeqClientRegister
+{
+public:
+    SeqClientRegister() {
+        phxrpc::ClientConfigRegistry::GetDefault()->Register("seq");
+    }
+    ~SeqClientRegister() {
+
+    }
+};
+
 static SeqClientRegister g_seqclient_register;
-
-SeqClientRegister::SeqClientRegister() {
-    phxrpc::ClientConfigRegistry::GetDefault()->Register("seq");
-}
-
-SeqClientRegister::~SeqClientRegister() {
-
-}
-
 
 SeqClient :: SeqClient()
 {

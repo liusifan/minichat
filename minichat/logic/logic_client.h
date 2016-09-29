@@ -9,14 +9,6 @@
 #include "logic.pb.h"
 #include "phxrpc/rpc.h"
 
-class LogicClientRegister
-{
-public:
-    LogicClientRegister();
-    ~LogicClientRegister();
-};
-
-
 class LogicClient
 {
 public:

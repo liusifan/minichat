@@ -1,7 +1,5 @@
 include ../../comm.mk
 
-include ../../phxrpc/phxrpc.mk
-
 CFLAGS += $(REDIS_CLIENT_INCLUDE)
 
 LDFLAGS := -L$(PHXRPC_ROOT)/lib -lphxrpc $(LDFLAGS) $(REDIS_CLIENT_LIBRARY)

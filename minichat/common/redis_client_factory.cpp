@@ -47,20 +47,12 @@ RedisClientFactory :: RedisClientFactory( const char * config_file )
 
     phxrpc::log( LOG_DEBUG, "read config %s", path );
 
-    phxrpc::ClientConfig config;
+    phxrpc::RedisClientConfig config;
 
     if( config.Read( path ) ) {
-        char buff[ 128 ] = { 0 };
-
-        for( size_t i = 0; ; i++ ) {
-            const phxrpc::Endpoint_t * ep = config.GetByIndex( i );
-
-            if( NULL == ep ) break;
-            snprintf( buff, sizeof( buff ), "%s:%d", ep->ip, ep->port );
-
-            if( i > 0 ) nodes.append( "," );
-            nodes.append( buff );
-        }
+        nodes_ = config.GetNodes();
+    } else {
+        phxrpc::log( LOG_ERR, "read config %s failed", path );
     }
 }
 
@@ -72,7 +64,7 @@ r3c::CRedisClient & RedisClientFactory :: Get()
 {
     static __thread r3c::CRedisClient * client = NULL;
     
-    if( NULL == client ) client = new r3c::CRedisClient( nodes );
+    if( NULL == client ) client = new r3c::CRedisClient( nodes_ );
 
     return * client;
 }

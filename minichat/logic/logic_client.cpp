@@ -16,16 +16,19 @@
 #include "phxrpc/rpc.h"
 
 static phxrpc::ClientMonitorPtr global_logicclient_monitor_;
+
+class LogicClientRegister
+{
+public:
+    LogicClientRegister() {
+        phxrpc::ClientConfigRegistry::GetDefault()->Register("logic");
+    }
+    ~LogicClientRegister() {
+
+    }
+};
+
 static LogicClientRegister g_logicclient_register;
-
-LogicClientRegister::LogicClientRegister() {
-    phxrpc::ClientConfigRegistry::GetDefault()->Register("logic");
-}
-
-LogicClientRegister::~LogicClientRegister() {
-
-}
-
 
 LogicClient :: LogicClient()
 {

@@ -17,15 +17,18 @@
 
 static phxrpc::ClientMonitorPtr global_accountclient_monitor_;
 
+class AccountClientRegister
+{
+public:
+    AccountClientRegister() {
+        phxrpc::ClientConfigRegistry::GetDefault()->Register("account");
+    }
+    ~AccountClientRegister() {
+
+    }
+};
+
 static AccountClientRegister g_accountclient_register;
-
-AccountClientRegister::AccountClientRegister() {
-    phxrpc::ClientConfigRegistry::GetDefault()->Register("account");
-}
-
-AccountClientRegister::~AccountClientRegister() {
-
-}
 
 AccountClient :: AccountClient()
 {

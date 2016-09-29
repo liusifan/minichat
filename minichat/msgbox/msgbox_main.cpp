@@ -80,7 +80,8 @@ int main( int argc, char * argv[] ) {
 
     ServiceArgs_t service_args;
     service_args.config = &config;
-    service_args.factory = new RedisClientFactory( "~/minichat/etc/client/redis_client.conf" );
+    //service_args.factory = new RedisClientFactory( "~/minichat/etc/client/redis_client.conf" );
+    service_args.factory = new RedisClientFactory( "~/etc/route/shanghai/mmminichat_route.conf" );
 
     phxrpc::HshaServer server( config.GetHshaServerConfig(), HttpDispatch, &service_args );
     server.RunForever();

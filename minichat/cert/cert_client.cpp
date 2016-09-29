@@ -17,16 +17,19 @@
 
 static phxrpc::ClientMonitorPtr global_certclient_monitor_;
 
+
+class CertClientRegister
+{
+public:
+    CertClientRegister() {
+        phxrpc::ClientConfigRegistry::GetDefault()->Register("cert");
+    }
+    ~CertClientRegister() {
+
+    }
+};
+
 static CertClientRegister g_certclient_register;
-
-CertClientRegister::CertClientRegister() {
-    phxrpc::ClientConfigRegistry::GetDefault()->Register("cert");
-}
-
-CertClientRegister::~CertClientRegister() {
-
-}
-
 
 CertClient :: CertClient()
 {
