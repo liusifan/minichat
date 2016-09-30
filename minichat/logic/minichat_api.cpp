@@ -12,36 +12,42 @@
 #include "crypt/pem_file.h"
 #include "crypt/crypt_utils.h"
 
+#include "phxrpc/file.h"
 #include "phxrpc/rpc.h"
 
-static phxrpc::ClientConfig global_logicclient_config_;
 static phxrpc::ClientMonitorPtr global_logicclient_monitor_;
 
-bool MiniChatAPI :: Init( const char * config_file )
+class MiniChatApiClientRegister
 {
-    return global_logicclient_config_.Read( config_file );
-}
-
-const char * MiniChatAPI :: GetPackageName()
-{
-    const char * ret = global_logicclient_config_.GetPackageName();
-    if (strlen(ret) == 0) {
-        ret = "logic";
+public:
+    MiniChatApiClientRegister() {
+        phxrpc::ClientConfigRegistry::GetDefault()->Register("logic");
     }
-    return ret;
-}
+    ~MiniChatApiClientRegister() {
+
+    }
+};
+
+static MiniChatApiClientRegister g_minichatapiclient_register;
+
 
 MiniChatAPI :: MiniChatAPI( phxrpc::UThreadEpollScheduler * scheduler )
     : scheduler_( scheduler )
 {
+    package_name_ = std::string("logic");
+    config_ = phxrpc::ClientConfigRegistry::GetDefault()->GetConfig("logic");
+    if(!config_) {
+        return;
+    }
+
     static std::mutex monitor_mutex;
     if ( !global_logicclient_monitor_.get() ) { 
         monitor_mutex.lock();
         if ( !global_logicclient_monitor_.get() ) {
             global_logicclient_monitor_ = phxrpc::MonitorFactory::GetFactory()
-                ->CreateClientMonitor( GetPackageName() );
+                ->CreateClientMonitor(package_name_.c_str());
         }
-        global_logicclient_config_.SetClientMonitor( global_logicclient_monitor_ );
+        config_->SetClientMonitor( global_logicclient_monitor_ );
         monitor_mutex.unlock();
     }
 }
@@ -52,6 +58,10 @@ MiniChatAPI :: ~MiniChatAPI()
 
 int MiniChatAPI :: Auth( const char * username, const char * pwd_md5, logic::AuthResponse * resp_obj )
 {
+    if(!config_) {
+        phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
+        return -1;
+    }
     logic::MiniRequest req;
     logic::MiniResponse resp;
 
@@ -74,7 +84,8 @@ int MiniChatAPI :: Auth( const char * username, const char * pwd_md5, logic::Aut
         manual_auth_req.SerializeToString( &tmp_buff );
 
         TaoCrypt::RSA_PublicKey pub;
-        PemFileUtils::LoadPubKey( "~/minichat/etc/client/minichat_pubkey.pem", &pub );
+        //PemFileUtils::LoadPubKey( "~/minichat/etc/client/minichat_pubkey.pem", &pub );
+        PemFileUtils::LoadPubKey( "~/mmminichat/etc/minichat_pubkey.pem", &pub );
 
         TaoCrypt::RandomNumberGenerator rng;
         TaoCrypt::RSAES_Encryptor enc( pub );
@@ -108,6 +119,10 @@ int MiniChatAPI :: Auth( const char * username, const char * pwd_md5, logic::Aut
 
 int MiniChatAPI :: AutoAuth( logic::AuthResponse * resp_obj )
 {
+    if(!config_) {
+        phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
+        return -1;
+    }
     logic::MiniRequest req;
     logic::MiniResponse resp;
 
@@ -158,6 +173,10 @@ int MiniChatAPI :: AutoAuth( logic::AuthResponse * resp_obj )
 int MiniChatAPI :: SendMsg( const char * username, const char * to,
         const char * text, logic::SendMsgResponse * resp_obj )
 {
+    if(!config_) {
+        phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
+        return -1;
+    }
     username_ = username;
 
     logic::SendMsgRequest req;
@@ -177,6 +196,10 @@ int MiniChatAPI :: SendMsg( const char * username, const char * to,
 
 int MiniChatAPI :: Sync( const char * username, logic::SyncResponse * resp_obj )
 {
+    if(!config_) {
+        phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
+        return -1;
+    }
     username_ = username;
 
     int ret = Call_L1( "/logic/Sync", 2, sync_key_, resp_obj );
@@ -230,7 +253,7 @@ int MiniChatAPI :: Call_L1( const char * uri, int cmd_id,
 int MiniChatAPI :: Call_L0( const char * uri, int cmd_id,
         const logic::MiniRequest & req, logic::MiniResponse * resp )
 {
-    const phxrpc::Endpoint_t * ep = global_logicclient_config_.GetRandom();
+    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
     if(ep == nullptr) return -1;
 
@@ -241,14 +264,14 @@ int MiniChatAPI :: Call_L0( const char * uri, int cmd_id,
     if( NULL == scheduler_ ) {
         std::shared_ptr<phxrpc::BlockTcpStream> tmp( new phxrpc::BlockTcpStream );
         open_ret = phxrpc::PhxrpcTcpUtils::Open( tmp.get(), ep->ip, ep->port,
-                global_logicclient_config_.GetConnectTimeoutMS(), NULL, 0, 
+                config_->GetConnectTimeoutMS(), NULL, 0, 
                 *(global_logicclient_monitor_.get()));
 
         socket = tmp;
     } else {
         std::shared_ptr<phxrpc::UThreadTcpStream> tmp( new phxrpc::UThreadTcpStream );
         open_ret = phxrpc::PhxrpcTcpUtils::Open( scheduler_, tmp.get(), ep->ip, ep->port,
-                    global_logicclient_config_.GetConnectTimeoutMS(),
+                    config_->GetConnectTimeoutMS(),
                     *(global_logicclient_monitor_.get()));
 
         socket = tmp;
@@ -256,13 +279,13 @@ int MiniChatAPI :: Call_L0( const char * uri, int cmd_id,
 
     if ( ! open_ret ) return -1;
 
-    socket->SetTimeout(global_logicclient_config_.GetSocketTimeoutMS());
+    socket->SetTimeout(config_->GetSocketTimeoutMS());
 
     phxrpc::HttpCaller caller( *( socket.get() ), *( global_logicclient_monitor_.get() ) );
     caller.SetURI( uri, cmd_id );
     // TODO: construct a connection pool, use keep_alive
     caller.SetKeepAlive( false );
-    caller.SetIsEnableCliFr( global_logicclient_config_.IsEnableClientFastReject() );
+    caller.SetIsEnableCliFr( config_->IsEnableClientFastReject() );
 
     int ret = caller.Call( req, resp );
 

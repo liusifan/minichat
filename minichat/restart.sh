@@ -7,7 +7,7 @@ for d in $DIRS; do
 
     cd $d
 
-    ./"$d"_main -c "$d"_server.conf -l 6 -d
+    ./"$d"-main -c "$d"_server.conf -l 6 -d
 
     cd ..
 

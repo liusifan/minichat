@@ -6,16 +6,13 @@
 #include "logic.pb.h"
 
 #include "phxrpc/network.h"
+#include "phxrpc/rpc.h"
 
 namespace phxrpc {
     class UThreadEpollScheduler;
 };
 
 class MiniChatAPI {
-public:
-    static bool Init( const char * config_file );
-    static const char * GetPackageName();
-
 public:
     MiniChatAPI( phxrpc::UThreadEpollScheduler * scheduler = NULL );
     ~MiniChatAPI();
@@ -47,5 +44,8 @@ private:
     logic::SyncKey sync_key_;
 
     phxrpc::UThreadEpollScheduler * scheduler_;
+
+    std::string package_name_;
+    phxrpc::ClientConfig * config_;
 };
 
