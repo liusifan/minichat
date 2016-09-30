@@ -52,7 +52,8 @@ int CertToolImpl :: RSADecrypt( phxrpc::OptMap & opt_map )
 
     {
         TaoCrypt::RSA_PublicKey pub;
-        PemFileUtils::LoadPubKey( "~/minichat/etc/client/minichat_pubkey.pem", &pub );
+        //PemFileUtils::LoadPubKey( "~/minichat/etc/client/minichat_pubkey.pem", &pub );
+        PemFileUtils::LoadPubKey( "~/mmminichat/etc/minichat_pubkey.pem", &pub );
 
         TaoCrypt::RandomNumberGenerator rng;
         TaoCrypt::RSAES_Encryptor enc( pub );

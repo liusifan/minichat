@@ -18,7 +18,8 @@ CertCodec :: CertCodec()
 {
     priv_key_ = NULL;
 
-    InitRSA( "~/minichat/etc/minichat_privkey.pem" );
+    //InitRSA( "~/minichat/etc/minichat_privkey.pem" );
+    InitRSA( "~/mmminichat/etc/minichat_privkey.pem" );
 }
 
 CertCodec :: ~CertCodec()

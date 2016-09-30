@@ -38,7 +38,6 @@ LogicClient :: LogicClient()
         return;
     }
 
-
     static std::mutex monitor_mutex;
     if ( !global_logicclient_monitor_.get() ) { 
         monitor_mutex.lock();
