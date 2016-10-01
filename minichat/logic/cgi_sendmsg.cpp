@@ -14,6 +14,7 @@ CgiSendMsg :: CgiSendMsg()
     //SeqClient::Init( "~/minichat/etc/client/seq_client.conf" );
     //AccountClient::Init( "~/minichat/etc/client/account_client.conf" );
     //AddrbookClient::Init( "~/minichat/etc/client/addrbook_client.conf" );
+    business_name_ = std::string("Sendmsg");
 }
 
 CgiSendMsg :: ~CgiSendMsg()

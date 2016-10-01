@@ -43,7 +43,7 @@ AddrbookClient :: AddrbookClient()
         monitor_mutex.lock();
         if ( !global_addrbookclient_monitor_.get() ) {
             global_addrbookclient_monitor_ = phxrpc::MonitorFactory::GetFactory()
-                ->CreateClientMonitor( package_name_.c_str() );
+                ->CreateClientMonitor(config_->GetOssId());
         }
         config_->SetClientMonitor( global_addrbookclient_monitor_ );
         monitor_mutex.unlock();

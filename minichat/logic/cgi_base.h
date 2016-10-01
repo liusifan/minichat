@@ -14,6 +14,9 @@ public:
 
     virtual int Process( const logic::ReqHead & head,
             const std::string & req_buff, std::string * resp_buff ) = 0;
+protected:
+
+    std::string business_name_;
 
 private:
     int AESProcess( const logic::MiniRequest & req, logic::MiniResponse * resp );

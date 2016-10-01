@@ -16,6 +16,7 @@ CgiSync :: CgiSync()
     //AccountClient::Init( "~/minichat/etc/client/account_client.conf" );
     //AddrbookClient::Init( "~/minichat/etc/client/addrbook_client.conf" );
     //ProfileClient::Init( "~/minichat/etc/client/profile_client.conf" );
+    business_name_ = std::string("Sync");
 }
 
 CgiSync :: ~CgiSync()
@@ -108,7 +109,6 @@ int CgiSync :: Process( const logic::ReqHead & head,
             const std::string & req_buff, std::string * resp_buff )
 {
     int ret = 0;
-
     logic::SyncRequest req_obj;
     logic::SyncResponse resp_obj;
 
