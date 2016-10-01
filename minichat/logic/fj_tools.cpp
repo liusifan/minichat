@@ -65,9 +65,9 @@ void ShowUsage()
 
 }
 
-int Auth()
+int Auth(phxrpc::UThreadEpollScheduler * scheduler)
 {
-    MiniChatAPI api;
+    MiniChatAPI api(scheduler);
 
     logic::AuthResponse resp_obj, auth_resp_obj;
 
@@ -85,7 +85,7 @@ int Auth()
 
 int WorkerRun(phxrpc::UThreadEpollScheduler * scheduler)
 {
-    return Auth();
+    return Auth(scheduler);
 }
 
 
