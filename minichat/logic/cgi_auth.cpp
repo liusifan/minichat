@@ -18,6 +18,8 @@ CgiAuth :: CgiAuth()
     //ProfileClient::Init( "~/minichat/etc/client/profile_client.conf" );
     //PresenceClient::Init( "~/minichat/etc/client/presence_client.conf" );
     //CertClient::Init( "~/minichat/etc/client/cert_client.conf" );
+
+    business_name_ = std::string("Auth");
 }
 
 CgiAuth :: ~CgiAuth()
@@ -144,7 +146,6 @@ int CgiAuth :: Process( const logic::ReqHead & head,
             const std::string & req_buff, std::string * resp_buff )
 {
     int ret = -1;
-
     logic::AuthRequest req_obj;
     logic::AuthResponse resp_obj;
 

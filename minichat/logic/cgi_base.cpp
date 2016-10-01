@@ -2,6 +2,7 @@
 #include "cgi_base.h"
 
 #include "phxrpc/file.h"
+#include "phxrpc/qos.h"
 
 #include "presence/presence_client.h"
 
@@ -52,6 +53,12 @@ int CgiBase :: AESProcess( const logic::MiniRequest & req, logic::MiniResponse *
 int CgiBase :: Execute( const logic::MiniRequest & req, logic::MiniResponse * resp )
 {
     int ret = 0;
+
+    std::string qos_info = business_name_;
+    qos_info.append("_");
+    qos_info.append(req.head().username());
+
+    phxrpc::FastRejectQoSMgr::SetReqQoSInfo(qos_info.c_str());
 
     if( logic::ENC_AES == req.head().enc_algo() ) {         // for normal cgi
         ret = AESProcess( req, resp );
