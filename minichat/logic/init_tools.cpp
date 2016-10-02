@@ -3,7 +3,9 @@
 #include <algorithm>
 #include <random>
 #include <unordered_map>
+#include <map>
 #include <string>
+#include <atomic>
 
 #include <time.h>
 #include <unistd.h>
@@ -23,14 +25,51 @@ using namespace std;
 int thread_cnt = 1;
 int begin_user_idx = 0;
 int end_user_idx = 0;
-int most_contacted_num_lower_bound = 3000;
-int most_contacted_num_upper_bound = 5000;
-int second_most_contacted_num_lower_bound = 500;
-int second_most_contacted_num_upper_bound = 3000;
-int less_contacted_num_lower_bound = 1;
-int less_contacted_num_upper_bound = 500;
 
 typedef unordered_map<string, unordered_map<string, bool> * > ContactMap;
+
+typedef struct _ContactInfo {
+    int dis_idx;
+    unordered_map<string, bool> *  contact_map;
+} ContactInfo;
+
+typedef unordered_map<string, ContactInfo> AllContactMap;
+
+typedef struct _UserDistributeInfo {
+    int lower_bound;
+    int upper_bound;
+    double ratio;
+} UserDisInfo;
+
+int user_dis_info_cnt = 11;
+UserDisInfo user_dis_info[] = {
+    {0,9,0.1104},
+    {10,29,0.2203},
+    {30,59,0.1567},
+    {60,89,0.1150},
+    {90,199,0.3330},
+    {200,699,0.0390},
+    {700,999,0.0116},
+    {1000,2000,0.0098},
+    {2000,3000,0.0022},
+    {3000,4000,0.0017},
+    {4000,5000,0.0002}
+
+/*
+ *    {0,9,0.1104},
+ *    {10,39,0.2203},
+ *    {40,69,0.1567},
+ *    {70,99,0.1150},
+ *    {100,399,0.3330},
+ *    {400,699,0.0390},
+ *    {700,999,0.0116},
+ *    {1000,2000,0.0098},
+ *    {2000,3000,0.0022},
+ *    {3000,4000,0.0017},
+ *    {4000,5000,0.0002}
+ *
+ */
+};
 
 void ShowUsage() 
 {
@@ -39,9 +78,6 @@ void ShowUsage()
             "  func:\n"
             "       InitUser [-b begin_user_idx] [-e end_user_idx] \n" 
             "       InitContact [-b begin_user_idx] [-e end_user_idx] \n" 
-            "                   [-u most_contacted_num_lower_bound] [-i most_contacted_num_upper_bound] \n" 
-            "                   [-o second_most_contacted_num_lower_bound] [-p second_most_contacted_num_upper_bound] \n" 
-            "                   [-r less_contacted_num_lower_bound] [-t less_contacted_num_upper_bound] \n" 
             "\n" );
 }
 
@@ -178,52 +214,62 @@ void InitUser()
 
 void SetContact(int contact_num_lower_bound,
         int contact_num_upper_bound,
-        ContactMap & contact_map,
-        ContactMap & all_map) 
+        ContactMap ** range_contact_map,
+        ContactMap * contact_map,
+        AllContactMap & all_map)
 {
-
-
     cout << "SetContact contact_num_lower_bound " << contact_num_lower_bound 
         << " contact_num_upper_bound " << contact_num_upper_bound 
-        << " contact_map size " << contact_map.size() << endl;
+        << " contact_map size " << contact_map->size() << endl;
 
-    std::default_random_engine ran_eng(time(NULL)); 
+    int seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine ran_eng(seed); 
     std::uniform_int_distribution<int> all_dis(begin_user_idx, end_user_idx - 1);
     std::uniform_int_distribution<int> dis(contact_num_lower_bound, contact_num_upper_bound);
+
     char username[64];
-    for(auto & it : contact_map) {
+    for(auto & it : *contact_map) {
         int contact_num = dis(ran_eng);
-        cout << "contact_num " << contact_num << endl;
-
-        if(contact_num > (end_user_idx - begin_user_idx)) {
-            contact_num = end_user_idx - begin_user_idx;
+        int total_user_cnt = end_user_idx - begin_user_idx;
+        if(contact_num >= total_user_cnt) {
+            contact_num = total_user_cnt;
         }
-        if(it.second->size() >= (size_t)contact_num) {
-            continue;
-        }
-
-        for(int i = 0; i < contact_num; i++) {
-            while(true) {
+        while(it.second->size() < (size_t)contact_num) {
                 int user_idx = all_dis(ran_eng);
                 snprintf(username, sizeof(username), "user%d", user_idx);
-
                 if(it.second->find(username) != it.second->end()) {
                     continue;
                 }
 
-                (*it.second)[username] = true;
-
-                unordered_map<string, bool> * m = NULL;
                 if(all_map.find(username) == all_map.end()) {
-                    m = new unordered_map<string, bool>;
-                    all_map[username] = m;
+
+                    int idx = 0;
+                    unordered_map<string, bool> * m = new unordered_map<string, bool>;
+                    (*range_contact_map)[idx][username] = m;
+
+                    ContactInfo contact_info;
+                    contact_info.dis_idx = idx;
+                    contact_info.contact_map = m;
+                    all_map[username] = contact_info;
+
+                    (*it.second)[username] = true;
+                    (*m)[it.first] = true;
+
                 } else {
-                    m = all_map[username];
+                    ContactInfo & info = all_map[username];
+                    if(info.contact_map->size() >= (size_t)user_dis_info[info.dis_idx].upper_bound) {
+                        --total_user_cnt;
+                        if(contact_num >= total_user_cnt) {
+                            contact_num = total_user_cnt;
+                        }
+                    } else {
+                        (*it.second)[username] = true;
+                        (*info.contact_map)[it.first] = true;
+                    }
+
                 }
-                (*m)[it.first] = true;
-                break;
-            }
         }
+
     }
 
 }
@@ -243,9 +289,6 @@ void CallProfile(int interval, int idx,
         end_idx = contact_map->size();
     }
 
-
-    cout << "CallProfile begin_idx " << begin_idx << " end_idx " << end_idx << endl;
-
     auto begin_it = contact_map->begin();
     std::advance(begin_it, begin_idx);
     auto end_it = contact_map->begin();
@@ -255,10 +298,10 @@ void CallProfile(int interval, int idx,
 
     for(; begin_it != end_it; begin_it++) {
 
-        //cout << "---------- " << begin_it.first << "-----------------" << endl;
         unordered_map<string, bool> * m = begin_it->second;
+
         for(auto & mit : *m) {
-            //cout << "        " << mit.first << endl;
+
 
             addrbook::ContactReq req;
             google::protobuf::Empty resp;
@@ -278,9 +321,9 @@ void CallProfile(int interval, int idx,
                 }
             }
             if(k == 3) {
-                cout << "user " << begin_it->first << " set contact to " << mit.first << " failed ret " << ret << endl;
+                cout << begin_it->first << " set contact to " << mit.first << " failed ret " << ret << endl;
             } else {
-                cout << "user " << begin_it->first << " set contact to " << mit.first << " success" << endl;
+                cout << begin_it->first << " set contact to " << mit.first << " success" << endl;
             }
         }
     }
@@ -288,126 +331,117 @@ void CallProfile(int interval, int idx,
 
 void InitContact() 
 {
-    ContactMap all_map;
-    ContactMap most_contacted_map;
-    ContactMap second_most_contacted_map;
-    ContactMap less_contacted_map;
+    AllContactMap all_map;
+    ContactMap * range_contact_map = new ContactMap[user_dis_info_cnt];
+
     std::default_random_engine ran_eng(time(NULL)); 
     std::uniform_int_distribution<int> dis1(begin_user_idx, end_user_idx - 1);
 
-    int most_contacted_user_num = (int)((double)(end_user_idx - begin_user_idx) * 0.05);
-    int second_most_contacted_user_num = (int)((double)(end_user_idx - begin_user_idx) * 0.1);
-    int less_contacted_user_num = (int)((double)(end_user_idx - begin_user_idx) * 0.85);
-
-
-    cout << "most_contacted_user_num " << most_contacted_user_num << " second_most_contacted_user_num"
-        << second_most_contacted_user_num << " less_contacted_user_num " << less_contacted_user_num << endl;
-
     char username[64];
+    unordered_map<int, bool> exist_idx_map;
 
-    for(int i = 0; i < most_contacted_user_num; i++) {
-        while(true) {
-            int user_idx = dis1(ran_eng);
-            snprintf(username, sizeof(username), "user%d", user_idx);
-            if(most_contacted_map.find(username) != most_contacted_map.end()) {
-                continue;
-            } else {
+    for(int i = 0; i < user_dis_info_cnt; i++) {
+        UserDisInfo dis_info = user_dis_info[i]; 
+        int contacted_user_num = (int)((double)(end_user_idx - begin_user_idx) * dis_info.ratio);
+
+        if(contacted_user_num == 0) {
+            cout << "contacted_user_num == 0 lower_bound " << dis_info.lower_bound 
+                << " upper_bound " << dis_info.upper_bound << endl;
+        }
+
+        for(int k = 0; k < contacted_user_num; k++) {
+            while(true) {
+                int user_idx = dis1(ran_eng);
+                if(exist_idx_map.find(user_idx) != exist_idx_map.end()) {
+                    continue;
+                }
+                exist_idx_map[user_idx] = true;
+
+                snprintf(username, sizeof(username), "user%d", user_idx);
                 unordered_map<string, bool> * m = new unordered_map<string, bool>;
-                most_contacted_map[username] = m;
-                all_map[username] = m;
+                range_contact_map[i][username] = m;
+
+                ContactInfo contact_info;
+                contact_info.dis_idx = i;
+                contact_info.contact_map = m;
+                all_map[username] = contact_info;
                 break;
             }
         }
     }
 
-    SetContact(most_contacted_num_lower_bound,
-            most_contacted_num_upper_bound,
-            most_contacted_map,
-            all_map); 
+    for(int i = user_dis_info_cnt - 1; i >= 0; i--) {
+        UserDisInfo dis_info = user_dis_info[i]; 
+        SetContact(dis_info.lower_bound,
+                dis_info.upper_bound,
+                &range_contact_map,
+                &range_contact_map[i],
+                all_map);
+    }
 
-    for(int i = 0; i < second_most_contacted_user_num; i++) {
-        while(true) {
-            int user_idx = dis1(ran_eng);
-            snprintf(username, sizeof(username), "user%d", user_idx);
-            if(second_most_contacted_map.find(username) != second_most_contacted_map.end() ||
-                    most_contacted_map.find(username) != most_contacted_map.end()) {
-                continue;
-            } else {
-                unordered_map<string, bool> * m = NULL;
-                if(all_map.find(username) == all_map.end()) {
-                    m = new unordered_map<string, bool>;
-                    all_map[username] = m;
-                } else {
-                    m = all_map[username];
-                }
-                second_most_contacted_map[username] = m;
-                break;
-            }
+
+    long long total_cnt = 0;
+    int total_user_cnt = 0;
+    for(int i = 0; i < user_dis_info_cnt; i++) {
+
+        UserDisInfo dis_info = user_dis_info[i]; 
+
+        ContactMap & m = range_contact_map[i];
+        long long range_total_cnt = 0;
+
+        for(auto & mit : m) {
+            range_total_cnt += mit.second->size();
+            
         }
+
+        total_cnt += range_total_cnt;
+
+        printf("[%d %d] user cnt %zu avg contact cnt %lld\n",
+                dis_info.lower_bound,
+                dis_info.upper_bound,
+                m.size(),
+                m.empty()?0:range_total_cnt / m.size() );
+        total_user_cnt += m.size();
     }
 
-    SetContact(second_most_contacted_num_lower_bound,
-            second_most_contacted_num_upper_bound,
-            second_most_contacted_map,
-            all_map); 
+    printf("total user cnt %d total contact cnt %lld avr contact cnt %lld\n",
+            total_user_cnt, total_cnt, total_cnt / (end_user_idx - begin_user_idx + 1));
 
-    for(int i = 0; i < less_contacted_user_num; i++) {
-        while(true) {
-            int user_idx = dis1(ran_eng);
-            snprintf(username, sizeof(username), "user%d", user_idx);
-            if(less_contacted_map.find(username) != less_contacted_map.end() ||
-                    second_most_contacted_map.find(username) != second_most_contacted_map.end() ||
-                    most_contacted_map.find(username) != most_contacted_map.end()) {
-                continue;
-            } else {
-                unordered_map<string, bool> * m = NULL;
-                if(all_map.find(username) == all_map.end()) {
-                    m = new unordered_map<string, bool>;
-                    all_map[username] = m;
-                } else {
-                    m = all_map[username];
-                }
-                less_contacted_map[username] = m;
-                break;
-            }
-        }
-    }
-
-    SetContact(less_contacted_num_lower_bound,
-            less_contacted_num_upper_bound,
-            less_contacted_map,
-            all_map); 
-
-
-
-
-    int interval = all_map.size() / thread_cnt;
-    if(0 == interval) {
-        thread_cnt = 1;
-        interval = all_map.size();
-    } else if(0 != all_map.size() % thread_cnt) {
-        thread_cnt += 1;
-    }
-
-    cout << "thread_cnt " << thread_cnt << " all_map size "
-        << all_map.size() <<
-        " interval " << interval << endl;
-
-    std::thread threads[thread_cnt];
-
-    for(int i = 0 ; i < thread_cnt; i++) {
-        threads[i] = std::thread(CallProfile, interval, i, &all_map);
-    }
-
-
-    for(auto & t : threads) {
-        t.join();
-    }
-
-    for(auto & it : all_map) {
-        delete it.second;
-        it.second = NULL;
-    }
+/*
+ *    int interval = all_map.size() / thread_cnt;
+ *    if(0 == interval) {
+ *        thread_cnt = 1;
+ *        interval = all_map.size();
+ *    } else if(0 != all_map.size() % thread_cnt) {
+ *        thread_cnt += 1;
+ *    }
+ *
+ *    cout << "thread_cnt " << thread_cnt << " all_map size "
+ *        << all_map.size() <<
+ *        " interval " << interval << endl;
+ *    
+ *    for(auto & it : all_map) {
+ *        cout << it.first << " has " << it.second->size() << endl;
+ *    }
+ *
+ *    std::thread threads[thread_cnt];
+ *
+ *    for(int i = 0 ; i < thread_cnt; i++) {
+ *        threads[i] = std::thread(CallProfile, interval, i, &all_map);
+ *    }
+ *
+ *
+ *    for(auto & t : threads) {
+ *        t.join();
+ *    }
+ *
+ *    for(auto & it : all_map) {
+ *        delete it.second;
+ *        it.second = NULL;
+ *    }
+ *
+ *    delete [] range_contact_map;
+ */
 }
 
 int main( int argc, char * *argv )
@@ -425,28 +459,8 @@ int main( int argc, char * *argv )
     extern char *optarg ;
     int c ;
     const char * func = NULL;
-    while ( (c = getopt ( argc, argv, "u:i:o:p:r:t:b:e:f:k:v:?:" )) != EOF ) {
+    while ( (c = getopt ( argc, argv, "b:e:f:k:v:?:" )) != EOF ) {
         switch ( c ) {
-
-            case 'u' :
-                most_contacted_num_lower_bound = atoi(optarg);
-                break;
-            case 'i' :
-                most_contacted_num_upper_bound = atoi(optarg);
-                break;
-            case 'o' :
-                second_most_contacted_num_lower_bound = atoi(optarg);
-                break;
-            case 'p' :
-                second_most_contacted_num_upper_bound = atoi(optarg);
-                break;
-            case 'r' :
-                less_contacted_num_lower_bound = atoi(optarg);
-                break;
-            case 't' :
-                less_contacted_num_upper_bound = atoi(optarg);
-                break;
-
             case 'b' :
                 begin_user_idx = atoi(optarg);
                 break;
