@@ -6,6 +6,7 @@
 #include <random>
 #include <iostream>
 
+
 typedef std::set< int > PostingList;
 
 // count1 -> ( user_1, user_2, user_3, ... )
@@ -17,9 +18,9 @@ typedef struct tagContactList {
     PostingList contacts;
 } ContactList_t;
 
+// ContactList_t list[] = {}
 // user1 -> { max, ( contact_1, contact_2, contact_3, ... ) }
 // user2 -> { max, ( contact_x, contact_y, contact_z, ... ) }
-typedef std::map< int, ContactList_t > ContactMap;
 
 static int const MAX_CONTACT_COUNT = 5000;
 
@@ -60,31 +61,31 @@ int GenContactCountInfo( int count, CountInfoMap * info_map )
     return 0;
 }
 
-int GenOneContactResult( const int index, const CountInfoMap & info_map, ContactMap * result )
+int GenOneContactResult( const int index, ContactList_t * list,
+        const CountInfoMap & info_map, CountInfoMap::const_reverse_iterator info_iter )
 {
-    ContactMap::iterator from_iter = result->find( index );
+    ContactList_t & from = list[ index ];
 
-    CountInfoMap::const_reverse_iterator info_iter = info_map.rbegin();
     for( ; info_map.rend() != info_iter; ++info_iter ) {
 
-        if( from_iter->second.contacts.size() >= from_iter->second.max ) break;
+        if( from.contacts.size() >= from.max ) break;
 
         PostingList::iterator user_iter = info_iter->second.begin();
         for( ; info_iter->second.end() != user_iter; ++user_iter ) {
 
-            if( from_iter->second.contacts.size() >= from_iter->second.max ) break;
+            if( from.contacts.size() >= from.max ) break;
 
             int to_index = *user_iter;
 
             if( to_index == index ) continue;
 
-            ContactMap::iterator to_iter = result->find( to_index );
+            ContactList_t & to = list[ to_index ];
 
-            if( to_iter->second.contacts.size() >= to_iter->second.max ) continue;
+            if( to.contacts.size() >= to.max ) continue;
 
-            if( from_iter->second.contacts.end() == from_iter->second.contacts.find( to_index ) ) {
-                from_iter->second.contacts.insert( to_index );
-                to_iter->second.contacts.insert( index );
+            if( from.contacts.end() == from.contacts.find( to_index ) ) {
+                from.contacts.insert( to_index );
+                to.contacts.insert( index );
             }
         }
     }
@@ -92,7 +93,7 @@ int GenOneContactResult( const int index, const CountInfoMap & info_map, Contact
     return 0;
 }
 
-int GenContactResult( int count, const CountInfoMap & info_map, ContactMap * result )
+int GenContactResult( int count, const CountInfoMap & info_map, ContactList_t * list )
 {
     // init result
     {
@@ -101,9 +102,7 @@ int GenContactResult( int count, const CountInfoMap & info_map, ContactMap * res
 
             PostingList::iterator user_iter = info_iter->second.begin();
             for( ; info_iter->second.end() != user_iter; ++user_iter ) {
-                ContactList_t item;
-                item.max = info_iter->first;
-                result->insert( std::make_pair( *user_iter, item ) );
+                list[ *user_iter ].max = info_iter->first;
             }
         }
     }
@@ -117,7 +116,7 @@ int GenContactResult( int count, const CountInfoMap & info_map, ContactMap * res
 
             PostingList::iterator user_iter = info_iter->second.begin();
             for( ; info_iter->second.end() != user_iter; ++user_iter ) {
-                GenOneContactResult( *user_iter, info_map, result );
+                GenOneContactResult( *user_iter, list, info_map, info_iter );
             }
         }
     }
@@ -169,12 +168,12 @@ void PrintCountInfo( const int count, const CountInfoMap & info_map )
     }
 }
 
-void PrintContactMap( const int count, const ContactMap & contact_map )
+void PrintContactMap( const int count, const ContactList_t * list )
 {
     int total = 0;
-    for( auto & c : contact_map )
-    {
-        total += c.second.contacts.size();
+
+    for( int i = 0; i < count; i++ ) {
+        total += list[i].contacts.size();
     }
 
     printf( "%d, %d\n", total, total / count );
@@ -187,10 +186,13 @@ int InitAddrbook( const int count, int thread_count )
 
     PrintCountInfo( count, info_map );
 
-    ContactMap contact_map;
-    GenContactResult( count, info_map, &contact_map );
+    ContactList_t * list = new ContactList_t[ count ];
 
-    PrintContactMap( count, contact_map );
+    GenContactResult( count, info_map, list );
+
+    PrintContactMap( count, list );
+
+    delete [] list;
 
     return 0;
 }
