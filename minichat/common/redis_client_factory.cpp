@@ -45,12 +45,13 @@ RedisClientFactory :: RedisClientFactory( const char * config_file )
         snprintf( path, sizeof( path ), "%s", config_file );
     }
 
-    phxrpc::log( LOG_DEBUG, "read config %s", path );
+    phxrpc::log( LOG_INFO, "read config %s", path );
 
     phxrpc::RedisClientConfig config;
 
     if( config.Read( path ) ) {
         nodes_ = config.GetNodes();
+        phxrpc::log( LOG_INFO, "nodes: %s", nodes_.c_str() );
     } else {
         phxrpc::log( LOG_ERR, "read config %s failed", path );
     }

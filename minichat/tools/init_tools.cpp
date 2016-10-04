@@ -28,25 +28,27 @@ void InitUser( int count, int thread_count )
     cout << "thread_count " << thread_count << " count "
         << count << " interval " << interval << endl;
 
-    std::thread * threads = new std::thread[thread_count];
+    std::thread * threads[ thread_count ];
 
     for(int i = 0 ; i < thread_count; i++) {
 
         int begin_idx = interval * i;
         int end_idx = interval * ( i + 1 );
 
-        threads[i] = std::thread( InitUserFunc, begin_idx, end_idx );
+        threads[i] = new std::thread( InitUserFunc, begin_idx, end_idx );
     }
 
     for(int i = 0; i < thread_count; i++ ) {
         try {
-            threads[i].join();
+            threads[i]->join();
         } catch (const std::exception & ex) {
             cout << ex.what() << endl;
         }
     }
 
-    delete [] threads;
+    for( int i = 0; i < thread_count; i++ ) {
+        delete threads[i];
+    }
 }
 
 void ShowUsage( const char * program )
@@ -55,7 +57,7 @@ void ShowUsage( const char * program )
     printf ( "%s [-f func] [-c count] [-t thread count] [-v]\n", program );
     printf ( "\n" );
     printf ( "\t-f user -c <count> -t <thread count>\n" );
-    printf ( "\t-f addrbook -c <count> -t <thread count>\n" );
+    printf ( "\t-f addrbook -c <count> -t <thread count> -m <mode>\n" );
     printf ( "\n" );
 
     exit( -1 );
@@ -71,9 +73,9 @@ int main( int argc, char * *argv )
     int c ;
 
     const char * func = NULL;
-    int count = 0, thread_count = 1;
+    int count = 0, thread_count = 1, mode = 0;
 
-    while ( (c = getopt ( argc, argv, "f:c:t:v" )) != EOF ) {
+    while ( (c = getopt ( argc, argv, "f:c:t:m:v" )) != EOF ) {
         switch ( c ) {
             case 'f':
                 func = optarg;
@@ -83,6 +85,9 @@ int main( int argc, char * *argv )
                 break;
             case 't' :
                 thread_count = atoi(optarg);
+                break;
+            case 'm':
+                mode = atoi(optarg);
                 break;
             case 'v' : 
             case '?' :
@@ -97,7 +102,7 @@ int main( int argc, char * *argv )
     if(0 == strcasecmp("user", func)) {
         InitUser( count, thread_count );
     } else if(0 == strcasecmp("addrbook", func)) {
-        InitAddrbook( count, thread_count );
+        InitAddrbook( count, thread_count, mode );
     } else {
         cout << "func " << func << " is undefined " << endl;
     } 

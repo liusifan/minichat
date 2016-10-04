@@ -6,6 +6,9 @@
 #include <random>
 #include <iostream>
 
+#include "addrbook/addrbook_client.h"
+
+using namespace std;
 
 typedef std::set< int > PostingList;
 
@@ -61,7 +64,7 @@ int GenContactCountInfo( int count, CountInfoMap * info_map )
     return 0;
 }
 
-int GenOneContactResult( const int index, ContactList_t * list,
+int GenOneContactListByOrder( const int index, ContactList_t * list,
         const CountInfoMap & info_map, CountInfoMap::const_reverse_iterator info_iter )
 {
     ContactList_t & from = list[ index ];
@@ -93,9 +96,44 @@ int GenOneContactResult( const int index, ContactList_t * list,
     return 0;
 }
 
-int GenContactResult( int count, const CountInfoMap & info_map, ContactList_t * list )
+int GenOneContactListByRandom( int count, ContactList_t * list, int index, const CountInfoMap & info_map )
 {
-    // init result
+    ContactList_t & from = list[ index ];
+
+    static int seed = std::chrono::system_clock::now().time_since_epoch().count();
+    static std::default_random_engine rd( seed );
+    std::uniform_int_distribution<int> dist( 0, count - 1 );
+
+    std::pair<std::set<int>::iterator,bool> insert_ret;
+
+    int noop = 0;
+
+    for( ; from.contacts.size() < from.max && noop < 100; ) {
+        int to_index = rd() % count;
+        if( to_index == index ) continue;
+
+        ContactList_t & to = list[ to_index ];
+        if( to.contacts.size() >= to.max ) continue;
+
+        if( from.contacts.end() == from.contacts.find( to_index ) ) {
+            insert_ret = from.contacts.insert( to_index );
+            to.contacts.insert( index );
+        } else {
+            noop++;
+        }
+    }
+
+    if( from.contacts.size() < from.max ) {
+        //printf( "index %d, size %zu, max %d\n", index, from.contacts.size(), from.max );
+        GenOneContactListByOrder( index, list, info_map, info_map.rbegin() );
+    }
+
+    return 0;
+}
+
+int GenContactList( int count, const CountInfoMap & info_map, ContactList_t * list, int mode )
+{
+    // init list
     {
         CountInfoMap::const_iterator info_iter = info_map.begin();
         for( ; info_map.end() != info_iter; ++info_iter ) {
@@ -107,79 +145,186 @@ int GenContactResult( int count, const CountInfoMap & info_map, ContactList_t * 
         }
     }
 
-    printf( "Init result DONE\n" );
+    int unit = count / 100, progress = 0;
 
-    // gen contact list
-    {
+    if( 0 == mode ) {
         CountInfoMap::const_reverse_iterator info_iter = info_map.rbegin();
         for( ; info_map.rend() != info_iter; ++info_iter ) {
-
             PostingList::iterator user_iter = info_iter->second.begin();
             for( ; info_iter->second.end() != user_iter; ++user_iter ) {
-                GenOneContactResult( *user_iter, list, info_map, info_iter );
+                GenOneContactListByOrder( *user_iter, list, info_map, info_iter );
+
+                if( 0 == ( ++progress % unit ) ) {
+                    printf( "#" );
+                    fflush( stdout );
+                }
+            }
+        }
+    } else {
+        for( int i = 0; i < count; i++ ) {
+            GenOneContactListByOrder( i, list, info_map, info_map.rbegin() );
+
+            if( 0 == ( ++progress % unit ) ) {
+                printf( "#" );
+                fflush( stdout );
             }
         }
     }
 
+    printf( "\n" );
+
     return 0;
+}
+
+void PrintDetail( const char * tag, int count, int * p )
+{
+    std::cout << tag << " distribution" << std::endl;
+    std::cout << std::fixed; std::cout.precision(5);
+
+    for (int i=0; i<10; ++i) {
+        std::cout << i << ": " << float(p[i]) / count << std::endl;
+    }
+
+    for (int i=1; i<10; ++i) {
+        int total = 0, sum = 0;
+        for (int j=0; j<10; ++j) {
+            total += p[ 10 * i + j ];
+            sum += ( 10 * i + j ) * p[ 10 * i + j ];
+        }
+
+        total = ( 0 == total ) ? 1 : total;
+        std::cout << i * 10 << ": " << float(total) / count
+            << ", cnt: " << total
+            << ", avg: " << sum / total << std::endl;
+    }
+
+    for (int i=1; i < 10; ++i ) {
+        int total = 0, sum = 0;
+        for( int j = 0; j < 100; ++j ) {
+            total += p[ i * 100 + j ];
+            sum += ( i * 100 + j ) * p[ 100 * i + j ];
+        }
+
+        total = ( 0 == total ) ? 1 : total;
+        std::cout << i * 100 << ": " << float(total) / count
+            << ", cnt: " << total
+            << ", avg: " << sum / total << std::endl;
+    }
+
+    for (int i=1; i < 5; ++i ) {
+        int total = 0, sum = 0;
+        for( int j = 0; j < 1000; ++j ) {
+            total += p[ i * 1000 + j ];
+            sum += ( i * 1000 + j ) * p[ i * 1000 + j ];
+        }
+
+        total = ( 0 == total ) ? 1 : total;
+        std::cout << i * 1000 << ": " << float(total) / count
+            << ", cnt: " << total
+            << ", avg: " << sum / total << std::endl;
+    }
 }
 
 void PrintCountInfo( const int count, const CountInfoMap & info_map )
 {
-    size_t p[ MAX_CONTACT_COUNT ] = { 0 };
+    int p[ MAX_CONTACT_COUNT ] = { 0 };
 
     CountInfoMap::const_iterator iter = info_map.begin();
     for( ; info_map.end() != iter; ++iter ) {
         p[ iter->first ] = iter->second.size();
     }
 
-	std::cout << "exponential_distribution" << std::endl;
-	std::cout << std::fixed; std::cout.precision(5);
-
-	for (int i=0; i<10; ++i) {
-        std::cout << i << ": " << float(p[i]) / count << std::endl;
-	}
-
-    for (int i=1; i<10; ++i) {
-        int total = 0;
-        for (int j=0; j<10; ++j) {
-            total += p[ 10 * i + j ];
-        }
-
-        std::cout << i * 10 << ": " << float(total) / count << std::endl;
-    }
-
-    for (int i=1; i < 10; ++i ) {
-        int total = 0;
-        for( int j = 0; j < 100; ++j ) {
-            total += p[ i * 100 + j ];
-        }
-
-        std::cout << i * 100 << ": " << float(total) / count << std::endl;
-    }
-
-    for (int i=1; i < 5; ++i ) {
-        int total = 0;
-        for( int j = 0; j < 1000; ++j ) {
-            total += p[ i * 1000 + j ];
-        }
-
-        std::cout << i * 1000 << ": " << float(total) / count << std::endl;
-    }
+    PrintDetail( "expectation", count, p );
 }
 
-void PrintContactMap( const int count, const ContactList_t * list )
+void PrintContactList( const int count, const ContactList_t * list )
 {
-    int total = 0;
+    printf( "\n" );
+
+    int p[ MAX_CONTACT_COUNT ] = { 0 };
+
+    int total = 0, lack_count = 0, lack_total = 0;
 
     for( int i = 0; i < count; i++ ) {
-        total += list[i].contacts.size();
+        const ContactList_t & item = list[i];
+        ++p[ item.contacts.size() ];
+
+        total += item.contacts.size();
+        if( item.contacts.size() < item.max ) {
+            lack_count++;
+            lack_total += item.max - item.contacts.size();
+
+            printf( "%d, %zu, %d\n", i, item.contacts.size(), item.max );
+        }
     }
 
-    printf( "%d, %d\n", total, total / count );
+    printf( "total %d, avg %d, lack %d, lack.total %d\n\n",
+            total, total / count, lack_count, lack_total );
+
+    PrintDetail( "real", count, p );
 }
 
-int InitAddrbook( const int count, int thread_count )
+void CallAddrbook( int count, ContactList_t * list, int begin, int end )
+{
+    if( end > count ) end = count;
+
+    AddrbookClient client;
+    char from[ 128 ] = { 0 }, to[ 128 ] = { 0 };
+
+    for( int i = begin; i < end; i++ ) {
+        snprintf( from, sizeof( from ), "user%d", i );
+        for( auto & c : list[i].contacts ) {
+            snprintf( to, sizeof( to ), "user%d", c );
+
+            addrbook::ContactReq req;
+            google::protobuf::Empty resp;
+
+            req.set_username( from );
+            req.mutable_contact()->set_username( to );
+            req.mutable_contact()->set_remark( to );
+
+            int k = 0;
+            int ret = 0;
+            for(k = 0; k < 3; k++) {
+                ret = client.Set( req, &resp );
+                if(0 != ret) {
+                    continue;
+                } else {
+                    break;
+                }
+            }
+            if(k == 3) printf( "add %s - %s fail\n", from, to );
+        }
+
+    }
+}
+
+int SaveAddrbook( int count, ContactList_t * list, int thread_count )
+{
+    int unit = ( count + thread_count - 1 ) / thread_count;
+
+    std::thread * threads[ thread_count ];
+
+    for( int i = 0; i < thread_count; i++ ) {
+        threads[i] = new std::thread( CallAddrbook, count, list, unit * i, unit * ( i + 1 ) );
+    }
+
+    for( int i = 0; i < thread_count; i++ ) {
+        try {
+            threads[i]->join();
+        } catch (const std::exception & ex) {
+            cout << ex.what() << endl;
+        }
+    }
+
+    for( int i = 0; i < thread_count; i++ ) {
+        delete threads[i];
+    }
+
+    return 0;
+}
+
+int InitAddrbook( const int count, int thread_count, int mode )
 {
     CountInfoMap info_map;
     GenContactCountInfo( count, &info_map );
@@ -188,9 +333,11 @@ int InitAddrbook( const int count, int thread_count )
 
     ContactList_t * list = new ContactList_t[ count ];
 
-    GenContactResult( count, info_map, list );
+    GenContactList( count, info_map, list, mode );
 
-    PrintContactMap( count, list );
+    PrintContactList( count, list );
+
+    SaveAddrbook( count, list, thread_count );
 
     delete [] list;
 
