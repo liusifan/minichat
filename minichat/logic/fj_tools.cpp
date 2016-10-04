@@ -232,9 +232,9 @@ int main( int argc, char * *argv )
 
     srand(time(NULL));
 
-    std::thread threads[thread_cnt];
+    std::thread * threads[thread_cnt];
     for(int i = 0 ; i < thread_cnt; i++) {
-        threads[i] = std::thread(ThreadRun, i);
+        threads[i] = new std::thread(ThreadRun, i);
         ret_array[i] = new RetVec();
         if(!ret_array[i]) {
             printf("new RetVec failed errno %d\n", errno);
@@ -244,7 +244,7 @@ int main( int argc, char * *argv )
 
 
     for(auto & t : threads) {
-        t.join();
+        t->join();
     }
 
     for(int i = 0; i < thread_cnt; i++) {

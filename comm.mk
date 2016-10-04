@@ -7,8 +7,6 @@ MINICHAT_ROOT := $(dir $(call where-am-i))
 
 include $(MINICHAT_ROOT)/phxrpc/phxrpc.mk
 
-PLUGIN_REDIS_CONFIG_LOADER_LDFLAGS :=
-
 REDIS_CLIENT_INCLUDE = -I$(MINICHAT_ROOT)/third_party/ \
   	-I$(MINICHAT_ROOT)/third_party/
 
