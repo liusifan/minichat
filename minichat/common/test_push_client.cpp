@@ -20,7 +20,7 @@ void sub( const char * channel )
         std::cout << "sub " << ret << std::endl;
         for( ; ; ) {
             std::string msg;
-            ret = client.Wait( &msg );
+            ret = client.Wait( channel, &msg );
             std::cout << "wait " << ret << ", msg " << msg << std::endl;
         }
     };
@@ -34,7 +34,7 @@ void sub( const char * channel )
     std::cout << "sub " << ret << std::endl;
     for( ; ; ) {
         std::string msg;
-        ret = client.Wait( &msg );
+        ret = client.Wait( channel, &msg );
         std::cout << "wait " << ret << ", msg " << msg << std::endl;
     }
 

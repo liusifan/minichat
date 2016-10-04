@@ -45,6 +45,7 @@ LOGIC_CFLAGS += $(REDIS_CLIENT_INCLUDE) -I$(MINICHAT_ROOT)/minichat \
 		  -I$(MINICHAT_ROOT)/third_party/yassl -DUSE_SYS_STL
 
 LOGIC_LDFLAGS := $(PLUGIN_ELPP_LDFLAGS) $(PLUGIN_SK_MONITOR_LDFLAGS) $(PLUGIN_REDIS_CONFIG_LOADER_LDFLAGS) \
+	-L$(MINICHAT_ROOT)/minichat/common -lcommon \
 	-L$(MINICHAT_ROOT)/minichat/cert -lcert_client \
 	-L$(MINICHAT_ROOT)/minichat/profile -lprofile_client \
 	-L$(MINICHAT_ROOT)/minichat/account -laccount_client \

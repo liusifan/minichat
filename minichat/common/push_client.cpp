@@ -18,89 +18,101 @@ PushClient :: PushClient( phxrpc::UThreadEpollScheduler * scheduler )
     if( ! config_->Read( path ) ) {
         phxrpc::log( LOG_ERR, "read config %s failed", path );
     }
-
-    socket_ = NULL;
 }
 
 PushClient :: ~PushClient()
 {
     if( NULL != config_ ) delete config_;
-    if( NULL != socket_ ) delete socket_;
+
+    for( auto & s : socket_map_ ) {
+        delete s.second;
+    }
 }
 
-bool PushClient :: Connect( const char * channel )
+phxrpc::BaseTcpStream * PushClient :: GetSocket( const char * channel )
 {
-    if( NULL != socket_ ) return true;
-
     std::hash<std::string> h;
     size_t index = h( channel ) % config_->GetCount();
 
     const phxrpc::Endpoint_t * ep = config_->GetByIndex( index );
 
-    if(ep == nullptr) return false;
+    if(ep == nullptr) return nullptr;
 
+    char node[ 128 ] = { 0 };
+    snprintf( node, sizeof( node ), "%s:%d", ep->ip, ep->port );
+
+    if( socket_map_.end() != socket_map_.find( node ) ) {
+        return socket_map_[ node ];
+    }
+
+    phxrpc::BaseTcpStream * socket = NULL;
     bool open_ret = false;
 
     if( NULL == scheduler_ ) {
         phxrpc::BlockTcpStream * tmp = new phxrpc::BlockTcpStream;
         open_ret = phxrpc::BlockTcpUtils::Open( tmp, ep->ip, ep->port,
                 config_->GetConnectTimeoutMS(), NULL, 0 );
-        socket_ = tmp;
+        socket = tmp;
     } else {
         phxrpc::UThreadTcpStream * tmp = new phxrpc::UThreadTcpStream;
         open_ret = phxrpc::UThreadTcpUtils::Open( scheduler_, tmp, ep->ip, ep->port,
                     config_->GetConnectTimeoutMS() );
-        socket_ = tmp;
+        socket = tmp;
     }
 
     if ( ! open_ret ) {
-        delete socket_;
-        return false;
+        delete socket;
+        return nullptr;
     }
 
-    socket_->SetTimeout( config_->GetSocketTimeoutMS() );
+    socket->SetTimeout( config_->GetSocketTimeoutMS() );
 
-    return true;
+    socket_map_.insert( std::make_pair( node, socket ) );
+
+    return socket;
 }
 
 bool PushClient :: Sub( const char * channel )
 {
-    if( ! Connect( channel ) ) return false;
+    phxrpc::BaseTcpStream * socket = GetSocket( channel );
 
-    socket_->SetTimeout( 3600 * 1000 );
+    if( nullptr == socket ) return false;
 
-    (*socket_) << "SUBSCRIBE " << channel << std::endl;
+    socket->SetTimeout( 3600 * 1000 );
 
-    if( ! socket_->flush().good() ) return false;
+    (*socket) << "SUBSCRIBE " << channel << std::endl;
+
+    if( ! socket->flush().good() ) return false;
 
     char line[1024] = {0};
 
     // read success response
     for( ; ; ) {
-        if( ! socket_->getlineWithTrimRight(line, sizeof(line)).good() ) return false;
+        if( ! socket->getlineWithTrimRight(line, sizeof(line)).good() ) return false;
         if( ':' == line[0] ) return true;
     }
 
     return false;
 }
 
-bool PushClient :: Wait( std::string * msg )
+bool PushClient :: Wait( const char * channel, std::string * msg )
 {
-    if( NULL == socket_ ) return false;
+    phxrpc::BaseTcpStream * socket = GetSocket( channel );
+    if( NULL == socket ) return false;
 
     char line[1024] = {0};
 
     // read start line
-    if( ! socket_->getlineWithTrimRight(line, sizeof(line)).good() ) return false;
+    if( ! socket->getlineWithTrimRight(line, sizeof(line)).good() ) return false;
     if( '*' != line[0] ) return false;
 
     // read unused line
     for( int i = 0; i < 5; i++ ) {
-        if( ! socket_->getlineWithTrimRight(line, sizeof(line)).good() ) return false;
+        if( ! socket->getlineWithTrimRight(line, sizeof(line)).good() ) return false;
     }
 
     // read real msg
-    if( ! socket_->getlineWithTrimRight(line, sizeof(line)).good() ) return false;
+    if( ! socket->getlineWithTrimRight(line, sizeof(line)).good() ) return false;
 
     msg->append( line );
 
@@ -109,15 +121,16 @@ bool PushClient :: Wait( std::string * msg )
 
 bool PushClient :: Pub( const char * channel, const char * msg )
 {
-    if( ! Connect( channel ) ) return false;
+    phxrpc::BaseTcpStream * socket = GetSocket( channel );
+    if( NULL == socket ) return false;
 
-    (*socket_) << "PUBLISH " << channel << " " << msg << std::endl;
+    (*socket) << "PUBLISH " << channel << " " << msg << std::endl;
 
-    if( ! socket_->flush().good() ) return false;
+    if( ! socket->flush().good() ) return false;
 
     char line[1024] = {0};
 
-    if( ! socket_->getlineWithTrimRight(line, sizeof(line)).good() ) return false;
+    if( ! socket->getlineWithTrimRight(line, sizeof(line)).good() ) return false;
     if( ':' == line[0] ) return true;
 
     return false;

@@ -2,6 +2,7 @@
 #pragma once
 
 #include <string>
+#include <map>
 
 #include "phxrpc/network.h"
 #include "phxrpc/rpc.h"
@@ -19,16 +20,17 @@ public:
 
     bool Sub( const char * channel );
     
-    bool Wait( std::string * msg );
+    bool Wait( const char * channel, std::string * msg );
 
     bool Pub( const char * channel, const char * msg );
 
 private:
-    bool Connect( const char * channel );
+    phxrpc::BaseTcpStream * GetSocket( const char * channel );
 
 private:
     phxrpc::UThreadEpollScheduler * scheduler_;
     phxrpc::RedisClientConfig * config_;
-    phxrpc::BaseTcpStream * socket_;
+
+    std::map< string, phxrpc::BaseTcpStream * > socket_map_;
 };
 

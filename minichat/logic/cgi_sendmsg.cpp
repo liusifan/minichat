@@ -7,6 +7,8 @@
 #include "seq/seq_client.h"
 #include "account/account_client.h"
 #include "addrbook/addrbook_client.h"
+#include "common/push_client.h"
+#include "common/push_client_factory.h"
 
 CgiSendMsg :: CgiSendMsg()
 {
@@ -87,7 +89,13 @@ int CgiSendMsg :: Process( const logic::ReqHead & head,
         resp_msg->set_ret( ret );
         resp_msg->set_id( result.id() );
 
-        // TODO: push result.newcount() to receiver
+        // push result.newcount() to receiver
+        if( 0 == ret ) {
+            char push_msg[ 128 ] = { 0 };
+            snprintf( push_msg, sizeof( push_msg ), "%s newcount %d, last msg from %s",
+                    msg.to().c_str(), result.newcount(), head.username().c_str() );
+            PushClientFactory::GetDefault()->Get().Pub( msg.to().c_str(), push_msg );
+        }
     }
 
     resp_obj.SerializeToString( resp_buff );
