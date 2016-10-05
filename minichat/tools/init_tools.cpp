@@ -15,9 +15,14 @@ void InitUserFunc(int begin_idx, int end_idx)
     InitProfile(begin_idx,end_idx);
 }
 
-void InitUser( int count, int thread_count )
+int InitUser( phxrpc::OptMap & opt_map )
 {
-    if( count <= 0 ) return;
+    if( NULL == opt_map.Get( 'c' ) ) return -1;
+
+    int count = atoi( opt_map.Get( 'c' ) );
+
+    int thread_count = 1;
+    if( NULL != opt_map.Get( 't' ) ) thread_count = atoi( opt_map.Get( 't' ) );
 
     int interval = count / thread_count;
     if(0 == interval) {
@@ -49,15 +54,50 @@ void InitUser( int count, int thread_count )
     for( int i = 0; i < thread_count; i++ ) {
         delete threads[i];
     }
+
+    return 0;
+}
+
+int GenAddrbook( phxrpc::OptMap & opt_map )
+{
+    if( NULL == opt_map.Get( 'c' ) ) return -1;
+
+    int count = atoi( opt_map.Get( 'c' ) );
+
+    int mode = 0;
+    if( NULL != opt_map.Get( 'm' ) ) mode = atoi( opt_map.Get( 'm' ) );
+
+    const char * path = "minichat_addrbook.txt";
+
+    GenAddrbook( count, mode, path );
+
+    printf( "generate addrbook %s\n", path );
+
+    return 0;
+}
+
+int LoadAddrbook( phxrpc::OptMap & opt_map )
+{
+    if( NULL == opt_map.Get( 'p' ) ) return -1;
+
+    const char * path = opt_map.Get( 'p' );
+
+    int thread_count = 1;
+    if( NULL != opt_map.Get( 't' ) ) thread_count = atoi( opt_map.Get( 't' ) );
+
+    LoadAddrbook( path, thread_count );
+
+    return 0;
 }
 
 void ShowUsage( const char * program )
 {
     printf ( "\n" ) ;
-    printf ( "%s [-f func] [-c count] [-t thread count] [-v]\n", program );
+    printf ( "%s [-f func] [-v]\n", program );
     printf ( "\n" );
-    printf ( "\t-f user -c <count> -t <thread count>\n" );
-    printf ( "\t-f addrbook -c <count> -t <thread count> -m <mode>\n" );
+    printf ( "\t-f inituser -c <count> -t <thread count>\n" );
+    printf ( "\t-f genaddr -c <count> -m <mode>\n" );
+    printf ( "\t-f loadaddr -p <data file> -t <thread count>\n" );
     printf ( "\n" );
 
     exit( -1 );
@@ -69,43 +109,26 @@ int main( int argc, char * *argv )
 
     phxrpc::ClientConfigRegistry::GetDefault()->Stop();
 
-    extern char *optarg ;
-    int c ;
+    phxrpc::OptMap opt_map( "f:c:m:t:p:v" );
 
-    const char * func = NULL;
-    int count = 0, thread_count = 1, mode = 0;
+    if( ! opt_map.Parse( argc, argv ) ) ShowUsage( argv[0] );
 
-    while ( (c = getopt ( argc, argv, "f:c:t:m:v" )) != EOF ) {
-        switch ( c ) {
-            case 'f':
-                func = optarg;
-                break;
-            case 'c' :
-                count = atoi(optarg);
-                break;
-            case 't' :
-                thread_count = atoi(optarg);
-                break;
-            case 'm':
-                mode = atoi(optarg);
-                break;
-            case 'v' : 
-            case '?' :
-            default :
-                ShowUsage( argv[0] );
-                break ;
-        }
-    }
+    if( NULL == opt_map.Get( 'f' ) || opt_map.Has( 'v' ) ) ShowUsage( argv[0] );
 
-    if( NULL == func || count <= 0 ) ShowUsage( argv[0] );
+    const char * func = opt_map.Get( 'f' );
+
+    int ret = -1;
 
     if(0 == strcasecmp("user", func)) {
-        InitUser( count, thread_count );
-    } else if(0 == strcasecmp("addrbook", func)) {
-        InitAddrbook( count, thread_count, mode );
-    } else {
-        cout << "func " << func << " is undefined " << endl;
-    } 
+        ret = InitUser( opt_map );
+    } else if(0 == strcasecmp("genaddr", func)) {
+        ret = GenAddrbook( opt_map );
+    } else if(0 == strcasecmp("loadaddr", func)) {
+        ret = LoadAddrbook( opt_map );
+    }
+
+    if( 0 != ret ) ShowUsage( argv[0] );
+
     return 0;
 }
 

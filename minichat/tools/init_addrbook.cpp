@@ -182,7 +182,9 @@ void PrintDetail( const char * tag, int count, int * p )
     std::cout << std::fixed; std::cout.precision(5);
 
     for (int i=0; i<10; ++i) {
-        std::cout << i << ": " << float(p[i]) / count << std::endl;
+        std::cout << i << ": " << float(p[i]) / count
+            << ", cnt: " << p[i]
+            << std::endl;
     }
 
     for (int i=1; i<10; ++i) {
@@ -324,7 +326,27 @@ int SaveAddrbook( int count, ContactList_t * list, int thread_count )
     return 0;
 }
 
-int InitAddrbook( const int count, int thread_count, int mode )
+int SaveToFile( int count, ContactList_t * list, const char * path )
+{
+    FILE * fp = fopen( path, "w" );
+    if( NULL != fp ) {
+
+        fprintf( fp, "#%d\n", count );
+
+        for( int i = 0; i < count; i++ ) {
+            fprintf( fp, "#%d\n", i );
+            fprintf( fp, "#%zu\n", list[i].contacts.size() );
+            for( auto & u : list[i].contacts ) {
+                fprintf( fp, "\t%d\n", u );
+            }
+        }
+        fclose( fp );
+    }
+
+    return 0;
+}
+
+int GenAddrbook( const int count, int mode, const char * path )
 {
     CountInfoMap info_map;
     GenContactCountInfo( count, &info_map );
@@ -337,9 +359,55 @@ int InitAddrbook( const int count, int thread_count, int mode )
 
     PrintContactList( count, list );
 
-    SaveAddrbook( count, list, thread_count );
+    SaveToFile( count, list, path );
 
     delete [] list;
+
+    return 0;
+}
+
+int LoadAddrbook( const char * path, int thread_count )
+{
+    int count = 0;
+    ContactList_t * list = NULL;
+
+    FILE * fp = fopen( path, "r" );
+    if( NULL != fp ) {
+        char line[ 128 ] = { 0 };
+        if( NULL != fgets( line, sizeof( line ), fp ) ) {
+            count = atoi( line + 1 );
+        }
+
+        list = new ContactList_t[ count ];
+
+        for( int i = 0; i < count; i++ ) {
+            int index = 0;
+
+            if( NULL == fgets( line, sizeof( line ), fp ) ) break;
+            index = atoi( line + 1 );
+
+            assert( i == index );
+
+            if( NULL == fgets( line, sizeof( line ), fp ) ) break;
+            list[i].max = atoi( line + 1 );
+
+            for( int j = 0; j < list[i].max; j++ ) {
+                if( NULL == fgets( line, sizeof( line ), fp ) ) break;
+                list[i].contacts.insert( atoi( line ) );
+            }
+        }
+
+        fclose( fp );
+    }
+
+    if( NULL != list ) {
+
+        PrintContactList( count, list );
+
+        SaveAddrbook( count, list, thread_count );
+
+        delete [] list;
+    }
 
     return 0;
 }
