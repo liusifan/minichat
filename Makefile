@@ -1,5 +1,5 @@
 
-DIRS = third_party minichat
+DIRS = third_party phxrpc minichat
 
 all:
 	for d in $(DIRS); do \

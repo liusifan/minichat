@@ -9,6 +9,9 @@ int InitAccount( int begin_idx, int end_idx )
 {
     char username[ 64 ] = { 0 };
 
+    int unit = ( end_idx - begin_idx ) / 100;
+    if( unit <= 0 ) unit = 1;
+
     int k = 0;
     int ret = 0;
 
@@ -35,8 +38,6 @@ int InitAccount( int begin_idx, int end_idx )
         if(3 == k) {
             cout << "setuser " << username << " failed ret " << ret << endl;
             continue;
-        } else {
-            cout << "setuser " << username << " success " << endl;
         }
 
         account::PwdReq pwd_req;
@@ -56,11 +57,16 @@ int InitAccount( int begin_idx, int end_idx )
         if(3 == k) {
             cout << "setpwd " << username << " failed ret " << ret << endl;
             continue;
-        } else {
-            cout << "setpwd " << username << " success " << endl;
+        }
+
+        if( i > 0 && ( 0 == i % unit ) ) {
+            printf( "#" );
+            fflush( stdout );
         }
     }
 
+    printf( "\naccount %d - %d done\n", begin_idx, end_idx );
+    
     return 0;
 }
 

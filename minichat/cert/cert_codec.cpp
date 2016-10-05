@@ -7,6 +7,8 @@
 #include "crypt/pem_file.h"
 #include "crypt/crypt_utils.h"
 
+#include "common/define.h"
+
 CertCodec * CertCodec :: GetDefault()
 {
     static CertCodec codec;
@@ -18,8 +20,7 @@ CertCodec :: CertCodec()
 {
     priv_key_ = NULL;
 
-    //InitRSA( "~/minichat/etc/minichat_privkey.pem" );
-    InitRSA( "~/mmminichat/etc/minichat_privkey.pem" );
+    InitRSA( MINI_PRIV_KEY_PATH );
 }
 
 CertCodec :: ~CertCodec()

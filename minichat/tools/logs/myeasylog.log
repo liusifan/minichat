@@ -1,0 +1,883 @@
+2016-10-03 15:15:33,612 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 15:15:33,612 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 15:15:33,612 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 15:15:33,612 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 15:15:33,612 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 15:15:33,612 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 15:16:08,568 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 15:16:08,569 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 15:16:08,569 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 15:16:08,569 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 15:16:08,569 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 15:16:08,569 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 15:21:39,285 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 15:21:39,285 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 15:21:39,285 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 15:21:39,285 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 15:21:39,285 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 15:21:39,285 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 15:21:43,472 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 15:21:43,472 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 15:21:43,472 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 15:21:43,472 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 15:21:43,472 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 15:21:43,472 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 15:22:23,760 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 15:22:23,760 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 15:22:23,760 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 15:22:23,760 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 15:22:23,760 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 15:22:23,760 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 15:24:22,671 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 15:24:22,671 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 15:24:22,671 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 15:24:22,671 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 15:24:22,671 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 15:24:22,671 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 15:25:52,882 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 15:25:52,882 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 15:25:52,882 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 15:25:52,882 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 15:25:52,882 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 15:25:52,882 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 15:26:38,028 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 15:26:38,028 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 15:26:38,028 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 15:26:38,028 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 15:26:38,028 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 15:26:38,028 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 15:27:09,345 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 15:27:09,345 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 15:27:09,345 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 15:27:09,345 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 15:27:09,345 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 15:27:09,345 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 15:27:11,053 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 15:27:11,053 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 15:27:11,053 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 15:27:11,053 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 15:27:11,053 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 15:27:11,053 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 15:27:13,717 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 15:27:13,717 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 15:27:13,717 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 15:27:13,717 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 15:27:13,717 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 15:27:13,717 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 15:27:26,680 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 15:27:26,680 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 15:27:26,680 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 15:27:26,680 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 15:27:26,680 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 15:27:26,680 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 15:27:37,589 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 15:27:37,589 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 15:27:37,589 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 15:27:37,589 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 15:27:37,589 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 15:27:37,589 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 17:56:07,124 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 17:56:07,124 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 17:56:07,124 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 17:56:07,124 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 17:56:07,124 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 17:56:07,124 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 17:56:25,380 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 17:56:25,381 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 17:56:25,381 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 17:56:25,381 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 17:56:25,381 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 17:56:25,381 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:08:27,174 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:08:27,174 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:08:27,174 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:08:27,174 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:08:27,174 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:08:27,174 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:08:29,267 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:08:29,267 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:08:29,267 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:08:29,267 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:08:29,267 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:08:29,267 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:09:16,133 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:09:16,133 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:09:16,133 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:09:16,133 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:09:16,133 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:09:16,133 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:20:28,308 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:20:28,308 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:20:28,308 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:20:28,308 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:20:28,308 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:20:28,308 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:20:32,726 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:20:32,726 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:20:32,726 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:20:32,726 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:20:32,726 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:20:32,726 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:23:05,738 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:23:05,738 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:23:05,738 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:23:05,738 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:23:05,738 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:23:05,738 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:34:54,166 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:34:54,166 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:34:54,166 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:34:54,166 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:34:54,166 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:34:54,166 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:36:06,698 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:36:06,698 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:36:06,698 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:36:06,698 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:36:06,698 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:36:06,698 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:36:10,584 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:36:10,585 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:36:10,585 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:36:10,585 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:36:10,585 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:36:10,585 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:37:28,811 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:37:28,811 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:37:28,811 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:37:28,811 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:37:28,811 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:37:28,811 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:37:37,932 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:37:37,932 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:37:37,932 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:37:37,932 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:37:37,932 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:37:37,932 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:38:32,496 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:38:32,496 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:38:32,496 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:38:32,496 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:38:32,496 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:38:32,496 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:39:17,789 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:39:17,789 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:39:17,789 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:39:17,789 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:39:17,789 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:39:17,789 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:39:22,659 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:39:22,660 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:39:22,660 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:39:22,660 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:39:22,660 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:39:22,660 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:39:29,016 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:39:29,017 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:39:29,017 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:39:29,017 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:39:29,017 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:39:29,017 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:40:01,915 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:40:01,915 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:40:01,915 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:40:01,915 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:40:01,915 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:40:01,915 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:40:25,763 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:40:25,763 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:40:25,763 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:40:25,763 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:40:25,763 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:40:25,763 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:44:55,327 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:44:55,327 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:44:55,327 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:44:55,327 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:44:55,327 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:44:55,327 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:46:24,316 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:46:24,316 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:46:24,316 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:46:24,316 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:46:24,316 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:46:24,316 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:47:09,828 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:47:09,828 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:47:09,828 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:47:09,828 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:47:09,828 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:47:09,828 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:47:18,450 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:47:18,450 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:47:18,450 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:47:18,450 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:47:18,450 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:47:18,450 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:48:26,994 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:48:26,995 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:48:26,995 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:48:26,995 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:48:26,995 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:48:26,995 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:49:06,797 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:49:06,797 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:49:06,797 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:49:06,797 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:49:06,797 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:49:06,797 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:49:28,187 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:49:28,187 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:49:28,187 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:49:28,187 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:49:28,187 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:49:28,187 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:49:36,725 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:49:36,725 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:49:36,725 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:49:36,725 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:49:36,725 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:49:36,725 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:49:43,606 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:49:43,606 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:49:43,606 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:49:43,606 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:49:43,606 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:49:43,606 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:49:51,037 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:49:51,038 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:49:51,038 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:49:51,038 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:49:51,038 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:49:51,038 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:50:26,006 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:50:26,007 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:50:26,007 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:50:26,007 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:50:26,007 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:50:26,007 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:50:42,089 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:50:42,089 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:50:42,090 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:50:42,090 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:50:42,090 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:50:42,090 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:50:44,665 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:50:44,665 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:50:44,665 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:50:44,665 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:50:44,665 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:50:44,665 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:50:54,074 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:50:54,075 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:50:54,075 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:50:54,075 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:50:54,075 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:50:54,075 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:56:06,018 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:56:06,018 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:56:06,018 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:56:06,018 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:56:06,018 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:56:06,018 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:56:13,875 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:56:13,875 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:56:13,875 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:56:13,875 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:56:13,875 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:56:13,875 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:56:17,371 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:56:17,371 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:56:17,371 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:56:17,371 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:56:17,371 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:56:17,371 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:59:24,372 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:59:24,372 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:59:24,372 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:59:24,372 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:59:24,372 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:59:24,372 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 18:59:54,813 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 18:59:54,813 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 18:59:54,814 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 18:59:54,814 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 18:59:54,814 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 18:59:54,814 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 19:02:17,545 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 19:02:17,545 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 19:02:17,545 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 19:02:17,545 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 19:02:17,545 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 19:02:17,545 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 19:03:15,566 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 19:03:15,566 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 19:03:15,566 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 19:03:15,566 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 19:03:15,566 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 19:03:15,566 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 19:03:54,372 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 19:03:54,372 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 19:03:54,372 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 19:03:54,372 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 19:03:54,372 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 19:03:54,372 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 19:06:18,045 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 19:06:18,045 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 19:06:18,045 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 19:06:18,045 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 19:06:18,045 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 19:06:18,045 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 19:06:35,870 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 19:06:35,870 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 19:06:35,870 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 19:06:35,870 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 19:06:35,870 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 19:06:35,870 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 19:07:30,645 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 19:07:30,645 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 19:07:30,645 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 19:07:30,645 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 19:07:30,645 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 19:07:30,645 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 19:12:07,737 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 19:12:07,737 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 19:12:07,737 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 19:12:07,737 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 19:12:07,737 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 19:12:07,737 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 21:49:18,596 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 21:49:18,597 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 21:49:18,597 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 21:49:18,597 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 21:49:18,597 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 21:49:18,597 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 21:49:44,248 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 21:49:44,248 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 21:49:44,248 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 21:49:44,248 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 21:49:44,248 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 21:49:44,248 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 21:52:10,213 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 21:52:10,213 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 21:52:10,213 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 21:52:10,213 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 21:52:10,213 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 21:52:10,213 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 21:52:51,249 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 21:52:51,249 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 21:52:51,249 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 21:52:51,249 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 21:52:51,249 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 21:52:51,249 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 21:54:15,657 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 21:54:15,658 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 21:54:15,658 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 21:54:15,658 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 21:54:15,658 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 21:54:15,658 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 21:57:21,212 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 21:57:21,212 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 21:57:21,212 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 21:57:21,212 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 21:57:21,212 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 21:57:21,212 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 21:57:31,254 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 21:57:31,254 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 21:57:31,254 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 21:57:31,254 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 21:57:31,254 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 21:57:31,254 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 21:57:38,378 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 21:57:38,378 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 21:57:38,378 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 21:57:38,378 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 21:57:38,378 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 21:57:38,378 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 21:59:28,414 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 21:59:28,414 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 21:59:28,414 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 21:59:28,414 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 21:59:28,414 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 21:59:28,414 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 22:00:45,144 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 22:00:45,144 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 22:00:45,144 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 22:00:45,144 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 22:00:45,144 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 22:00:45,144 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 22:02:12,708 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 22:02:12,708 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 22:02:12,708 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 22:02:12,708 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 22:02:12,709 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 22:02:12,709 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 22:05:08,812 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 22:05:08,812 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 22:05:08,812 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 22:05:08,812 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 22:05:08,812 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 22:05:08,812 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 22:08:43,749 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 22:08:43,749 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 22:08:43,749 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 22:08:43,749 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 22:08:43,749 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 22:08:43,749 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 22:14:40,171 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 22:14:40,171 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 22:14:40,171 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 22:14:40,171 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 22:14:40,171 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 22:14:40,171 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 23:18:58,283 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 23:18:58,283 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 23:18:58,283 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 23:18:58,283 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 23:18:58,283 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 23:18:58,283 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 23:19:17,377 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 23:19:17,377 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 23:19:17,377 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 23:19:17,377 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 23:19:17,377 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 23:19:17,377 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 23:21:10,225 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 23:21:10,225 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 23:21:10,225 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 23:21:10,225 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 23:21:10,225 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 23:21:10,225 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 23:32:39,257 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 23:32:39,257 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 23:32:39,257 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 23:32:39,257 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 23:32:39,257 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 23:32:39,257 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 23:32:52,139 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 23:32:52,139 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 23:32:52,139 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 23:32:52,139 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 23:32:52,139 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 23:32:52,139 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 23:33:05,360 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 23:33:05,360 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 23:33:05,360 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 23:33:05,360 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 23:33:05,360 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 23:33:05,360 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 23:40:32,405 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 23:40:32,406 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 23:40:32,406 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 23:40:32,406 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 23:40:32,406 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 23:40:32,406 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 23:44:54,322 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 23:44:54,322 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 23:44:54,322 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 23:44:54,322 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 23:44:54,322 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 23:44:54,322 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 23:45:03,129 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 23:45:03,129 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 23:45:03,129 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 23:45:03,129 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 23:45:03,129 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 23:45:03,129 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 23:45:05,082 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 23:45:05,082 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 23:45:05,082 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 23:45:05,082 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 23:45:05,082 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 23:45:05,082 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 23:45:10,537 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 23:45:10,538 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 23:45:10,538 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 23:45:10,538 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 23:45:10,538 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 23:45:10,538 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 23:45:57,337 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 23:45:57,337 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 23:45:57,337 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 23:45:57,337 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 23:45:57,337 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 23:45:57,337 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-03 23:46:07,355 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-03 23:46:07,355 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-03 23:46:07,355 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-03 23:46:07,355 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-03 23:46:07,355 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-03 23:46:07,355 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 09:53:39,066 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 09:53:39,067 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 09:53:39,067 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 09:53:39,067 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 09:53:39,067 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 09:53:39,067 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 10:04:19,823 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 10:04:19,823 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 10:04:19,823 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 10:04:19,823 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 10:04:19,823 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 10:04:19,823 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 10:06:51,653 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 10:06:51,653 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 10:06:51,653 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 10:06:51,653 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 10:06:51,653 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 10:06:51,653 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 10:07:09,681 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 10:07:09,681 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 10:07:09,681 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 10:07:09,681 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 10:07:09,681 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 10:07:09,681 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 10:09:31,161 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 10:09:31,161 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 10:09:31,161 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 10:09:31,161 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 10:09:31,161 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 10:09:31,161 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 10:11:26,433 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 10:11:26,433 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 10:11:26,433 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 10:11:26,433 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 10:11:26,433 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 10:11:26,433 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 10:13:11,100 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 10:13:11,100 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 10:13:11,100 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 10:13:11,100 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 10:13:11,100 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 10:13:11,100 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 10:13:22,381 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 10:13:22,381 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 10:13:22,381 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 10:13:22,381 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 10:13:22,381 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 10:13:22,381 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 10:15:37,277 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 10:15:37,277 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 10:15:37,277 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 10:15:37,277 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 10:15:37,277 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 10:15:37,277 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 10:18:30,513 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 10:18:30,513 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 10:18:30,513 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 10:18:30,513 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 10:18:30,513 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 10:18:30,513 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 10:19:24,571 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 10:19:24,571 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 10:19:24,571 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 10:19:24,571 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 10:19:24,571 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 10:19:24,571 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 10:21:48,426 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 10:21:48,426 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 10:21:48,426 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 10:21:48,426 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 10:21:48,426 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 10:21:48,426 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 10:23:51,248 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 10:23:51,248 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 10:23:51,248 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 10:23:51,248 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 10:23:51,248 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 10:23:51,248 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 10:31:13,611 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 10:31:13,611 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 10:31:13,611 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 10:31:13,611 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 10:31:13,611 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 10:31:13,611 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 11:03:48,311 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 11:03:48,311 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 11:03:48,311 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 11:03:48,311 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 11:03:48,311 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 11:03:48,311 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 11:03:48,311 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-04 11:03:48,311 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-04 11:03:59,822 ERROR [default] WARN: open /home/qspace/etc/route/shanghai/mmminichat_route.conf fail, errno 2, No such file or directory
+2016-10-04 11:03:59,823 ERROR [default] RedisClientConfigLoader::RedisClientConfigLoader read redis client config /home/qspace/etc/minichat/client/redis_client.conf failed
+2016-10-04 11:03:59,823 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-04 11:03:59,823 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-04 11:03:59,823 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-04 11:03:59,823 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-04 11:03:59,823 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-04 11:03:59,823 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 09:47:09,314 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 09:47:09,314 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 09:47:09,314 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 09:47:09,314 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 09:47:09,314 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 09:47:09,314 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 09:47:09,315 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 09:47:09,315 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 09:47:09,315 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 09:47:23,012 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 09:47:23,013 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 09:47:23,013 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 09:47:23,013 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 09:47:23,013 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 09:47:23,013 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 09:47:23,013 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 09:47:23,013 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 09:47:23,013 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:16:24,485 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:16:24,485 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:16:24,485 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:16:24,485 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:16:24,485 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:16:24,485 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:16:24,485 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:16:24,485 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:16:24,485 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:16:30,849 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:16:30,849 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:16:30,849 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:16:30,850 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:16:30,850 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:16:30,850 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:16:30,850 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:16:30,850 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:16:30,850 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:16:37,812 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:16:37,812 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:16:37,812 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:16:37,812 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:16:37,812 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:16:37,812 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:16:37,812 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:16:37,812 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:16:37,812 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:17:03,101 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:17:03,101 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:17:03,101 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:17:03,101 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:17:03,101 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:17:03,101 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:17:03,101 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:17:03,101 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:17:03,101 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:17:34,822 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:17:34,822 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:17:34,822 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:17:34,823 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:17:34,823 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:17:34,823 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:17:34,823 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:17:34,823 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:17:34,823 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:18:18,160 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:18:18,161 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:18:18,161 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:18:18,161 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:18:18,161 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:18:18,161 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:18:18,161 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:18:18,161 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:18:18,161 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:19:19,645 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:19:19,645 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:19:19,645 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:19:19,645 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:19:19,645 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:19:19,645 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:19:19,645 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:19:19,645 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:19:19,645 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:19:46,361 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:19:46,362 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:19:46,362 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:19:46,362 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:19:46,362 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:19:46,362 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:19:46,362 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:19:46,362 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:19:46,362 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:19:54,829 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:19:54,830 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:19:54,830 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:19:54,830 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:19:54,830 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:19:54,830 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:19:54,830 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:19:54,830 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:19:54,830 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:20:41,195 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:20:41,195 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:20:41,195 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:20:41,195 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:20:41,195 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:20:41,195 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:20:41,195 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:20:41,195 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:20:41,195 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:20:49,245 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:20:49,245 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:20:49,245 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:20:49,246 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:20:49,246 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:20:49,246 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:20:49,246 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:20:49,246 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:20:49,246 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:21:35,120 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:21:35,120 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:21:35,120 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:21:35,121 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:21:35,121 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:21:35,121 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:21:35,121 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:21:35,121 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:21:35,121 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:23:09,762 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:23:09,763 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:23:09,763 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:23:09,763 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:23:09,763 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:23:09,763 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:23:09,763 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:23:09,763 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:23:09,763 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:23:15,990 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:23:15,991 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:23:15,991 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:23:15,991 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:23:15,991 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:23:15,991 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:23:15,991 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:23:15,991 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:23:15,991 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:23:55,804 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:23:55,804 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:23:55,804 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:23:55,804 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:23:55,804 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:23:55,804 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:23:55,804 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:23:55,804 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:23:55,804 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:24:28,208 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:24:28,208 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:24:28,208 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:24:28,208 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:24:28,208 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:24:28,208 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:24:28,208 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:24:28,208 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:24:28,208 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:27:12,308 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:27:12,308 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:27:12,309 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:27:12,310 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:27:12,310 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:27:12,310 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:27:12,310 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:27:12,310 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:27:12,310 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:27:25,412 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:27:25,412 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:27:25,412 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:27:25,412 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:27:25,412 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:27:25,412 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:27:25,412 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:27:25,412 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:27:25,412 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:28:53,366 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:28:53,366 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:28:53,366 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:28:53,366 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:28:53,366 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:28:53,366 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:28:53,366 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:28:53,366 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:28:53,366 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:52:44,506 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:52:44,506 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:52:44,506 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:52:44,506 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:52:44,506 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:52:44,506 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:52:44,507 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:52:44,507 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:52:44,507 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:52:52,418 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:52:52,418 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:52:52,418 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:52:52,418 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:52:52,418 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:52:52,418 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:52:52,418 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:52:52,418 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:52:52,418 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:52:57,669 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:52:57,669 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:52:57,669 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:52:57,669 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:52:57,669 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:52:57,670 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:52:57,670 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:52:57,670 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:52:57,670 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:53:43,520 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:53:43,520 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:53:43,520 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:53:43,521 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:53:43,521 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:53:43,521 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:53:43,521 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:53:43,521 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:53:43,521 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:53:48,840 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:53:48,840 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:53:48,840 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:53:48,840 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:53:48,840 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:53:48,840 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:53:48,840 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:53:48,840 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:53:48,840 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:54:09,167 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:54:09,167 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:54:09,167 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:54:09,168 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:54:09,168 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:54:09,168 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:54:09,168 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:54:09,168 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:54:09,168 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 10:54:15,767 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for account failed
+2016-10-05 10:54:15,767 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for account failed
+2016-10-05 10:54:15,767 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for account ret -1
+2016-10-05 10:54:15,767 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for profile failed
+2016-10-05 10:54:15,767 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for profile failed
+2016-10-05 10:54:15,767 ERROR [default] ClientConfigRegistry::Register LoadConfig for profile failed
+2016-10-05 10:54:15,767 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for addrbook failed
+2016-10-05 10:54:15,768 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for addrbook failed
+2016-10-05 10:54:15,768 ERROR [default] ClientConfigRegistry::Register LoadConfig for addrbook failed
+2016-10-05 20:15:22,515 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for logic failed
+2016-10-05 20:15:22,515 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for logic failed
+2016-10-05 20:15:22,515 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for logic ret -1
+2016-10-05 20:15:42,909 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for logic failed
+2016-10-05 20:15:42,909 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for logic failed
+2016-10-05 20:15:42,909 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for logic ret -1
+2016-10-05 20:16:29,776 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for logic failed
+2016-10-05 20:16:29,776 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for logic failed
+2016-10-05 20:16:29,776 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for logic ret -1
+2016-10-05 20:16:44,371 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for logic failed
+2016-10-05 20:16:44,371 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for logic failed
+2016-10-05 20:16:44,371 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for logic ret -1
+2016-10-05 20:17:23,876 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for logic failed
+2016-10-05 20:17:23,876 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for logic failed
+2016-10-05 20:17:23,876 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for logic ret -1
+2016-10-05 20:17:41,268 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for logic failed
+2016-10-05 20:17:41,268 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for logic failed
+2016-10-05 20:17:41,268 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for logic ret -1
+2016-10-05 20:18:14,549 ERROR [default] RedisClientConfigLoader::GetConfigContent get content for logic failed
+2016-10-05 20:18:14,549 ERROR [default] ClientConfigRegistry::LoadConfig GetConfigContent for logic failed
+2016-10-05 20:18:14,549 ERROR [default] ClientConfigRegistry::SetClientConfigLoader LoadConfig for logic ret -1

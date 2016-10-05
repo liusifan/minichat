@@ -27,7 +27,7 @@ CLI_OBJS = logic.pb.o \
 		   phxrpc_logic_stub.o \
 		   minichat_api.o
 
-TARGETS = liblogic_client.a logic-main logic_tool_main fj_tools
+TARGETS = liblogic_client.a logic-main logic_tool_main
 
 all: $(TARGETS)
 
@@ -38,9 +38,6 @@ liblogic_client.a: $(CLI_OBJS)
 	$(AR) $@ $^
 
 logic_tool_main: phxrpc_logic_tool.o logic_tool_impl.o logic_tool_main.o
-	$(LINKER) $^ -L. -llogic_client $(LDFLAGS) -o $@
-
-fj_tools: phxrpc_logic_tool.o logic_tool_impl.o fj_tools.o
 	$(LINKER) $^ -L. -llogic_client $(LDFLAGS) -o $@
 
 ########## message ##########

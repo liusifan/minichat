@@ -15,6 +15,12 @@ namespace phxrpc {
 
 class PushClient {
 public:
+    static int const USER_PER_CHANNEL = 100;
+
+public:
+    static void Username2Channel( const char * username, std::string * channel );
+
+public:
     PushClient( phxrpc::UThreadEpollScheduler * scheduler = NULL );
     ~PushClient();
 

@@ -7,12 +7,25 @@ MINICHAT_ROOT := $(dir $(call where-am-i))
 
 include $(MINICHAT_ROOT)/phxrpc/phxrpc.mk
 
+ifeq ($(OS),Darwin)
+	PLUGIN_REDIS_CONFIG_LOADER_LDFLAGS = \
+			-Wl,-force_load,$(MINICHAT_ROOT)/minichat/lib/libphxrpc_plugin_redis_config_loader.a
+	PLUGIN_SK_MONITOR_LDFLAGS = \
+			-Wl,-force_load,$(MINICHAT_ROOT)/minichat/lib/libphxrpc_plugin_monitor_sk.a
+else
+	PLUGIN_REDIS_CONFIG_LOADER_LDFLAGS = -Wl,--whole-archive -L$(MINICHAT_ROOT)/minichat/lib/ \
+			-lphxrpc_plugin_redis_config_loader -Wl,--no-whole-archive
+	PLUGIN_SK_MONITOR_LDFLAGS = -Wl,--whole-archive -L$(MINICHAT_ROOT)/minichat/lib/ \
+			-lphxrpc_plugin_monitor_sk -Wl,--no-whole-archive
+endif
+
+PLUGIN_REDIS_CONFIG_LOADER_LDFLAGS :=
+
 REDIS_CLIENT_INCLUDE = -I$(MINICHAT_ROOT)/third_party/ \
   	-I$(MINICHAT_ROOT)/third_party/
 
 REDIS_CLIENT_LIBRARY = -L$(MINICHAT_ROOT)/third_party/r3c/ -lr3c \
   	-L$(MINICHAT_ROOT)/third_party/hiredis -lhiredis
-
 
 ACCOUNT_CFLAGS += $(REDIS_CLIENT_INCLUDE) -I$(MINICHAT_ROOT)/minichat
 

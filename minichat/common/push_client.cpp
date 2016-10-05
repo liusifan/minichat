@@ -7,6 +7,16 @@
 
 #include <functional>
 
+void PushClient :: Username2Channel( const char * username, std::string * channel )
+{
+    char tmp[ 128 ] = { 0 };
+
+    int index = atoi( username + 4 ) / USER_PER_CHANNEL;
+    snprintf( tmp, sizeof( tmp ), "channel_%d", index );
+
+    channel->append( tmp );
+}
+
 PushClient :: PushClient( phxrpc::UThreadEpollScheduler * scheduler )
 {
     scheduler_ = scheduler;
@@ -124,7 +134,7 @@ bool PushClient :: Pub( const char * channel, const char * msg )
     phxrpc::BaseTcpStream * socket = GetSocket( channel );
     if( NULL == socket ) return false;
 
-    (*socket) << "PUBLISH " << channel << " " << msg << std::endl;
+    (*socket) << "PUBLISH " << channel << " \"" << msg << "\"" << std::endl;
 
     if( ! socket->flush().good() ) return false;
 

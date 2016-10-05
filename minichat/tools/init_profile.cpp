@@ -11,6 +11,9 @@ int InitProfile( int begin_idx, int end_idx )
 {
     std::random_device rd;
 
+    int unit = ( end_idx - begin_idx ) / 100;
+    if( unit <= 0 ) unit = 1;
+
     char username[ 64 ] = { 0 };
 
     int k = 0;
@@ -42,10 +45,15 @@ int InitProfile( int begin_idx, int end_idx )
         if(3 == k) {
             cout << "set profile " << username << " failed ret " << ret << endl;
             continue;
-        } else {
-            cout << "set profile " << username << " success " << endl;
+        }
+
+        if( i > 0 && ( 0 == i % unit ) ) {
+            printf( "#" );
+            fflush( stdout );
         }
     }
+
+    printf( "\nprofile %d - %d done\n", begin_idx, end_idx );
 
     return 0;
 }

@@ -91,10 +91,13 @@ int CgiSendMsg :: Process( const logic::ReqHead & head,
 
         // push result.newcount() to receiver
         if( 0 == ret ) {
+            std::string channel;
+            PushClient::Username2Channel( msg.to().c_str(), &channel );
+
             char push_msg[ 128 ] = { 0 };
             snprintf( push_msg, sizeof( push_msg ), "%s newcount %d, last msg from %s",
                     msg.to().c_str(), result.newcount(), head.username().c_str() );
-            PushClientFactory::GetDefault()->Get().Pub( msg.to().c_str(), push_msg );
+            PushClientFactory::GetDefault()->Get().Pub( channel.c_str(), push_msg );
         }
     }
 

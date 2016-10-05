@@ -247,6 +247,7 @@ void PrintContactList( const int count, const ContactList_t * list )
 
     int total = 0, lack_count = 0, lack_total = 0;
 
+    printf( "user\tcount\tmax\n" );
     for( int i = 0; i < count; i++ ) {
         const ContactList_t & item = list[i];
         ++p[ item.contacts.size() ];
@@ -256,7 +257,7 @@ void PrintContactList( const int count, const ContactList_t * list )
             lack_count++;
             lack_total += item.max - item.contacts.size();
 
-            printf( "%d, %zu, %d\n", i, item.contacts.size(), item.max );
+            printf( "%d\t%zu\t%d\n", i, item.contacts.size(), item.max );
         }
     }
 
@@ -269,6 +270,9 @@ void PrintContactList( const int count, const ContactList_t * list )
 void CallAddrbook( int count, ContactList_t * list, int begin, int end )
 {
     if( end > count ) end = count;
+
+    int unit = ( end - begin ) / 100;
+    if( unit <= 0 ) unit = 1;
 
     AddrbookClient client;
     char from[ 128 ] = { 0 }, to[ 128 ] = { 0 };
@@ -298,7 +302,13 @@ void CallAddrbook( int count, ContactList_t * list, int begin, int end )
             if(k == 3) printf( "add %s - %s fail\n", from, to );
         }
 
+        if( i > 0 && ( 0 == i % unit ) ) {
+            printf( "#" );
+            fflush( stdout );
+        }
     }
+
+    printf( "\naddrbook %d - %d done\n", begin, end );
 }
 
 int SaveAddrbook( int count, ContactList_t * list, int thread_count )
@@ -331,11 +341,11 @@ int SaveToFile( int count, ContactList_t * list, const char * path )
     FILE * fp = fopen( path, "w" );
     if( NULL != fp ) {
 
-        fprintf( fp, "#%d\n", count );
+        fprintf( fp, "*%d\n", count );
 
         for( int i = 0; i < count; i++ ) {
             fprintf( fp, "#%d\n", i );
-            fprintf( fp, "#%zu\n", list[i].contacts.size() );
+            fprintf( fp, "$%zu\n", list[i].contacts.size() );
             for( auto & u : list[i].contacts ) {
                 fprintf( fp, "\t%d\n", u );
             }

@@ -92,12 +92,19 @@ int LogicToolImpl :: Sync( phxrpc::OptMap & opt_map )
 
     logic::SyncResponse resp_obj;
 
-    int ret = api.Sync( opt_map.Get( 'u' ), &resp_obj );
+    api.SetUsername( opt_map.Get( 'u' ) );
+
+    int ret = api.Sync( &resp_obj );
     
     printf( "%s return %d\n", __func__, ret );
     printf( "resp_obj: {\n%s}\n", resp_obj.DebugString().c_str() );
 
     PrintSyncResp( resp_obj );
+
+    printf( "Contacts:\n" );
+    for( auto & c : api.GetContacts() ) {
+        printf( "%s\n", c.c_str() );
+    }
 
     return ret;
 }
@@ -113,8 +120,9 @@ int LogicToolImpl :: SendMsg( phxrpc::OptMap & opt_map )
 
     logic::SendMsgResponse resp_obj;
 
-    int ret = api.SendMsg( opt_map.Get( 's' ), opt_map.Get( 't' ),
-            opt_map.Get( 'm' ), &resp_obj );
+    api.SetUsername( opt_map.Get( 's' ) );
+
+    int ret = api.SendMsg( opt_map.Get( 't' ), opt_map.Get( 'm' ), &resp_obj );
 
     printf( "%s return %d\n", __func__, ret );
     printf( "resp_obj: {\n%s\n}\n", resp_obj.DebugString().c_str() );
@@ -146,12 +154,12 @@ int LogicToolImpl :: FakeDoAll( phxrpc::OptMap & opt_map )
             printf( "resp: {\n%s}\n", auth_resp.DebugString().c_str() );
 
             logic::SendMsgResponse sendmsg_resp;
-            ret = api.SendMsg( username, username, "hello", &sendmsg_resp );
+            ret = api.SendMsg( username, "hello", &sendmsg_resp );
             printf( "SendMsg %d\n", ret );
             printf( "resp: {\n%s}\n", sendmsg_resp.DebugString().c_str() );
 
             logic::SyncResponse sync_resp;
-            ret = api.Sync( username, &sync_resp );
+            ret = api.Sync( &sync_resp );
             printf( "Sync %d\n", ret );
             printf( "resp: {\n%s}\n", sync_resp.DebugString().c_str() );
 

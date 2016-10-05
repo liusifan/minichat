@@ -14,6 +14,8 @@
 
 #include "crypt/pem_file.h"
 
+#include "common/define.h"
+
 using namespace phxrpc;
 
 CertToolImpl:: CertToolImpl()
@@ -52,8 +54,7 @@ int CertToolImpl :: RSADecrypt( phxrpc::OptMap & opt_map )
 
     {
         TaoCrypt::RSA_PublicKey pub;
-        //PemFileUtils::LoadPubKey( "~/minichat/etc/client/minichat_pubkey.pem", &pub );
-        PemFileUtils::LoadPubKey( "~/mmminichat/etc/minichat_pubkey.pem", &pub );
+        PemFileUtils::LoadPubKey( MINI_PUB_KEY_PATH, &pub );
 
         TaoCrypt::RandomNumberGenerator rng;
         TaoCrypt::RSAES_Encryptor enc( pub );

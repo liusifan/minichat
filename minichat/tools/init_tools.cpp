@@ -119,7 +119,7 @@ int main( int argc, char * *argv )
 
     int ret = -1;
 
-    if(0 == strcasecmp("user", func)) {
+    if(0 == strcasecmp("inituser", func)) {
         ret = InitUser( opt_map );
     } else if(0 == strcasecmp("genaddr", func)) {
         ret = GenAddrbook( opt_map );

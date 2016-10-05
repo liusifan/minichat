@@ -15,6 +15,8 @@
 #include "phxrpc/file.h"
 #include "phxrpc/rpc.h"
 
+#include "common/define.h"
+
 static phxrpc::ClientMonitorPtr global_logicclient_monitor_;
 
 class MiniChatApiClientRegister
@@ -56,6 +58,11 @@ MiniChatAPI :: ~MiniChatAPI()
 {
 }
 
+bool MiniChatAPI :: IsAuthOK()
+{
+    return session_key_.size() > 0;
+}
+
 int MiniChatAPI :: Auth( const char * username, const char * pwd_md5, logic::AuthResponse * resp_obj )
 {
     if(!config_) {
@@ -84,8 +91,7 @@ int MiniChatAPI :: Auth( const char * username, const char * pwd_md5, logic::Aut
         manual_auth_req.SerializeToString( &tmp_buff );
 
         TaoCrypt::RSA_PublicKey pub;
-        //PemFileUtils::LoadPubKey( "~/minichat/etc/client/minichat_pubkey.pem", &pub );
-        PemFileUtils::LoadPubKey( "~/mmminichat/etc/minichat_pubkey.pem", &pub );
+        PemFileUtils::LoadPubKey( MINI_PUB_KEY_PATH, &pub );
 
         TaoCrypt::RandomNumberGenerator rng;
         TaoCrypt::RSAES_Encryptor enc( pub );
@@ -170,14 +176,13 @@ int MiniChatAPI :: AutoAuth( logic::AuthResponse * resp_obj )
     return ret;
 }
 
-int MiniChatAPI :: SendMsg( const char * username, const char * to,
+int MiniChatAPI :: SendMsg( const char * to,
         const char * text, logic::SendMsgResponse * resp_obj )
 {
     if(!config_) {
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    username_ = username;
 
     logic::SendMsgRequest req;
     {
@@ -194,21 +199,49 @@ int MiniChatAPI :: SendMsg( const char * username, const char * to,
     return Call_L1( "/logic/SendMsg", 3, req, resp_obj );
 }
 
-int MiniChatAPI :: Sync( const char * username, logic::SyncResponse * resp_obj )
+int MiniChatAPI :: Sync( logic::SyncResponse * resp_obj )
 {
     if(!config_) {
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    username_ = username;
 
     int ret = Call_L1( "/logic/Sync", 2, sync_key_, resp_obj );
 
     if( 0 == ret ) {
         sync_key_.ParseFromString( resp_obj->new_sync_key() );
+
+        for( int i = 0; i < resp_obj->oplog_size(); i++ ) {
+            const logic::CmdItem & item = resp_obj->oplog( i );
+
+            if( item.type() == logic::CMD_ADD_MSG ) {
+                //TODO: stat msg count
+            }
+
+            if( item.type() == logic::CMD_MOD_CONTACT ) {
+                logic::CmdModContact cmd;
+                cmd.ParseFromString( item.buff() );
+                contacts_.push_back( cmd.username() );
+            }
+        }
     }
 
     return ret;
+}
+
+const std::vector<std::string> & MiniChatAPI :: GetContacts() const
+{
+    return contacts_;
+}
+
+const char * MiniChatAPI :: GetUsername()
+{
+    return username_.c_str();
+}
+
+void MiniChatAPI :: SetUsername( const char * username )
+{
+    username_ = username;
 }
 
 int MiniChatAPI :: Call_L1( const char * uri, int cmd_id,
