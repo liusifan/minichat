@@ -48,6 +48,7 @@ CERT_CFLAGS += $(REDIS_CLIENT_INCLUDE) -I$(MINICHAT_ROOT)/minichat \
 		  -I$(MINICHAT_ROOT)/third_party/yassl -DUSE_SYS_STL
 
 CERT_LDFLAGS :=  $(PLUGIN_ELPP_LDFLAGS) $(PLUGIN_SK_MONITOR_LDFLAGS) $(PLUGIN_REDIS_CONFIG_LOADER_LDFLAGS) \
+	-L$(MINICHAT_ROOT)/minichat/common -lcommon \
 	-L$(PHXRPC_ROOT)/lib -lphxrpc \
 	-L$(MINICHAT_ROOT)/minichat/crypt -lminicrypt \
 	-L$(MINICHAT_ROOT)/third_party/yassl/lib -ltaocrypt \

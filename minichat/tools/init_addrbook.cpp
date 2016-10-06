@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "addrbook/addrbook_client.h"
+#include "addrbook/addrbook_client_long_conn.h"
 
 using namespace std;
 
@@ -274,7 +275,8 @@ void CallAddrbook( int count, ContactList_t * list, int begin, int end )
     int unit = ( end - begin ) / 100;
     if( unit <= 0 ) unit = 1;
 
-    AddrbookClient client;
+    //AddrbookClient client;
+    AddrbookClientLongConn client;
     char from[ 128 ] = { 0 }, to[ 128 ] = { 0 };
 
     for( int i = begin; i < end; i++ ) {

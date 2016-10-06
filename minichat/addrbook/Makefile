@@ -22,6 +22,7 @@ SVR_OBJS = addrbook.pb.o \
 
 CLI_OBJS = addrbook.pb.o \
 		   addrbook_client.o \
+		   addrbook_client_long_conn.o \
 		   phxrpc_addrbook_stub.o
 
 TARGETS = libaddrbook_client.a addrbook-main addrbook_tool_main
