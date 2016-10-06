@@ -31,7 +31,7 @@ int SeqServiceImpl :: PHXEcho( const google::protobuf::StringValue & req,
 int SeqServiceImpl :: Alloc( const seq::AllocReq & req,
         google::protobuf::UInt32Value * resp )
 {
-    SeqDAO dao( args_.factory->Get() );
+    SeqDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.Alloc( req, resp );
 }
@@ -39,7 +39,7 @@ int SeqServiceImpl :: Alloc( const seq::AllocReq & req,
 int SeqServiceImpl :: Get( const google::protobuf::StringValue & req,
         seq::SyncKey * resp )
 {
-    SeqDAO dao( args_.factory->Get() );
+    SeqDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.Get( req.value().c_str(), resp );
 }

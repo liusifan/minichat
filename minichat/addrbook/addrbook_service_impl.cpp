@@ -32,7 +32,7 @@ int AddrbookServiceImpl :: PHXEcho( const google::protobuf::StringValue & req,
 int AddrbookServiceImpl :: Set( const addrbook::ContactReq & req,
         google::protobuf::Empty * resp )
 {
-    AddrbookDAO dao( args_.factory->Get() );
+    AddrbookDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.Set( req, resp );
 }
@@ -40,7 +40,7 @@ int AddrbookServiceImpl :: Set( const addrbook::ContactReq & req,
 int AddrbookServiceImpl :: GetAll( const google::protobuf::StringValue & req,
         addrbook::ContactList * resp )
 {
-    AddrbookDAO dao( args_.factory->Get() );
+    AddrbookDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.GetAll( req, resp );;
 }
@@ -48,7 +48,7 @@ int AddrbookServiceImpl :: GetAll( const google::protobuf::StringValue & req,
 int AddrbookServiceImpl :: GetOne( const addrbook::GetOneReq & req,
         addrbook::Contact * resp )
 {
-    AddrbookDAO dao( args_.factory->Get() );
+    AddrbookDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.GetOne( req, resp );
 }
@@ -57,7 +57,7 @@ int AddrbookServiceImpl :: GetOne( const addrbook::GetOneReq & req,
 int AddrbookServiceImpl :: GetBySeq( const addrbook::GetBySeqReq & req,
         addrbook::ContactList * resp )
 {
-    AddrbookDAO dao( args_.factory->Get() );
+    AddrbookDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.GetBySeq( req, resp );;
 }

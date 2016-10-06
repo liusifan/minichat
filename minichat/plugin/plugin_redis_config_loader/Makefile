@@ -13,7 +13,8 @@ REDIS_CLIENT_LIBRARY = -L$(MINICHAT_ROOT)/third_party/r3c/ -lr3c \
 
 CFLAGS := -I$(MINICHAT_ROOT)/minichat/ -I$(MINICHAT_ROOT)/third_party $(REDIS_CLIENT_INCLUDE) $(CFLAGS)
 
-LDFLAGS := -L$(PHXRPC_ROOT)/lib $(REDIS_CLIENT_LIBRARY) -lphxrpc $(LDFLAGS)
+LDFLAGS := -L$(MINICHAT_ROOT)/minichat/common -lcommon \
+	-L$(PHXRPC_ROOT)/lib $(REDIS_CLIENT_LIBRARY) -lphxrpc $(LDFLAGS)
 
 all: $(TARGETS) 
 

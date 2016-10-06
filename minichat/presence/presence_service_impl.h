@@ -11,12 +11,9 @@
 
 class PresenceServerConfig;
 
-class RedisClientFactory;
-
 typedef struct tagServiceArgs {
     PresenceServerConfig * config;
     //You can add other arguments here and initiate in main().
-    RedisClientFactory * factory;
 }ServiceArgs_t;
 
 class PresenceServiceImpl : public PresenceService

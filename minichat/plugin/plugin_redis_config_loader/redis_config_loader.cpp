@@ -26,6 +26,7 @@ See the AUTHORS file for names of contributors.
 #include "redis_config_loader.h"
 
 #include "common/define.h"
+#include "common/redis_client_config.h"
 
 namespace phxrpc {
 
@@ -33,7 +34,7 @@ static RedisClientConfigLoader g_redis_client_config_loader;
 
 RedisClientConfigLoader::RedisClientConfigLoader() {
 
-    phxrpc::RedisClientConfig config;
+    RedisClientConfig config;
 
     if( config.Read( MINI_REDIS_CLIENT_CONFIG ) ) {
         client_ = new r3c::CRedisClient( config.GetNodes() );

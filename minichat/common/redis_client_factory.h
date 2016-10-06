@@ -9,7 +9,10 @@ namespace r3c {
 
 class RedisClientFactory {
 public:
-    RedisClientFactory( const char * config_file );
+    static RedisClientFactory * GetDefault();
+
+public:
+    RedisClientFactory();
     ~RedisClientFactory();
 
     r3c::CRedisClient & Get();

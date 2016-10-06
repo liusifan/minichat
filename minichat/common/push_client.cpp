@@ -1,11 +1,14 @@
 
 #include "push_client.h"
+#include "redis_client_config.h"
 
 #include "r3c/r3c.h"
 
 #include "phxrpc/rpc.h"
 
 #include <functional>
+
+#include "define.h"
 
 void PushClient :: Username2Channel( const char * username, std::string * channel )
 {
@@ -21,9 +24,9 @@ PushClient :: PushClient( phxrpc::UThreadEpollScheduler * scheduler )
 {
     scheduler_ = scheduler;
 
-    config_ = new phxrpc::RedisClientConfig();
+    config_ = new RedisClientConfig();
 
-    const char * path = "~/etc/route/shanghai/mmminichat_route.conf";
+    const char * path = MINI_REDIS_CLIENT_CONFIG;
 
     if( ! config_->Read( path ) ) {
         phxrpc::log( LOG_ERR, "read config %s failed", path );

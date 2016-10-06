@@ -32,7 +32,7 @@ int MsgBoxServiceImpl :: PHXEcho( const google::protobuf::StringValue & req,
 int MsgBoxServiceImpl :: Add( const msgbox::MsgIndex & req,
         msgbox::AddMsgResp * resp )
 {
-    MsgBoxDAO dao( args_.factory->Get() );
+    MsgBoxDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.Add( req, resp );
 }
@@ -40,7 +40,7 @@ int MsgBoxServiceImpl :: Add( const msgbox::MsgIndex & req,
 int MsgBoxServiceImpl :: GetBySeq( const msgbox::GetBySeqReq & req,
         msgbox::MsgIndexList * resp )
 {
-    MsgBoxDAO dao( args_.factory->Get() );
+    MsgBoxDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.GetBySeq( req, resp );
 }
@@ -48,7 +48,7 @@ int MsgBoxServiceImpl :: GetBySeq( const msgbox::GetBySeqReq & req,
 int MsgBoxServiceImpl :: GetAll( const google::protobuf::StringValue & req,
         msgbox::MsgIndexList * resp )
 {
-    MsgBoxDAO dao( args_.factory->Get() );
+    MsgBoxDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.GetAll( req, resp );
 }

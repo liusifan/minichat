@@ -1,8 +1,10 @@
 
-#include "common/redis_client_factory.h"
 #include "r3c/r3c.h"
 
 #include "phxrpc/file.h"
+#include "phxrpc/network.h"
+
+#include "common/redis_client_config.h"
 
 #include <vector>
 #include <string>
@@ -11,14 +13,28 @@ int flushall( phxrpc::OptMap & opt_map )
 {
     if( ! opt_map.Has( 'c' ) ) return -1;
 
-    RedisClientFactory factory( opt_map.Get( 'c' ) );
+    RedisClientConfig config;
+    config.Read( opt_map.Get( 'c' ) );
 
-    std::vector<std::pair<std::string, std::string> > result;
-    factory.Get().flushall( &result );
+    for( int i = 0; i < config.GetCount(); i++ ) {
+        const phxrpc::Endpoint_t * ep = config.GetByIndex( i );
 
-    printf( "Result %zu\n", result.size() );
-    for( auto & i : result ) {
-        printf( "%s, %s\n", i.first.c_str(), i.second.c_str() );
+        char line[ 128 ] = { 0 };
+        int k = 0;
+        for( k = 0; k < 3; k++ ) {
+            phxrpc::BlockTcpStream socket;
+            bool open_ret = phxrpc::BlockTcpUtils::Open( &socket, ep->ip, ep->port,
+                    config.GetConnectTimeoutMS(), NULL, 0 );
+            if( ! open_ret ) continue;
+            socket << "flushall" << std::endl;
+            if( ! socket.flush().good() ) continue;
+            if( socket.getlineWithTrimRight(line, sizeof(line)).good() ) break;
+        }
+        if( k < 3 ) {
+            printf( "%s:%d [%s]\n", ep->ip, ep->port, line );
+        } else {
+            printf( "%s:%d fail\n", ep->ip, ep->port );
+        }
     }
 
     return 0;

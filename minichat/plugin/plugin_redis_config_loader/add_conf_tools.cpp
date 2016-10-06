@@ -9,6 +9,8 @@
 #include "phxrpc/file.h"
 #include "phxrpc/rpc.h"
 
+#include "common/redis_client_config.h"
+
 using namespace phxrpc;
 using namespace std;
 
@@ -39,7 +41,7 @@ int main(int argc, const char *argv[])
     }
 
     r3c::CRedisClient * client = NULL;
-    phxrpc::RedisClientConfig config;
+    RedisClientConfig config;
 
     if(config.Read(redis_cli_conf)) {
         cout << "nodes " << config.GetNodes() << endl;

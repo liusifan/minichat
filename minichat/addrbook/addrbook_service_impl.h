@@ -10,12 +10,10 @@
 #include "phxrpc_addrbook_service.h"
 
 class AddrbookServerConfig;
-class RedisClientFactory;
 
 typedef struct tagServiceArgs {
     AddrbookServerConfig * config;
     //You can add other arguments here and initiate in main().
-    RedisClientFactory * factory;
 }ServiceArgs_t;
 
 class AddrbookServiceImpl : public AddrbookService

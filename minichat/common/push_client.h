@@ -9,9 +9,10 @@
 
 namespace phxrpc {
     class UThreadEpollScheduler;
-    class RedisClientConfig;
     class BaseTcpStream;
 };
+
+class RedisClientConfig;
 
 class PushClient {
 public:
@@ -35,7 +36,7 @@ private:
 
 private:
     phxrpc::UThreadEpollScheduler * scheduler_;
-    phxrpc::RedisClientConfig * config_;
+    RedisClientConfig * config_;
 
     std::map< string, phxrpc::BaseTcpStream * > socket_map_;
 };

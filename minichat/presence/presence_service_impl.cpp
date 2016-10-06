@@ -32,7 +32,7 @@ int PresenceServiceImpl :: PHXEcho( const google::protobuf::StringValue & req,
 int PresenceServiceImpl :: Create( const google::protobuf::StringValue & req,
         presence::Session * resp )
 {
-    PresenceDAO dao( args_.factory->Get() );
+    PresenceDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.Create( req.value().c_str(), resp );
 }
@@ -40,7 +40,7 @@ int PresenceServiceImpl :: Create( const google::protobuf::StringValue & req,
 int PresenceServiceImpl :: Get( const google::protobuf::StringValue & req,
         presence::Session * resp )
 {
-    PresenceDAO dao( args_.factory->Get() );
+    PresenceDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.Get( req.value().c_str(), resp );
 }
@@ -48,7 +48,7 @@ int PresenceServiceImpl :: Get( const google::protobuf::StringValue & req,
 int PresenceServiceImpl :: Remove( const google::protobuf::StringValue & req,
         presence::Session * resp )
 {
-    PresenceDAO dao( args_.factory->Get() );
+    PresenceDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.Remove( req.value().c_str(), resp );
 }

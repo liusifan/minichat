@@ -32,7 +32,7 @@ int ProfileServiceImpl :: PHXEcho( const google::protobuf::StringValue & req,
 int ProfileServiceImpl :: Set( const profile::Setting & req,
         google::protobuf::Empty * resp )
 {
-    ProfileDAO dao( args_.factory->Get() );
+    ProfileDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.Set( req, resp );
 }
@@ -40,7 +40,7 @@ int ProfileServiceImpl :: Set( const profile::Setting & req,
 int ProfileServiceImpl :: Get( const google::protobuf::StringValue & req,
         profile::Setting * resp )
 {
-    ProfileDAO dao( args_.factory->Get() );
+    ProfileDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.Get( req, resp );
 }

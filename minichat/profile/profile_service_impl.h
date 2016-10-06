@@ -11,12 +11,9 @@
 
 class ProfileServerConfig;
 
-class RedisClientFactory;
-
 typedef struct tagServiceArgs {
     ProfileServerConfig * config;
     //You can add other arguments here and initiate in main().
-    RedisClientFactory * factory;
 }ServiceArgs_t;
 
 class ProfileServiceImpl : public ProfileService

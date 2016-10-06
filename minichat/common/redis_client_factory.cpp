@@ -1,10 +1,13 @@
 
 #include "redis_client_factory.h"
+#include "redis_client_config.h"
 
 #include "phxrpc/rpc.h"
 #include "phxrpc/file.h"
 
 #include "r3c/r3c.h"
+
+#include "define.h"
 
 void redis_log_error( const char * fmt, ... )
 {
@@ -32,11 +35,13 @@ void redis_log_debug( const char * fmt, ... )
 
 
 
-RedisClientFactory :: RedisClientFactory( const char * config_file )
+RedisClientFactory :: RedisClientFactory()
 {
     r3c::set_error_log_write( redis_log_error );
     r3c::set_info_log_write( redis_log_info );
     r3c::set_debug_log_write( redis_log_debug );
+
+    const char * config_file = MINI_REDIS_CLIENT_CONFIG;
 
     char path[ 1024 ] = { 0 };
     if( '~' == config_file[0] ) {
@@ -47,7 +52,7 @@ RedisClientFactory :: RedisClientFactory( const char * config_file )
 
     phxrpc::log( LOG_INFO, "read config %s", path );
 
-    phxrpc::RedisClientConfig config;
+    RedisClientConfig config;
 
     if( config.Read( path ) ) {
         nodes_ = config.GetNodes();
@@ -59,6 +64,12 @@ RedisClientFactory :: RedisClientFactory( const char * config_file )
 
 RedisClientFactory :: ~RedisClientFactory()
 {
+}
+
+RedisClientFactory * RedisClientFactory :: GetDefault()
+{
+    static RedisClientFactory factory;
+    return &factory;
 }
 
 r3c::CRedisClient & RedisClientFactory :: Get()

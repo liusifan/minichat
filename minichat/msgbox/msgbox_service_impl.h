@@ -10,16 +10,10 @@
 #include "phxrpc_msgbox_service.h"
 
 class MsgBoxServerConfig;
-class RedisClientFactory;
-
-namespace r3c {
-  class CRedisClient;
-};
 
 typedef struct tagServiceArgs {
     MsgBoxServerConfig * config;
     //You can add other arguments here and initiate in main().
-    RedisClientFactory * factory;
 }ServiceArgs_t;
 
 class MsgBoxServiceImpl : public MsgBoxService
@@ -39,10 +33,6 @@ public:
 
     virtual int GetAll( const google::protobuf::StringValue & req,
         msgbox::MsgIndexList * resp );
-
-public:
-
-    r3c::CRedisClient * GetRedisClient();
 
 private:
     ServiceArgs_t & args_;

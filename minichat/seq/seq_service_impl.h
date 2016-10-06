@@ -10,12 +10,10 @@
 #include "phxrpc_seq_service.h"
 
 class SeqServerConfig;
-class RedisClientFactory;
 
 typedef struct tagServiceArgs {
     SeqServerConfig * config;
     //You can add other arguments here and initiate in main().
-    RedisClientFactory * factory;
 }ServiceArgs_t;
 
 class SeqServiceImpl : public SeqService

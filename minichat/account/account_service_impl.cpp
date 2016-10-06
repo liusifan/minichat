@@ -31,7 +31,7 @@ int AccountServiceImpl :: PHXEcho( const google::protobuf::StringValue & req,
 int AccountServiceImpl :: Set( const account::User & req,
         google::protobuf::Empty * resp )
 {
-    AccountDAO dao( args_.factory->Get() );
+    AccountDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.Set( req );;
 }
@@ -39,7 +39,7 @@ int AccountServiceImpl :: Set( const account::User & req,
 int AccountServiceImpl :: SetPwd( const account::PwdReq & req,
         google::protobuf::Empty * resp )
 {
-    AccountDAO dao( args_.factory->Get() );
+    AccountDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.SetPwd( req );
 }
@@ -47,7 +47,7 @@ int AccountServiceImpl :: SetPwd( const account::PwdReq & req,
 int AccountServiceImpl :: Get( const google::protobuf::StringValue & req,
         account::User * resp )
 {
-    AccountDAO dao( args_.factory->Get() );
+    AccountDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.Get( req.value().c_str(), resp );
 }
@@ -55,7 +55,7 @@ int AccountServiceImpl :: Get( const google::protobuf::StringValue & req,
 int AccountServiceImpl :: Auth( const account::PwdReq & req,
         google::protobuf::Empty * resp )
 {
-    AccountDAO dao( args_.factory->Get() );
+    AccountDAO dao( RedisClientFactory::GetDefault()->Get() );
 
     return dao.Auth( req );
 }

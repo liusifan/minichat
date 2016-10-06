@@ -16,8 +16,6 @@
 #include "phxrpc/http.h"
 #include "phxrpc/file.h"
 
-#include "common/redis_client_factory.h"
-
 using namespace std;
 
 void HttpDispatch( const phxrpc::HttpRequest & request, phxrpc::HttpResponse * response, phxrpc::DispatcherArgs_t * args ) {
@@ -80,8 +78,6 @@ int main( int argc, char * argv[] ) {
 
     ServiceArgs_t service_args;
     service_args.config = &config;
-    //service_args.factory = new RedisClientFactory( "~/minichat/etc/client/redis_client.conf" );
-    service_args.factory = new RedisClientFactory( "~/etc/route/shanghai/mmminichat_route.conf" );
 
     phxrpc::HshaServer server( config.GetHshaServerConfig(), HttpDispatch, &service_args );
     server.RunForever();

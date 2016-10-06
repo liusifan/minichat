@@ -1,5 +1,5 @@
 
-DIRS = plugin common crypt \
+DIRS = common plugin crypt \
 	   cert presence seq account profile addrbook msgbox \
 	   logic \
 	   tools

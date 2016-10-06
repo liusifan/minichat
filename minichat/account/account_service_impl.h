@@ -11,12 +11,9 @@
 
 class AccountServerConfig;
 
-class RedisClientFactory;
-
 typedef struct tagServiceArgs {
     AccountServerConfig * config;
     //You can add other arguments here and initiate in main().
-    RedisClientFactory * factory;
 }ServiceArgs_t;
 
 class AccountServiceImpl : public AccountService
