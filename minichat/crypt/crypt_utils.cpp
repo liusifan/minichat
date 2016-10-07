@@ -8,6 +8,8 @@
 #include "taocrypt/include/rsa.hpp"
 #include "taocrypt/include/aes.hpp"
 
+#include "phxrpc/file.h"
+
 int CryptUtils :: AES128Encrypt( const char * key, const std::string & in, std::string * out )
 {
     const int bs(TaoCrypt::AES::BLOCK_SIZE);
@@ -49,7 +51,11 @@ int CryptUtils :: AES128Decrypt( const char * key, const std::string & in, std::
             (unsigned char*)fixed_in.c_str(), fixed_in.size() );
 
     int padding = *( out->rbegin() );
-    out->resize( out->size() - padding );
+    if( padding <= bs ) {
+        out->resize( out->size() - padding );
+    } else {
+        phxrpc::log( LOG_ERR, "ERR: invalid padding %d", padding );
+    }
 
     return 0;
 }

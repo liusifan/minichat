@@ -136,8 +136,6 @@ int BMUThread::LoadFunc(vector<MsgFromTo> & msg_from_to,
         return 0;
     }
 
-    std::random_device rd;
-
     double time_interval_ms = 1000.0 / (double)qps;
     int seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine generator(seed);
@@ -152,7 +150,7 @@ int BMUThread::LoadFunc(vector<MsgFromTo> & msg_from_to,
         curr_cnt += 1;
         gettimeofday(&begin, NULL);
 
-        const MsgFromTo & item = msg_from_to[ rd() % msg_from_to.size() ];
+        const MsgFromTo & item = msg_from_to[ generator() % msg_from_to.size() ];
 
         logic::SendMsgResponse resp;
         apis_[item.from]->SendMsg( item.to.c_str(), "msg from ", &resp );

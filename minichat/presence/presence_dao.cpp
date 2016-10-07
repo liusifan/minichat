@@ -23,7 +23,7 @@ int PresenceDAO :: Create( const char * username, presence::Session * session )
 
     snprintf( key, sizeof( key ), "session_%s", username );
 
-    std::random_device rd;
+    static std::default_random_engine rd(time(NULL));
     std::stringstream fmt;
     fmt << rd() << rd();
 

@@ -6,7 +6,6 @@
 #include "msgbox/msgbox_client.h"
 #include "seq/seq_client.h"
 #include "account/account_client.h"
-#include "profile/profile_client.h"
 #include "addrbook/addrbook_client.h"
 
 CgiSync :: CgiSync()
