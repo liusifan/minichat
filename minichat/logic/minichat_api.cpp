@@ -206,7 +206,10 @@ int MiniChatAPI :: Sync( logic::SyncResponse * resp_obj, int * msg_count )
         return -1;
     }
 
-    int ret = Call_L1( "/logic/Sync", 2, sync_key_, resp_obj );
+    logic::SyncRequest req_obj;
+    sync_key_.SerializeToString( req_obj.mutable_sync_key() );
+
+    int ret = Call_L1( "/logic/Sync", 2, req_obj, resp_obj );
 
     if( 0 == ret ) {
         sync_key_.ParseFromString( resp_obj->new_sync_key() );
@@ -242,6 +245,11 @@ const char * MiniChatAPI :: GetUsername()
 void MiniChatAPI :: SetUsername( const char * username )
 {
     username_ = username;
+}
+
+logic::SyncKey * MiniChatAPI :: GetSyncKey()
+{
+    return &sync_key_;
 }
 
 int MiniChatAPI :: Call_L1( const char * uri, int cmd_id,

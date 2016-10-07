@@ -36,6 +36,8 @@ public:
     void SetUsername( const char * username );
     const char * GetUsername();
 
+    logic::SyncKey * GetSyncKey();
+
 private:
     int Call_L0( const char * uri, int cmd_id,
             const logic::MiniRequest & req, logic::MiniResponse * resp );

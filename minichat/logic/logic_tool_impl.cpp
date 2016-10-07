@@ -94,6 +94,9 @@ int LogicToolImpl :: Sync( phxrpc::OptMap & opt_map )
 
     api.SetUsername( opt_map.Get( 'u' ) );
 
+    if( opt_map.Has( 'm' ) ) api.GetSyncKey()->set_msg_seq( atoi( opt_map.Get( 'm' ) ) );
+    if( opt_map.Has( 'c' ) ) api.GetSyncKey()->set_contact_seq( atoi( opt_map.Get( 'c' ) ) );
+
     int ret = api.Sync( &resp_obj );
     
     printf( "%s return %d\n", __func__, ret );

@@ -146,8 +146,8 @@ service Logic
 
     rpc Sync( MiniRequest ) returns( MiniResponse ) {
         option( phxrpc.CmdID ) = 2;
-        option( phxrpc.OptString ) = "u:s:";
-        option( phxrpc.Usage ) = "-u <user> -s <synckey>";
+        option( phxrpc.OptString ) = "u:m:c:";
+        option( phxrpc.Usage ) = "-u <user> -m <msg seq> -c <contact seq>";
     }
 
     rpc SendMsg( MiniRequest ) returns( MiniResponse ) {
