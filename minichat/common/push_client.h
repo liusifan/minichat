@@ -34,6 +34,8 @@ public:
 private:
     phxrpc::BaseTcpStream * GetSocket( const char * channel );
 
+    bool EraseSocket( phxrpc::BaseTcpStream * socket );
+
 private:
     phxrpc::UThreadEpollScheduler * scheduler_;
     RedisClientConfig * config_;

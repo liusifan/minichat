@@ -19,7 +19,6 @@ if [ ! -f $MINICHAT_ROOT/sbin/redis-server ]; then
 
     make
     cp src/redis-server $MINICHAT_ROOT/sbin
-    cp redis.conf $MINICHAT_ROOT/etc
 
     cd $MINICHAT_ROOT
 fi

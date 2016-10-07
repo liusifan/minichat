@@ -133,9 +133,7 @@ int BMUThread :: StartAuth()
 
 int BMUThread::LoadFunc(vector<MsgFromTo> & msg_from_to,
         phxrpc::UThreadSocket_t * socket,  
-        int qps,
-        int & curr_cnt,
-        int total_req_cnt)
+        int qps, int & curr_cnt, int total_req_cnt)
 {
     if(0 == msg_from_to.size()) {
         return 0;
@@ -178,6 +176,7 @@ int BMUThread::LoadFunc(vector<MsgFromTo> & msg_from_to,
 
         UThreadWait(*socket, interval);
     }
+
     return 0;
 }
 
@@ -195,20 +194,18 @@ int BMUThread :: StartLoad()
         client.Sub( channel );
 
         for( ; RUNNING == status_; ) {
-
             std::string msg;
             client.Wait( channel, &msg );
 
-            int index = -1;
-            if( msg.size() > 4 ) index = atoi( msg.c_str() + 4 );
+            if( 0 == strcasecmp( "exit", msg.c_str() ) ) break;
+            if( msg.size() < 4 ) continue;
 
+            int index = atoi( msg.c_str() + 4 );
             int offset = index - begin_index_;
 
             if( offset < user_per_uthread_ && offset >= 0 ) {
                 logic::SyncResponse resp;
-
                 apis_[ offset ]->Sync( &resp );
-
                 printf( "sync %s\n", apis_[offset]->GetUsername() );
             }
         }
@@ -221,13 +218,10 @@ int BMUThread :: StartLoad()
 
     // do sendmsg
     phxrpc::__uthread( *scheduler_ ) - [=]( void * ) {
-
-
         int fd = ::socket(AF_INET, SOCK_STREAM, IPPROTO_IP); 
         phxrpc::UThreadSocket_t * socket = scheduler_->CreateSocket(fd);
 
         vector<MsgFromTo> msg_from_to;
-
         // get all contact
         for( int i = 0; i < user_per_uthread_; i++ ) {
             logic::SyncResponse resp;
@@ -235,26 +229,17 @@ int BMUThread :: StartLoad()
 
             const std::vector< std::string > & contacts = apis_[i]->GetContacts();
             if( contacts.size() == 0 ) continue;
-            for(auto & it : contacts) {
-                msg_from_to.push_back( { i, it } );
-            }
+            for(auto & it : contacts) msg_from_to.push_back( { i, it } );
         }
 
-        //int msg_from_to_size = msg_from_to.size();
         int curr_qps = begin_qps_per_uthread_;
         int curr_cnt = 0;
         int total_req_cnt = user_per_uthread_ * msg_per_user_;
 
         int ret = 0;
-
         while(RUNNING == status_) {
-
-            ret =  LoadFunc(msg_from_to,
-                    socket,
-                    curr_qps,
-                    curr_cnt,
-                    total_req_cnt);
-
+            ret =  LoadFunc(msg_from_to, socket,
+                    curr_qps, curr_cnt, total_req_cnt);
             if(1 == ret) {
                 curr_qps += qps_increment_per_uthread_;
                 if(curr_qps > max_qps_per_uthread_) {
@@ -266,8 +251,15 @@ int BMUThread :: StartLoad()
         }
 
         free(socket);
-
         status_ = STOPPING;
+
+        PushClient client( scheduler_ );
+
+        char channel[ 128 ] = { 0 };
+        snprintf( channel, sizeof( channel ), "channel_%d",
+                begin_index_ / PushClient::USER_PER_CHANNEL );
+
+        client.Pub( channel, "exit" );
     };
 
     return 0;

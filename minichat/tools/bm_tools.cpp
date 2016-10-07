@@ -25,7 +25,7 @@ void run( phxrpc::OptMap & opt_map )
 
 void ShowUsage( const char * program )
 {
-    printf( "\nUsage: %s [-t <thread>] [-u <uthread per thread>] "
+    printf( "\nUsage: %s [-t <thread>] [-u <uthread per thread>]\n"
             "          [-b <begin user index>] [-m <msg per user>]\n"
             "          [-q begin qps] [-x max qps] [-i qps time interval] [-n qps increment] \n",
             program );
@@ -39,6 +39,8 @@ void ShowUsage( const char * program )
 int main( int argc, char * argv[] )
 {
     phxrpc::openlog( argv[0], "~/log/error", LOG_DEBUG);
+
+    phxrpc::ClientConfigRegistry::GetDefault()->Stop();
 
     phxrpc::OptMap opt_map( "q:x:i:n:t:u:b:m:v" );
 

@@ -100,7 +100,7 @@ void ShowUsage( const char * program )
     printf ( "\n" );
     printf ( "\t-f inituser -c <count> -t <thread count>\n" );
     printf ( "\t-f genaddr -c <count> -m <mode>\n" );
-    printf ( "\t-f loadaddr -p <data file> -t <thread count>\n" );
+    printf ( "\t-f loadaddr -p <data file> -r <result file> -t <thread count>\n" );
     printf ( "\n" );
 
     exit( -1 );

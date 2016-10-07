@@ -85,11 +85,33 @@ phxrpc::BaseTcpStream * PushClient :: GetSocket( const char * channel )
     return socket;
 }
 
+bool PushClient :: EraseSocket( phxrpc::BaseTcpStream * socket )
+{
+    std::string key = "";
+
+    for( auto & s : socket_map_ ) {
+        if( s.second == socket ) {
+            key = s.first;
+            break;
+        }
+    }
+
+    if( key.size() > 0 ) {
+        socket_map_.erase( key );
+        delete socket;
+    }
+
+    return key.size() > 0;
+}
+
 bool PushClient :: Sub( const char * channel )
 {
     phxrpc::BaseTcpStream * socket = GetSocket( channel );
 
     if( nullptr == socket ) return false;
+
+    auto deleter = [this]( phxrpc::BaseTcpStream * socket ) { EraseSocket( socket ); };
+    std::unique_ptr< phxrpc::BaseTcpStream, decltype( deleter ) > to_erase( socket, deleter );
 
     socket->SetTimeout( 3600 * 1000 );
 
@@ -102,7 +124,10 @@ bool PushClient :: Sub( const char * channel )
     // read success response
     for( ; ; ) {
         if( ! socket->getlineWithTrimRight(line, sizeof(line)).good() ) return false;
-        if( ':' == line[0] ) return true;
+        if( ':' == line[0] ) {
+            to_erase.release();
+            return true;
+        }
     }
 
     return false;
@@ -112,6 +137,9 @@ bool PushClient :: Wait( const char * channel, std::string * msg )
 {
     phxrpc::BaseTcpStream * socket = GetSocket( channel );
     if( NULL == socket ) return false;
+
+    auto deleter = [this]( phxrpc::BaseTcpStream * socket ) { EraseSocket( socket ); };
+    std::unique_ptr< phxrpc::BaseTcpStream, decltype( deleter ) > to_erase( socket, deleter );
 
     char line[1024] = {0};
 
@@ -129,13 +157,18 @@ bool PushClient :: Wait( const char * channel, std::string * msg )
 
     msg->append( line );
 
-    return false;
+    to_erase.release();
+
+    return true;
 }
 
 bool PushClient :: Pub( const char * channel, const char * msg )
 {
     phxrpc::BaseTcpStream * socket = GetSocket( channel );
     if( NULL == socket ) return false;
+
+    auto deleter = [this]( phxrpc::BaseTcpStream * socket ) { EraseSocket( socket ); };
+    std::unique_ptr< phxrpc::BaseTcpStream, decltype( deleter ) > to_erase( socket, deleter );
 
     (*socket) << "PUBLISH " << channel << " \"" << msg << "\"" << std::endl;
 
@@ -144,7 +177,10 @@ bool PushClient :: Pub( const char * channel, const char * msg )
     char line[1024] = {0};
 
     if( ! socket->getlineWithTrimRight(line, sizeof(line)).good() ) return false;
-    if( ':' == line[0] ) return true;
+    if( ':' == line[0] ) {
+        to_erase.release();
+        return true;
+    }
 
     return false;
 }
