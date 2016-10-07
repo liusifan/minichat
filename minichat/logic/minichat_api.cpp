@@ -199,7 +199,7 @@ int MiniChatAPI :: SendMsg( const char * to,
     return Call_L1( "/logic/SendMsg", 3, req, resp_obj );
 }
 
-int MiniChatAPI :: Sync( logic::SyncResponse * resp_obj )
+int MiniChatAPI :: Sync( logic::SyncResponse * resp_obj, int * msg_count )
 {
     if(!config_) {
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
@@ -215,7 +215,7 @@ int MiniChatAPI :: Sync( logic::SyncResponse * resp_obj )
             const logic::CmdItem & item = resp_obj->oplog( i );
 
             if( item.type() == logic::CMD_ADD_MSG ) {
-                //TODO: stat msg count
+                if( NULL != msg_count ) ++(*msg_count);
             }
 
             if( item.type() == logic::CMD_MOD_CONTACT ) {

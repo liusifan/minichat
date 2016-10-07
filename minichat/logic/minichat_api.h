@@ -27,7 +27,7 @@ public:
     int SendMsg( const char * to,
             const char * text, logic::SendMsgResponse * resp_obj );
 
-    int Sync( logic::SyncResponse * resp_obj );
+    int Sync( logic::SyncResponse * resp_obj, int * msg_count = NULL );
 
 public:
 

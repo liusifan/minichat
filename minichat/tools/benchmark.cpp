@@ -22,9 +22,16 @@ typedef struct _MsgFromTo {
     string to;
 } MsgFromTo;
 
+typedef struct tagBMStat {
+    int auth_count, auth_ok_count, auth_fail_count;
+    int msg_count;
+} BMStat_t;
+
+__thread BMStat_t global_bm_stat;
+
 class BMUThread {
 public:
-    BMUThread( phxrpc::UThreadEpollScheduler * scheduler,
+    BMUThread( int tag, phxrpc::UThreadEpollScheduler * scheduler,
             int begin_index, int user_per_uthread, int msg_per_user,
             int begin_qps_per_uthread, int max_qps_per_uthread,
             int qps_time_interval_per_uthread,
@@ -44,6 +51,8 @@ private:
             int & curr_cnt,
             int total_req_cnt); 
 
+private:
+    int tag_;
     phxrpc::UThreadEpollScheduler * scheduler_;
     int begin_index_;
     int user_per_uthread_;
@@ -61,12 +70,14 @@ private:
     int qps_increment_per_uthread_;
 };
 
-BMUThread :: BMUThread( phxrpc::UThreadEpollScheduler * scheduler,
+BMUThread :: BMUThread( int tag, phxrpc::UThreadEpollScheduler * scheduler,
         int begin_index, int user_per_uthread, int msg_per_user,
         int begin_qps_per_uthread, int max_qps_per_uthread,
         int qps_time_interval_per_uthread,
         int qps_increment_per_uthread  )
 {
+    tag_ = tag;
+
     scheduler_ = scheduler;
     user_per_uthread_ = user_per_uthread;
     begin_index_ = begin_index;
@@ -117,10 +128,14 @@ int BMUThread :: StartAuth()
                     char username[ 128 ] = { 0 };
                     snprintf( username, sizeof( username ), "user%d", begin_index_ + i );
 
+                    ++global_bm_stat.auth_count;
+
                     logic::AuthResponse auth_resp;
                     if( 0 == apis_[i]->Auth( username, username, &auth_resp ) ) {
-                        auth_ok_count_++;
+                        ++auth_ok_count_;
+                        ++global_bm_stat.auth_ok_count;
                     } else {
+                        ++global_bm_stat.auth_fail_count;
                         printf("auth %s failed\n", username);
                     }
                 }
@@ -160,12 +175,17 @@ int BMUThread::LoadFunc(vector<MsgFromTo> & msg_from_to,
         logic::SendMsgResponse resp;
         apis_[item.from]->SendMsg( item.to.c_str(), "msg from ", &resp );
 
+        ++global_bm_stat.msg_count;
+
         gettimeofday(&end, NULL);
         unsigned long long usec = (end.tv_sec - begin.tv_sec) * 1000000 + (end.tv_usec - begin.tv_usec);
 
-        printf( "send msg from %s to %s cost %lld usec\n",
+        if( 0 == ( global_bm_stat.msg_count % 100 ) ) {
+            printf( "send msg from %s to %s cost %lld usec\n",
                 apis_[item.from]->GetUsername(), item.to.c_str(),
                 usec );
+            printf( "tag %d, msg_count %d\n", tag_, global_bm_stat.msg_count );
+        }
 
         usec = (end.tv_sec - begin_time.tv_sec) * 1000000 + (end.tv_usec - begin_time.tv_usec);
         if(usec >= (unsigned long long)qps_time_interval_per_uthread_ * 1000000) {
@@ -183,6 +203,7 @@ int BMUThread::LoadFunc(vector<MsgFromTo> & msg_from_to,
 
 int BMUThread :: StartLoad()
 {
+#if 0 // use sync_tools to sync
     // waiting for push
     phxrpc::__uthread( *scheduler_ ) - [=]( void * ) {
         PushClient client( scheduler_ );
@@ -213,6 +234,7 @@ int BMUThread :: StartLoad()
         status_ = STOPPED;
         printf("stop sync uthread\n");
     };
+#endif
 
     printf( "do sendmsg\n" );
 
@@ -251,7 +273,6 @@ int BMUThread :: StartLoad()
         }
 
         free(socket);
-        status_ = STOPPING;
 
         PushClient client( scheduler_ );
 
@@ -260,6 +281,8 @@ int BMUThread :: StartLoad()
                 begin_index_ / PushClient::USER_PER_CHANNEL );
 
         client.Pub( channel, "exit" );
+
+        status_ = STOPPED;
     };
 
     return 0;
@@ -267,7 +290,7 @@ int BMUThread :: StartLoad()
 
 //===================================================================
 
-int BMThread( int begin_index, int uthread_per_thread, int msg_per_user,
+int BMThread( int tag, int begin_index, int uthread_per_thread, int msg_per_user,
         int begin_qps_per_uthread, int max_qps_per_uthread, int qps_time_interval_per_uthread,
         int qps_increment_per_uthread )
 {
@@ -276,7 +299,7 @@ int BMThread( int begin_index, int uthread_per_thread, int msg_per_user,
     phxrpc::UThreadEpollScheduler scheduler( 64 * 1024, uthread_per_thread * 2 );
 
     for( int i = 0; i < uthread_per_thread; i++ ) {
-        uthreads[i] = new BMUThread( &scheduler,
+        uthreads[i] = new BMUThread( tag * 1000 + i, &scheduler,
                 begin_index + i * PushClient::USER_PER_CHANNEL,
                 PushClient::USER_PER_CHANNEL, msg_per_user,
                 begin_qps_per_uthread, max_qps_per_uthread,
@@ -288,6 +311,9 @@ int BMThread( int begin_index, int uthread_per_thread, int msg_per_user,
     printf( "begin auth\n" );
 
     scheduler.Run();
+
+    printf( "auth %d, ok %d, fail %d\n", global_bm_stat.auth_count,
+            global_bm_stat.auth_ok_count, global_bm_stat.auth_fail_count );
 
     for( int i = 0; i < uthread_per_thread; i++ ) {
         uthreads[i]->StartLoad();
@@ -314,7 +340,7 @@ int benchmark( int begin_index, int thread_count,
     int unit = PushClient::USER_PER_CHANNEL * uthread_per_thread;
 
     for( int i = 0; i < thread_count; i++ ) {
-        threads[i] = new std::thread( BMThread, begin_index + i * unit,
+        threads[i] = new std::thread( BMThread, i, begin_index + i * unit,
                 uthread_per_thread, msg_per_user,
                 begin_qps_per_uthread, max_qps_per_uthread, qps_time_interval_per_uthread,
                 qps_increment_per_uthread );
