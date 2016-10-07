@@ -79,13 +79,16 @@ int GenAddrbook( phxrpc::OptMap & opt_map )
 int LoadAddrbook( phxrpc::OptMap & opt_map )
 {
     if( NULL == opt_map.Get( 'p' ) ) return -1;
+    if( NULL == opt_map.Get( 'r' ) ) return -1;
 
     const char * path = opt_map.Get( 'p' );
+    const char * result_path = opt_map.Get( 'r' );
+
 
     int thread_count = 1;
     if( NULL != opt_map.Get( 't' ) ) thread_count = atoi( opt_map.Get( 't' ) );
 
-    LoadAddrbook( path, thread_count );
+    LoadAddrbook( path, result_path, thread_count );
 
     return 0;
 }
@@ -109,7 +112,7 @@ int main( int argc, char * *argv )
 
     phxrpc::ClientConfigRegistry::GetDefault()->Stop();
 
-    phxrpc::OptMap opt_map( "f:c:m:t:p:v" );
+    phxrpc::OptMap opt_map( "r:f:c:m:t:p:v" );
 
     if( ! opt_map.Parse( argc, argv ) ) ShowUsage( argv[0] );
 

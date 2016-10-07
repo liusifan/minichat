@@ -1,11 +1,12 @@
 
-#include "init_tools.h"
 
 #include <map>
+#include <string>
 #include <set>
 #include <random>
 #include <iostream>
 
+#include "init_tools.h"
 #include "addrbook/addrbook_client.h"
 #include "addrbook/addrbook_client_long_conn.h"
 
@@ -268,19 +269,37 @@ void PrintContactList( const int count, const ContactList_t * list )
     PrintDetail( "real", count, p );
 }
 
-void CallAddrbook( int count, ContactList_t * list, int begin, int end )
+void CallAddrbook( int count, ContactList_t * list, int begin, int end,
+       set<string> * result_set,
+       const char * result_path )
 {
+
+    FILE * result_fp = fopen( result_path, "a+" );
+    if( NULL == result_fp ) {
+        printf("fopen %s failed errno %d \n", result_path, errno);
+        return;
+    }
+
     if( end > count ) end = count;
 
     int unit = ( end - begin ) / 100;
     if( unit <= 0 ) unit = 1;
 
-    //AddrbookClient client;
     AddrbookClientLongConn client;
+    //AddrbookClient client;
     char from[ 128 ] = { 0 }, to[ 128 ] = { 0 };
 
     for( int i = begin; i < end; i++ ) {
         snprintf( from, sizeof( from ), "user%d", i );
+        if(result_set->find(from) != result_set->end()) {
+            if( i > 0 && ( 0 == i % unit ) ) {
+                printf( "#" );
+                fflush( stdout );
+            }
+            continue;
+        }
+
+        bool is_all_success = true;
         for( auto & c : list[i].contacts ) {
             snprintf( to, sizeof( to ), "user%d", c );
 
@@ -301,26 +320,38 @@ void CallAddrbook( int count, ContactList_t * list, int begin, int end )
                     break;
                 }
             }
-            if(k == 3) printf( "add %s - %s fail\n", from, to );
+            if(k == 3) {
+                printf( "add %s - %s fail\n", from, to );
+                is_all_success = false;
+            }
         }
 
         if( i > 0 && ( 0 == i % unit ) ) {
             printf( "#" );
             fflush( stdout );
         }
+
+        if(is_all_success) {
+            fprintf(result_fp, "%s\n", from);
+        }
     }
 
     printf( "\naddrbook %d - %d done\n", begin, end );
+    fclose( result_fp );
 }
 
-int SaveAddrbook( int count, ContactList_t * list, int thread_count )
+int SaveAddrbook( int count, ContactList_t * list,
+        set<string> * result_map,
+        const char * result_path,
+        int thread_count )
 {
     int unit = ( count + thread_count - 1 ) / thread_count;
 
     std::thread * threads[ thread_count ];
 
     for( int i = 0; i < thread_count; i++ ) {
-        threads[i] = new std::thread( CallAddrbook, count, list, unit * i, unit * ( i + 1 ) );
+        threads[i] = new std::thread( CallAddrbook, count, list, unit * i, unit * ( i + 1 ),
+               result_map, result_path );
     }
 
     for( int i = 0; i < thread_count; i++ ) {
@@ -378,11 +409,12 @@ int GenAddrbook( const int count, int mode, const char * path )
     return 0;
 }
 
-int LoadAddrbook( const char * path, int thread_count )
+int LoadAddrbook( const char * path, const char * result_path, int thread_count )
 {
     int count = 0;
     ContactList_t * list = NULL;
-
+    set<string> result_set;
+    
     FILE * fp = fopen( path, "r" );
     if( NULL != fp ) {
         char line[ 128 ] = { 0 };
@@ -412,11 +444,23 @@ int LoadAddrbook( const char * path, int thread_count )
         fclose( fp );
     }
 
+    FILE * result_fp = fopen( result_path, "r" );
+    if( NULL != result_fp ) {
+        char line[ 128 ] = { 0 };
+        while( NULL != fgets( line, sizeof( line ), result_fp ) ) {
+            int len = strlen(line);
+            line[len - 1] = '\0';
+            result_set.insert(line);
+        }
+        fclose( result_fp );
+    }
+
+
     if( NULL != list ) {
 
         PrintContactList( count, list );
 
-        SaveAddrbook( count, list, thread_count );
+        SaveAddrbook( count, list, &result_set, result_path, thread_count );
 
         delete [] list;
     }
