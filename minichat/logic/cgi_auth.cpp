@@ -96,23 +96,27 @@ static int DoManualAuth( const logic::ReqHead & head,
 {
     int ret = 0;
 
-    logic::ManualAuthReq auth_req;
+    logic::ManualAuthReq manual_auth_req;
 
     // 1. rsa decrypt
     CertClient cert_client;
     {
-        cert::CodecBuff enc_buff;
-        google::protobuf::BytesValue dec_buff;
+        if( logic::ENC_RSA == head.enc_algo() ) {
+            cert::CodecBuff enc_buff;
+            google::protobuf::BytesValue dec_buff;
 
-        enc_buff.set_buff( req_obj.manual_auth_req() );
-        ret = cert_client.RSADecrypt( enc_buff, &dec_buff );
+            enc_buff.set_buff( req_obj.manual_auth_req() );
+            ret = cert_client.RSADecrypt( enc_buff, &dec_buff );
 
-        if( 0 != ret ) {
-            phxrpc::log( LOG_ERR, "ERR: RSADecrypt %d, fail", ret );
-            return ret;
+            if( 0 != ret ) {
+                phxrpc::log( LOG_ERR, "ERR: RSADecrypt %d, fail", ret );
+                return ret;
+            }
+
+            if( ! manual_auth_req.ParseFromString( dec_buff.value() ) ) return -2;
+        } else {
+            if( ! manual_auth_req.ParseFromString( req_obj.manual_auth_req() ) ) return -2;
         }
-
-        if( ! auth_req.ParseFromString( dec_buff.value() ) ) return -2;
     }
 
     // 2. auth
@@ -122,7 +126,7 @@ static int DoManualAuth( const logic::ReqHead & head,
         google::protobuf::Empty empty;
 
         pwd_req.set_username( head.username() );
-        pwd_req.set_pwd_md5( auth_req.pwd_md5() );
+        pwd_req.set_pwd_md5( manual_auth_req.pwd_md5() );
 
         ret = acct_client.Auth( pwd_req, &empty );
 
@@ -132,7 +136,7 @@ static int DoManualAuth( const logic::ReqHead & head,
         }
     }
 
-    * rand_key = auth_req.rand_key();
+    * rand_key = manual_auth_req.rand_key();
 
     return ret;
 }

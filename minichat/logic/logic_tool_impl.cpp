@@ -48,7 +48,10 @@ int LogicToolImpl :: Auth( phxrpc::OptMap & opt_map )
 
     logic::AuthResponse resp_obj, auth_resp_obj;
 
-    int ret = api.Auth( opt_map.Get( 'u' ), opt_map.Get( 'p' ), &resp_obj );
+    bool use_rsa = true;
+    if( opt_map.Has( 'r' ) ) use_rsa = ( 0 != atoi( opt_map.Get( 'r' ) ) );
+
+    int ret = api.Auth( opt_map.Get( 'u' ), opt_map.Get( 'p' ), &resp_obj, use_rsa );
 
     printf( "%s return %d\n", __func__, ret );
     printf( "resp: {\n%s}\n", resp_obj.DebugString().c_str() );

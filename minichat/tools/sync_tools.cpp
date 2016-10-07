@@ -104,7 +104,7 @@ int SyncUThread :: StartSync()
 
                 if( 0 == ( global_sync_stat.sync_count % 100 ) ) {
                     printf( "sync %s\n", apis_[offset]->GetUsername() );
-                    printf( "tag %d, push_client %d, sync_count %d, msg_count %d\n",
+                    printf( "tag %d, push_count %d, sync_count %d, msg_count %d\n",
                             tag_, global_sync_stat.push_count, global_sync_stat.sync_count,
                             global_sync_stat.msg_count );
                 }

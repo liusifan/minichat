@@ -140,8 +140,8 @@ service Logic
 {
     rpc Auth( MiniRequest ) returns( MiniResponse ) {
         option( phxrpc.CmdID ) = 1;
-        option( phxrpc.OptString ) = "u:p:";
-        option( phxrpc.Usage ) = "-u <user> -p <pwd_md5>";
+        option( phxrpc.OptString ) = "u:p:r:";
+        option( phxrpc.Usage ) = "-u <user> -p <pwd_md5> -r <use rsa>";
     }
 
     rpc Sync( MiniRequest ) returns( MiniResponse ) {

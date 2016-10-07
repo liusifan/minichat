@@ -63,7 +63,8 @@ bool MiniChatAPI :: IsAuthOK()
     return session_key_.size() > 0;
 }
 
-int MiniChatAPI :: Auth( const char * username, const char * pwd_md5, logic::AuthResponse * resp_obj )
+int MiniChatAPI :: Auth( const char * username, const char * pwd_md5,
+        logic::AuthResponse * resp_obj, bool use_rsa )
 {
     if(!config_) {
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
@@ -75,7 +76,7 @@ int MiniChatAPI :: Auth( const char * username, const char * pwd_md5, logic::Aut
     logic::ManualAuthReq manual_auth_req;;
     {
         req.mutable_head()->set_username( username );
-        req.mutable_head()->set_enc_algo( logic::ENC_NONE );
+        req.mutable_head()->set_enc_algo( use_rsa ? logic::ENC_RSA : logic::ENC_NONE );
 
         manual_auth_req.set_pwd_md5( pwd_md5 );
 
@@ -86,7 +87,7 @@ int MiniChatAPI :: Auth( const char * username, const char * pwd_md5, logic::Aut
     }
 
     logic::AuthRequest req_obj;
-    {
+    if( use_rsa ) {
         std::string tmp_buff;
         manual_auth_req.SerializeToString( &tmp_buff );
 
@@ -100,9 +101,11 @@ int MiniChatAPI :: Auth( const char * username, const char * pwd_md5, logic::Aut
 
         enc.Encrypt( (unsigned char*)tmp_buff.c_str(), tmp_buff.size(),
                 (unsigned char*)req_obj.manual_auth_req().data(), rng);
-
-        req_obj.SerializeToString( req.mutable_req_buff() );
+    } else {
+        manual_auth_req.SerializeToString( req_obj.mutable_manual_auth_req() );
     }
+
+    req_obj.SerializeToString( req.mutable_req_buff() );
 
     int ret = Call_L0( "/logic/Auth", 1, req, &resp );
 

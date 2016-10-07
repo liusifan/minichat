@@ -18,7 +18,8 @@ public:
     MiniChatAPI( phxrpc::UThreadEpollScheduler * scheduler = NULL );
     ~MiniChatAPI();
 
-    int Auth( const char * username, const char * pwd_md5, logic::AuthResponse * resp_obj );
+    int Auth( const char * username, const char * pwd_md5,
+            logic::AuthResponse * resp_obj, bool use_rsa = true );
 
     int AutoAuth( logic::AuthResponse * resp_obj );
 

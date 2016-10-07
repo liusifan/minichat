@@ -9,26 +9,32 @@
 
 void run( phxrpc::OptMap & opt_map )
 {
-    int thread_count = atoi( opt_map.Get( 't' ) );
-    int uthread_per_thread = atoi( opt_map.Get( 'u' ) );
-    int begin_index = atoi( opt_map.Get( 'b' ) );
-    int msg_per_user = atoi( opt_map.Get( 'm' ) );
-    int begin_qps_per_uthread = atoi( opt_map.Get( 'q' ) );
-    int max_qps_per_uthread = atoi( opt_map.Get( 'x' ) );
-    int qps_time_interval_per_uthread = atoi( opt_map.Get( 'i' ) );
-    int qps_increment_per_uthread = atoi( opt_map.Get( 'n' ) );
+    BMArgs_t args;
 
-    benchmark( begin_index, thread_count, uthread_per_thread, msg_per_user,
-           begin_qps_per_uthread, max_qps_per_uthread, qps_time_interval_per_uthread,
-          qps_increment_per_uthread );
+    args.begin_index = atoi( opt_map.Get( 'b' ) );
+
+    args.thread_count = atoi( opt_map.Get( 't' ) );
+    args.uthread_per_thread = atoi( opt_map.Get( 'u' ) );
+    args.user_per_uthread = PushClient::USER_PER_CHANNEL;
+    args.msg_per_user = atoi( opt_map.Get( 'm' ) );
+
+    args.begin_qps_per_uthread = atoi( opt_map.Get( 'q' ) );
+    args.max_qps_per_uthread = atoi( opt_map.Get( 'x' ) );
+    args.qps_time_interval_per_uthread = atoi( opt_map.Get( 'i' ) );
+    args.qps_increment_per_uthread = atoi( opt_map.Get( 'n' ) );
+
+    args.auth_use_rsa = false;
+    if( opt_map.Has( 'r' ) ) args.auth_use_rsa = ( 0 != atoi( opt_map.Get( 'r' ) ) );
+
+    benchmark( args );
 }
 
 void ShowUsage( const char * program )
 {
-    printf( "\nUsage: %s [-t <thread>] [-u <uthread per thread>]\n"
-            "          [-b <begin user index>] [-m <msg per user>]\n"
-            "          [-q begin qps] [-x max qps] [-i qps time interval] [-n qps increment] \n",
-            program );
+    printf( "\nUsage: %s [-b <begin user index ] [-r <auth use rsa>]\n", program );
+    printf( "\t[-t <thread>] [-u <uthread per thread>] [-m <msg per user>]\n" );
+    printf( "\t[-q begin qps] [-x max qps] [-i qps time interval] [-n qps increment]\n" );
+
     printf( "\n" );
     printf( "\t%d users per uthread/channel as default\n", PushClient::USER_PER_CHANNEL );
     printf( "\n" );
@@ -42,7 +48,7 @@ int main( int argc, char * argv[] )
 
     phxrpc::ClientConfigRegistry::GetDefault()->Stop();
 
-    phxrpc::OptMap opt_map( "q:x:i:n:t:u:b:m:v" );
+    phxrpc::OptMap opt_map( "q:x:i:n:t:u:b:m:r:v" );
 
     if( ! opt_map.Parse( argc, argv ) ) ShowUsage( argv[0] );
 
