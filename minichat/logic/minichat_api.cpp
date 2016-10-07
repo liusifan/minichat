@@ -80,7 +80,8 @@ int MiniChatAPI :: Auth( const char * username, const char * pwd_md5,
 
         manual_auth_req.set_pwd_md5( pwd_md5 );
 
-        std::default_random_engine eng(time(NULL));
+        int seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::default_random_engine eng(seed);
         std::uniform_int_distribution<unsigned int> dis(0, std::numeric_limits<unsigned int>::max());  
         std::stringstream fmt;
         fmt << dis(eng) << dis(eng);
@@ -143,7 +144,8 @@ int MiniChatAPI :: AutoAuth( logic::AuthResponse * resp_obj )
 
         auth_req.set_ticket( auto_auth_ticket_ );
 
-        std::default_random_engine eng(time(NULL));
+        int seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::default_random_engine eng(seed);
         std::uniform_int_distribution<unsigned int> dis(0, std::numeric_limits<unsigned int>::max());  
         std::stringstream fmt;
         fmt << dis(eng) << dis(eng);
@@ -195,7 +197,8 @@ int MiniChatAPI :: SendMsg( const char * to,
         msg->set_to( to );
         msg->set_content( text );
 
-        std::default_random_engine eng(time(NULL));
+        int seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::default_random_engine eng(seed);
         std::uniform_int_distribution<unsigned int> dis(0, std::numeric_limits<unsigned int>::max());  
         std::stringstream fmt;
         fmt << dis(eng) << dis(eng);
