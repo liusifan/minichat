@@ -1,11 +1,11 @@
 
-#include "minichat_api.h"
-
-#include "logic_client.h"
 
 #include <random>     // random_device, uniform_int_distribution
 #include <sstream>
+#include <limits>
 
+#include "minichat_api.h"
+#include "logic_client.h"
 #include "taocrypt/include/config.h"
 #include "taocrypt/include/rsa.hpp"
 
@@ -80,9 +80,10 @@ int MiniChatAPI :: Auth( const char * username, const char * pwd_md5,
 
         manual_auth_req.set_pwd_md5( pwd_md5 );
 
-        std::random_device rd;
+        std::default_random_engine eng(time(NULL));
+        std::uniform_int_distribution<unsigned int> dis(0, std::numeric_limits<unsigned int>::max());  
         std::stringstream fmt;
-        fmt << rd() << rd();
+        fmt << dis(eng) << dis(eng);
         manual_auth_req.set_rand_key( fmt.str() );
     }
 
@@ -142,9 +143,10 @@ int MiniChatAPI :: AutoAuth( logic::AuthResponse * resp_obj )
 
         auth_req.set_ticket( auto_auth_ticket_ );
 
-        std::random_device rd;
+        std::default_random_engine eng(time(NULL));
+        std::uniform_int_distribution<unsigned int> dis(0, std::numeric_limits<unsigned int>::max());  
         std::stringstream fmt;
-        fmt << rd() << rd();
+        fmt << dis(eng) << dis(eng);
 
         auth_req.set_rand_key( fmt.str() );
     }
@@ -193,9 +195,10 @@ int MiniChatAPI :: SendMsg( const char * to,
         msg->set_to( to );
         msg->set_content( text );
 
-        std::random_device rd;
+        std::default_random_engine eng(time(NULL));
+        std::uniform_int_distribution<unsigned int> dis(0, std::numeric_limits<unsigned int>::max());  
         std::stringstream fmt;
-        fmt << rd() << rd();
+        fmt << dis(eng) << dis(eng);
         msg->set_uuid( fmt.str() );
     }
 
