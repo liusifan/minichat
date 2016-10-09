@@ -6,9 +6,9 @@
 
 #pragma once
 
+#include <string>
 #include "profile.pb.h"
 #include "phxrpc/rpc.h"
-
 
 class ProfileClient
 {
@@ -28,8 +28,8 @@ public:
     int Get( const google::protobuf::StringValue & req,
         profile::Setting * resp );
 
+
 private:
     std::string package_name_;
     phxrpc::ClientConfig * config_;
-
 };

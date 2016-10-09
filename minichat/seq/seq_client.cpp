@@ -37,6 +37,7 @@ SeqClient :: SeqClient()
     if(!config_) {
         return;
     }
+
     static std::mutex monitor_mutex;
     if ( !global_seqclient_monitor_.get() ) { 
         monitor_mutex.lock();
@@ -60,24 +61,19 @@ int SeqClient :: PHXEcho( const google::protobuf::StringValue & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_seqclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_seqclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                SeqStub stub( socket, *(global_seqclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.PHXEcho( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            SeqStub stub(socket, *(global_seqclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.PHXEcho(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int SeqClient :: PhxBatchEcho( const google::protobuf::StringValue & req,
@@ -120,23 +116,19 @@ int SeqClient :: Alloc( const seq::AllocReq & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_seqclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_seqclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                SeqStub stub( socket, *(global_seqclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.Alloc( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            SeqStub stub(socket, *(global_seqclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.Alloc(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int SeqClient :: Get( const google::protobuf::StringValue & req,
@@ -146,23 +138,19 @@ int SeqClient :: Get( const google::protobuf::StringValue & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_seqclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_seqclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                SeqStub stub( socket, *(global_seqclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.Get( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            SeqStub stub(socket, *(global_seqclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.Get(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 

@@ -61,23 +61,19 @@ int AddrbookClient :: PHXEcho( const google::protobuf::StringValue & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_addrbookclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_addrbookclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                AddrbookStub stub( socket, *(global_addrbookclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.PHXEcho( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            AddrbookStub stub(socket, *(global_addrbookclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.PHXEcho(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int AddrbookClient :: PhxBatchEcho( const google::protobuf::StringValue & req,
@@ -120,23 +116,19 @@ int AddrbookClient :: Set( const addrbook::ContactReq & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_addrbookclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_addrbookclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                AddrbookStub stub( socket, *(global_addrbookclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.Set( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            AddrbookStub stub(socket, *(global_addrbookclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.Set(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int AddrbookClient :: GetAll( const google::protobuf::StringValue & req,
@@ -146,23 +138,19 @@ int AddrbookClient :: GetAll( const google::protobuf::StringValue & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_addrbookclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_addrbookclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                AddrbookStub stub( socket, *(global_addrbookclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.GetAll( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            AddrbookStub stub(socket, *(global_addrbookclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.GetAll(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int AddrbookClient :: GetOne( const addrbook::GetOneReq & req,
@@ -172,23 +160,19 @@ int AddrbookClient :: GetOne( const addrbook::GetOneReq & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_addrbookclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_addrbookclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                AddrbookStub stub( socket, *(global_addrbookclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.GetOne( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            AddrbookStub stub(socket, *(global_addrbookclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.GetOne(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int AddrbookClient :: GetBySeq( const addrbook::GetBySeqReq & req,
@@ -198,23 +182,19 @@ int AddrbookClient :: GetBySeq( const addrbook::GetBySeqReq & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_addrbookclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_addrbookclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                AddrbookStub stub( socket, *(global_addrbookclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.GetBySeq( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            AddrbookStub stub(socket, *(global_addrbookclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.GetBySeq(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 

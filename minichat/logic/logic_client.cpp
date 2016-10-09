@@ -61,23 +61,19 @@ int LogicClient :: PHXEcho( const google::protobuf::StringValue & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_logicclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_logicclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                LogicStub stub( socket, *(global_logicclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.PHXEcho( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            LogicStub stub(socket, *(global_logicclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.PHXEcho(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int LogicClient :: PhxBatchEcho( const google::protobuf::StringValue & req,
@@ -120,23 +116,19 @@ int LogicClient :: Auth( const logic::MiniRequest & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_logicclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_logicclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                LogicStub stub( socket, *(global_logicclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.Auth( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            LogicStub stub(socket, *(global_logicclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.Auth(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int LogicClient :: Sync( const logic::MiniRequest & req,
@@ -146,23 +138,19 @@ int LogicClient :: Sync( const logic::MiniRequest & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_logicclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_logicclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                LogicStub stub( socket, *(global_logicclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.Sync( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            LogicStub stub(socket, *(global_logicclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.Sync(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int LogicClient :: SendMsg( const logic::MiniRequest & req,
@@ -172,23 +160,41 @@ int LogicClient :: SendMsg( const logic::MiniRequest & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_logicclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_logicclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                LogicStub stub( socket, *(global_logicclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.SendMsg( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            LogicStub stub(socket, *(global_logicclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.SendMsg(req, resp);
-        } 
+    return ret;
+}
+
+int LogicClient :: FakeDoAll( const logic::MiniRequest & req,
+        logic::MiniResponse * resp )
+{
+    if(!config_) {
+        phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
+        return -1;
     }
 
-    return -1;
+    int ret = phxrpc::ClientCall( *config_, *(global_logicclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                LogicStub stub( socket, *(global_logicclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.FakeDoAll( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
+
+    return ret;
 }
 
 

@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <string>
 #include "seq.pb.h"
 #include "phxrpc/rpc.h"
 
@@ -27,8 +28,8 @@ public:
     int Get( const google::protobuf::StringValue & req,
         seq::SyncKey * resp );
 
+
 private:
     std::string package_name_;
     phxrpc::ClientConfig * config_;
-
 };

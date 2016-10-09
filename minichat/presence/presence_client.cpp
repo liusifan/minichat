@@ -37,6 +37,7 @@ PresenceClient :: PresenceClient()
     if(!config_) {
         return;
     }
+
     static std::mutex monitor_mutex;
     if ( !global_presenceclient_monitor_.get() ) { 
         monitor_mutex.lock();
@@ -60,23 +61,19 @@ int PresenceClient :: PHXEcho( const google::protobuf::StringValue & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_presenceclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_presenceclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                PresenceStub stub( socket, *(global_presenceclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.PHXEcho( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            PresenceStub stub(socket, *(global_presenceclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.PHXEcho(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int PresenceClient :: PhxBatchEcho( const google::protobuf::StringValue & req,
@@ -119,23 +116,19 @@ int PresenceClient :: Create( const google::protobuf::StringValue & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_presenceclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_presenceclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                PresenceStub stub( socket, *(global_presenceclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.Create( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            PresenceStub stub(socket, *(global_presenceclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.Create(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int PresenceClient :: Get( const google::protobuf::StringValue & req,
@@ -145,23 +138,19 @@ int PresenceClient :: Get( const google::protobuf::StringValue & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_presenceclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_presenceclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                PresenceStub stub( socket, *(global_presenceclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.Get( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            PresenceStub stub(socket, *(global_presenceclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.Get(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int PresenceClient :: Remove( const google::protobuf::StringValue & req,
@@ -171,23 +160,19 @@ int PresenceClient :: Remove( const google::protobuf::StringValue & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_presenceclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_presenceclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                PresenceStub stub( socket, *(global_presenceclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.Remove( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            PresenceStub stub(socket, *(global_presenceclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.Remove(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 

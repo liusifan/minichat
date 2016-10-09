@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <string>
 #include "addrbook.pb.h"
 #include "phxrpc/rpc.h"
 
@@ -33,8 +34,8 @@ public:
     int GetBySeq( const addrbook::GetBySeqReq & req,
         addrbook::ContactList * resp );
 
+
 private:
     std::string package_name_;
     phxrpc::ClientConfig * config_;
-
 };

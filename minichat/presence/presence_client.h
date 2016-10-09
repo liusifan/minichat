@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <string>
 #include "presence.pb.h"
 #include "phxrpc/rpc.h"
 
@@ -29,6 +30,7 @@ public:
 
     int Remove( const google::protobuf::StringValue & req,
         presence::Session * resp );
+
 
 private:
     std::string package_name_;

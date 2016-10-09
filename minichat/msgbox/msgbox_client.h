@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <string>
 #include "msgbox.pb.h"
 #include "phxrpc/rpc.h"
 
@@ -30,8 +31,8 @@ public:
     int GetAll( const google::protobuf::StringValue & req,
         msgbox::MsgIndexList * resp );
 
+
 private:
     std::string package_name_;
     phxrpc::ClientConfig * config_;
-
 };

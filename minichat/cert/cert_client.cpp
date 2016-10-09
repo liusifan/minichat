@@ -17,7 +17,6 @@
 
 static phxrpc::ClientMonitorPtr global_certclient_monitor_;
 
-
 class CertClientRegister
 {
 public:
@@ -62,23 +61,19 @@ int CertClient :: PHXEcho( const google::protobuf::StringValue & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_certclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_certclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                CertStub stub( socket, *(global_certclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.PHXEcho( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            CertStub stub(socket, *(global_certclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.PHXEcho(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int CertClient :: PhxBatchEcho( const google::protobuf::StringValue & req,
@@ -121,23 +116,19 @@ int CertClient :: RSADecrypt( const cert::CodecBuff & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_certclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_certclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                CertStub stub( socket, *(global_certclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.RSADecrypt( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            CertStub stub(socket, *(global_certclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.RSADecrypt(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int CertClient :: AESEncrypt( const cert::CodecBuff & req,
@@ -147,23 +138,19 @@ int CertClient :: AESEncrypt( const cert::CodecBuff & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_certclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_certclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                CertStub stub( socket, *(global_certclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.AESEncrypt( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            CertStub stub(socket, *(global_certclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.AESEncrypt(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 int CertClient :: AESDecrypt( const cert::CodecBuff & req,
@@ -173,23 +160,19 @@ int CertClient :: AESDecrypt( const cert::CodecBuff & req,
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
         return -1;
     }
-    const phxrpc::Endpoint_t * ep = config_->GetRandom();
 
-    if(ep != nullptr) {
-        phxrpc::BlockTcpStream socket;
-        bool open_ret = phxrpc::PhxrpcTcpUtils::Open(&socket, ep->ip, ep->port,
-                    config_->GetConnectTimeoutMS(), NULL, 0, 
-                    *(global_certclient_monitor_.get()));
-        if ( open_ret ) {
-            socket.SetTimeout(config_->GetSocketTimeoutMS());
+    int ret = phxrpc::ClientCall( *config_, *(global_certclient_monitor_.get()),
+            [=,&req,&resp]( phxrpc::BaseTcpStream & socket ) -> int {
+                CertStub stub( socket, *(global_certclient_monitor_.get()) );
+                stub.SetConfig( config_ );
+                return stub.AESDecrypt( req, resp );
+            },
+            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+                return config.GetRandom();
+            }
+    );
 
-            CertStub stub(socket, *(global_certclient_monitor_.get()));
-            stub.SetConfig(config_);
-            return stub.AESDecrypt(req, resp);
-        } 
-    }
-
-    return -1;
+    return ret;
 }
 
 

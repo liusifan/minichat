@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <string>
 #include "account.pb.h"
 #include "phxrpc/rpc.h"
 
@@ -32,6 +33,7 @@ public:
 
     int Auth( const account::PwdReq & req,
         google::protobuf::Empty * resp );
+
 
 private:
     std::string package_name_;

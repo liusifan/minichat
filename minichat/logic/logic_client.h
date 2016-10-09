@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <string>
 #include "logic.pb.h"
 #include "phxrpc/rpc.h"
 
@@ -30,8 +31,11 @@ public:
     int SendMsg( const logic::MiniRequest & req,
         logic::MiniResponse * resp );
 
+    int FakeDoAll( const logic::MiniRequest & req,
+        logic::MiniResponse * resp );
+
+
 private:
     std::string package_name_;
     phxrpc::ClientConfig * config_;
-
 };

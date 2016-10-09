@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <string>
 #include "cert.pb.h"
 #include "phxrpc/rpc.h"
 
@@ -30,8 +31,8 @@ public:
     int AESDecrypt( const cert::CodecBuff & req,
         google::protobuf::BytesValue * resp );
 
+
 private:
     std::string package_name_;
     phxrpc::ClientConfig * config_;
-
 };
