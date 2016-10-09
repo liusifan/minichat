@@ -1,0 +1,60 @@
+
+CC = gcc
+AR = ar cru
+RM = /bin/rm -f
+
+CFLAGS = -std=c++11 -Wall -g -fPIC \
+		 -D_REENTRANT -D_GNU_SOURCE \
+		 -DSIZEOF_LONG_LONG=8 \
+		 -I../include -I../mySTL
+
+LIBOBJS = aes.o \
+	aestables.o \
+	algebra.o \
+	arc4.o \
+	asn.o \
+	bftables.o \
+	blowfish.o \
+	coding.o \
+	crypto.o \
+	des.o \
+	dh.o \
+	dsa.o \
+	file.o \
+	hash.o \
+	hc128.o \
+	integer.o \
+	md2.o \
+	md4.o \
+	md5.o \
+	misc.o \
+	rabbit.o \
+	random.o \
+	ripemd.o \
+	rsa.o \
+	sha.o \
+	template_instnt.o \
+	tftables.o \
+	twofish.o
+
+TARGETS = libtaocrypt.a
+
+all: $(TARGETS)
+
+libtaocrypt.a: $(LIBOBJS)
+	$(AR) $@ $^
+	cp $@ ../../lib/
+
+clean:
+	$(RM) *.o
+	$(RM) $(TARGETS)
+
+# make rule
+%.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@	
+
+%.o : %.cc
+	$(CC) $(CFLAGS) -c $< -o $@	
+
+%.o : %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@	

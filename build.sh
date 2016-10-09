@@ -44,6 +44,10 @@ if [ ! -f $MINICHAT_ROOT/third_party/r3c/libr3c.a ]; then
         git clone https://github.com/eyjian/r3c.git
     fi
 
+    cp mk.r3c r3c
+
+    cd r3c
+
     make
 fi
 
