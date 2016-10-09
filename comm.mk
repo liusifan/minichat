@@ -21,6 +21,8 @@ endif
 
 PLUGIN_REDIS_CONFIG_LOADER_LDFLAGS :=
 
+PLUGIN_SK_INCLUDE = -I$(MINICHAT_ROOT)/minichat/plugin/plugin_sk/
+
 REDIS_CLIENT_INCLUDE = -I$(MINICHAT_ROOT)/third_party/ \
   	-I$(MINICHAT_ROOT)/third_party/
 

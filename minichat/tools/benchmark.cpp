@@ -13,6 +13,7 @@
 #include "logic/minichat_api.h"
 
 #include "common/push_client.h"
+#include "ossattr_report.h"
 
 
 using namespace std;
@@ -25,6 +26,18 @@ typedef struct _MsgFromTo {
 typedef struct tagBMStat {
     int auth_count, auth_ok_count, auth_fail_count;
     int msg_count;
+    int msg_ok_cout;
+    int msg_fail_count;
+
+    void Reset() 
+    {
+        auth_count = 0;
+        auth_ok_count = 0;
+        auth_fail_count = 0;
+        msg_count = 0;
+        msg_ok_cout = 0;
+        msg_fail_count = 0;
+    }
 } BMStat_t;
 
 __thread BMStat_t global_bm_stat;
@@ -111,14 +124,18 @@ int BMUThread :: StartAuth()
                     snprintf( username, sizeof( username ), "user%d", begin_index_ + i );
 
                     ++global_bm_stat.auth_count;
+                    ReportAuthCount();
+                    
 
                     logic::AuthResponse auth_resp;
                     if( 0 == apis_[i]->Auth( username, username, &auth_resp, args_.auth_use_rsa ) ) {
                         ++auth_ok_count_;
                         ++global_bm_stat.auth_ok_count;
+                        ReportAuthSuccCount();
                     } else {
                         ++global_bm_stat.auth_fail_count;
-                        printf("auth %s failed\n", username);
+                        //printf("auth %s failed\n", username);
+                        ReportAuthFailCount();
                     }
                 }
             }
@@ -143,6 +160,7 @@ int BMUThread::LoadFunc(vector<MsgFromTo> & msg_from_to,
 
     struct timeval begin, end;
     struct timeval begin_time;
+    int ret = 0;
     gettimeofday(&begin_time, NULL);
 
     for(; curr_cnt < total_req_cnt; ) {
@@ -153,28 +171,56 @@ int BMUThread::LoadFunc(vector<MsgFromTo> & msg_from_to,
         const MsgFromTo & item = msg_from_to[ generator() % msg_from_to.size() ];
 
         logic::SendMsgResponse resp;
-        apis_[item.from]->SendMsg( item.to.c_str(), "msg from ", &resp );
+        ret = apis_[item.from]->SendMsg( item.to.c_str(), "msg from ", &resp );
 
-        ++global_bm_stat.msg_count;
 
-        gettimeofday(&end, NULL);
-        unsigned long long usec = (end.tv_sec - begin.tv_sec) * 1000000 + (end.tv_usec - begin.tv_usec);
+        if(0 == ret) {
 
-        if( 0 == ( global_bm_stat.msg_count % 100 ) ) {
-            printf( "send msg from %s to %s cost %lld usec\n",
-                apis_[item.from]->GetUsername(), item.to.c_str(),
-                usec );
-            printf( "tag %d, msg_count %d\n", tag_, global_bm_stat.msg_count );
+            int msg_size = resp.msg_size();
+            for(int i = 0; i < msg_size; i++) {
+
+                ++global_bm_stat.msg_count;
+                ReportMsgCount();
+
+               const ::logic::MsgResponse& msg_response =  resp.msg(i);
+               if(0 == msg_response.ret()) {
+                   ++global_bm_stat.msg_ok_cout;
+                   ReportMsgSuccCount();
+               } else {
+                   ++global_bm_stat.msg_fail_count;
+                   ReportMsgFailCount();
+               }
+            }
+        } else {
+            ++global_bm_stat.msg_fail_count;
         }
 
-        usec = (end.tv_sec - begin_time.tv_sec) * 1000000 + (end.tv_usec - begin_time.tv_usec);
-        if(usec >= (unsigned long long)args_.qps_time_interval_per_uthread * 1000000) {
+        gettimeofday(&end, NULL);
+        unsigned long long run_time = (end.tv_sec - begin.tv_sec) * 1000000 + (end.tv_usec - begin.tv_usec);
+
+        if( 0 == ( global_bm_stat.msg_count % 1000 ) ) {
+            //printf( "send msg from %s to %s cost %lld run_time\n",
+                //apis_[item.from]->GetUsername(), item.to.c_str(),
+                //run_time );
+            printf( "tag %d, msg_count %d msg_ok_cout %d msg_fail_count %d\n", tag_, global_bm_stat.msg_count,
+                 global_bm_stat.msg_ok_cout, global_bm_stat.msg_fail_count );
+        }
+
+        int interval = (int)distribution(generator);;
+        interval -= run_time/1000;
+        if(0 > interval) {
+            interval = 0;
+        }
+
+        unsigned long long use_time = (end.tv_sec - begin_time.tv_sec) * 1000000 + (end.tv_usec - begin_time.tv_usec);
+        if(use_time >= (unsigned long long)args_.qps_time_interval_per_uthread * 1000000) {
             return 1;
         }
 
-        double interval = distribution(generator);;
 
-        UThreadWait(*socket, interval);
+        if(interval > 0) {
+            UThreadWait(*socket, interval);
+        }
     }
 
     return 0;
@@ -234,6 +280,8 @@ int BMUThread :: StartLoad()
             for(auto & it : contacts) msg_from_to.push_back( { i, it } );
         }
 
+        printf("msg_from_to size %zu\n", msg_from_to.size());
+
         int curr_qps = args_.begin_qps_per_uthread;
         int curr_cnt = 0;
         int total_req_cnt = args_.user_per_uthread * args_.msg_per_user;
@@ -272,6 +320,9 @@ int BMUThread :: StartLoad()
 
 int BMThread( int tag, int begin_index, const BMArgs_t & args )
 {
+
+    global_bm_stat.Reset();
+
     BMUThread ** uthreads = ( BMUThread ** ) calloc( args.uthread_per_thread, sizeof( BMUThread * ) );
 
     phxrpc::UThreadEpollScheduler scheduler( 64 * 1024, args.uthread_per_thread * 2 );
@@ -286,7 +337,7 @@ int BMThread( int tag, int begin_index, const BMArgs_t & args )
 
     scheduler.Run();
 
-    printf( "auth %d, ok %d, fail %d\n", global_bm_stat.auth_count,
+    printf( "total auth %d, ok %d, fail %d\n", global_bm_stat.auth_count,
             global_bm_stat.auth_ok_count, global_bm_stat.auth_fail_count );
 
     for( int i = 0; i < args.uthread_per_thread; i++ ) {
@@ -300,6 +351,9 @@ int BMThread( int tag, int begin_index, const BMArgs_t & args )
     for( int i = 0; i < args.uthread_per_thread; i++ ) {
         delete uthreads[i];
     }
+
+    printf( "total msg %d, ok %d, fail %d\n", global_bm_stat.msg_count,
+            global_bm_stat.msg_ok_cout, global_bm_stat.msg_fail_count );
 
     free( uthreads );
 }

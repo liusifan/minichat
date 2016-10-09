@@ -111,6 +111,7 @@ int CgiSync :: Process( const logic::ReqHead & head,
     seq::SyncKey client_sync_key, last_sync_key, resp_sync_key;
 
     client_sync_key.ParseFromString( req_obj.sync_key() );
+    resp_sync_key = client_sync_key;
 
     //1. get last_sync_key
     SeqClient seq_client;

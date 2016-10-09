@@ -44,7 +44,7 @@ void ShowUsage( const char * program )
 
 int main( int argc, char * argv[] )
 {
-    phxrpc::openlog( argv[0], "~/log/error", LOG_DEBUG);
+    phxrpc::openlog( argv[0], "~/log/error", LOG_ERR);
 
     phxrpc::ClientConfigRegistry::GetDefault()->Stop();
 

@@ -15,6 +15,8 @@ typedef struct tagSyncStat {
     int push_count;
     int sync_count;
     int msg_count;
+    int sync_ok_count;
+    int sync_fail_count;
 } SyncStat_t;
 
 __thread SyncStat_t global_sync_stat;
@@ -98,7 +100,7 @@ int SyncUThread :: StartSync()
                 api->SetUsername( username );
 
                 int msg_count = 0;
-                apis_[ offset ]->Sync( &resp, &msg_count );
+                apis_[ offset ]->Sync( &resp, &msg_count, true );
 
                 global_sync_stat.msg_count += msg_count;
 
@@ -119,6 +121,9 @@ int SyncUThread :: StartSync()
 
 int SyncThread( int tag, int begin_index, int uthread_per_thread )
 {
+
+    memset(&global_sync_stat, 0x0, sizeof(global_sync_stat));
+
     SyncUThread ** uthreads = ( SyncUThread ** ) calloc( uthread_per_thread, sizeof( SyncUThread * ) );
 
     phxrpc::UThreadEpollScheduler scheduler( 64 * 1024, uthread_per_thread * 2 );
@@ -137,6 +142,13 @@ int SyncThread( int tag, int begin_index, int uthread_per_thread )
     for( int i = 0; i < uthread_per_thread; i++ ) {
         delete uthreads[i];
     }
+
+    printf("total push_count %d sync_count %d sync_ok_count %d sync_fail_count %d msg_count %d\n",
+            global_sync_stat.push_count,
+            global_sync_stat.sync_count,
+            global_sync_stat.sync_ok_count,
+            global_sync_stat.sync_fail_count,
+            global_sync_stat.msg_count);
 
     free( uthreads );
 }
@@ -183,7 +195,7 @@ void ShowUsage( const char * program )
 
 int main( int argc, char * argv[] )
 {
-    phxrpc::openlog( argv[0], "~/log/error", LOG_DEBUG);
+    phxrpc::openlog( argv[0], "~/log/error", LOG_ERR);
 
     phxrpc::ClientConfigRegistry::GetDefault()->Stop();
 

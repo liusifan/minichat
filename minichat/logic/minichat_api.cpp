@@ -149,7 +149,6 @@ int MiniChatAPI :: AutoAuth( logic::AuthResponse * resp_obj )
         std::uniform_int_distribution<unsigned int> dis(0, std::numeric_limits<unsigned int>::max());  
         std::stringstream fmt;
         fmt << dis(eng) << dis(eng);
-
         auth_req.set_rand_key( fmt.str() );
     }
 
@@ -208,7 +207,7 @@ int MiniChatAPI :: SendMsg( const char * to,
     return Call_L1( "/logic/SendMsg", 3, req, resp_obj );
 }
 
-int MiniChatAPI :: Sync( logic::SyncResponse * resp_obj, int * msg_count )
+int MiniChatAPI :: Sync( logic::SyncResponse * resp_obj, int * msg_count, bool is_no_contact )
 {
     if(!config_) {
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
@@ -230,7 +229,7 @@ int MiniChatAPI :: Sync( logic::SyncResponse * resp_obj, int * msg_count )
                 if( NULL != msg_count ) ++(*msg_count);
             }
 
-            if( item.type() == logic::CMD_MOD_CONTACT ) {
+            if( !is_no_contact && item.type() == logic::CMD_MOD_CONTACT ) {
                 logic::CmdModContact cmd;
                 cmd.ParseFromString( item.buff() );
                 contacts_.push_back( cmd.username() );
