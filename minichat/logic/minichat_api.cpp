@@ -6,7 +6,7 @@
 
 #include "minichat_api.h"
 #include "logic_client.h"
-#include "taocrypt/include/config.h"
+//#include "taocrypt/include/config.h"
 #include "taocrypt/include/rsa.hpp"
 
 #include "crypt/pem_file.h"
@@ -207,7 +207,7 @@ int MiniChatAPI :: SendMsg( const char * to,
     return Call_L1( "/logic/SendMsg", 3, req, resp_obj );
 }
 
-int MiniChatAPI :: Sync( logic::SyncResponse * resp_obj, int * msg_count, bool is_no_contact )
+int MiniChatAPI :: Sync( logic::SyncResponse * resp_obj, int * msg_count )
 {
     if(!config_) {
         phxrpc::log(LOG_ERR, "%s %s config is NULL", __func__, package_name_.c_str());
@@ -229,7 +229,7 @@ int MiniChatAPI :: Sync( logic::SyncResponse * resp_obj, int * msg_count, bool i
                 if( NULL != msg_count ) ++(*msg_count);
             }
 
-            if( !is_no_contact && item.type() == logic::CMD_MOD_CONTACT ) {
+            if( item.type() == logic::CMD_MOD_CONTACT ) {
                 logic::CmdModContact cmd;
                 cmd.ParseFromString( item.buff() );
                 contacts_.push_back( cmd.username() );

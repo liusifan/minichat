@@ -23,7 +23,7 @@ redis_tools: redis_tools.o
 	$(LINKER) $^ $(LDFLAGS) -o $@
 
 test_exp: test_exp.o
-	$(LINKER) $^ -lstdc++ -o $@
+	$(LINKER) $^ -lstdc++ -lm -o $@
 
 clean:
 	$(RM) *.o $(TARGETS)

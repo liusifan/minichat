@@ -6,7 +6,7 @@
 
 include ../../comm.mk
 
-CFLAGS += $(LOGIC_CFLAGS) 
+CFLAGS += $(LOGIC_CFLAGS)
 LDFLAGS += $(LOGIC_LDFLAGS)
 
 #choose to use boost for network

@@ -1,7 +1,7 @@
 
 #include "cert_codec.h"
 
-#include "taocrypt/include/config.h"
+//#include "taocrypt/include/config.h"
 #include "taocrypt/include/rsa.hpp"
 
 #include "crypt/pem_file.h"

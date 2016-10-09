@@ -71,14 +71,18 @@ if [ ! -f $MINICHAT_ROOT/third_party/yassl/lib/libyassl.a ]; then
         git clone https://github.com/yassl/yassl.git
     fi
 
-    cd yassl
+    #cd yassl
 
-    ./autogen.sh
-    ./configure
+    #./autogen.sh
+    #./configure
+    #make
+
+    #cp src/.libs/libyassl.a lib
+    #cp taocrypt/src/.libs/libtaocrypt.a lib
+
+    cp mk.yassl yassl/taocrypt/src/Makefile
+    cd yassl/taocrypt/src
     make
-
-    cp src/.libs/libyassl.a lib
-    cp taocrypt/src/.libs/libtaocrypt.a lib
 fi
 
 if [ ! -f $MINICHAT_ROOT/third_party/easyloggingpp/easylogging++.h ]; then

@@ -1,9 +1,9 @@
 
 include ../../comm.mk
 
-CFLAGS += -I$(MINICHAT_ROOT)/third_party/yassl -DUSE_SYS_STL
+CFLAGS += $(YASSL_CFLAGS)
 
-LDFLAGS += -L$(MINICHAT_ROOT)/third_party/yassl/lib -ltaocrypt
+LDFLAGS += $(YASSL_LDFLAGS) -L$(PHXRPC_ROOT)/lib/ -lphxrpc
 
 LIBCRYPT_OBJS = pem_file.o crypt_utils.o
 

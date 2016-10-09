@@ -4,7 +4,7 @@
 #include <random>     // random_device, uniform_int_distribution
 #include <sstream>
 
-#include "taocrypt/include/config.h"
+//#include "taocrypt/include/config.h"
 #include "taocrypt/include/rsa.hpp"
 #include "taocrypt/include/aes.hpp"
 

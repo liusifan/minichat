@@ -11,7 +11,7 @@ message Setting {
     string username = 1;
     string avatar = 2;
     string nickname = 3;
-    uint32 push_without_detail = 4;
+    bool push_without_detail = 4;
 }
 
 service Profile {

@@ -100,7 +100,7 @@ int SyncUThread :: StartSync()
                 api->SetUsername( username );
 
                 int msg_count = 0;
-                apis_[ offset ]->Sync( &resp, &msg_count, true );
+                apis_[ offset ]->Sync( &resp, &msg_count );
 
                 global_sync_stat.msg_count += msg_count;
 

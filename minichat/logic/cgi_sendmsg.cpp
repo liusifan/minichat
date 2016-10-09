@@ -7,8 +7,12 @@
 #include "seq/seq_client.h"
 #include "account/account_client.h"
 #include "addrbook/addrbook_client.h"
+#include "profile/profile_client.h"
+
 #include "common/push_client.h"
 #include "common/push_client_factory.h"
+
+#include <string.h>
 
 CgiSendMsg :: CgiSendMsg()
 {
@@ -63,6 +67,43 @@ static int AddOneMsg( const logic::ReqHead & head, const logic::MsgRequest & msg
     return msgbox_client.Add( index, result );
 }
 
+int NotifyReceiver( const char * from, const char * to,
+        int new_count, const char * content )
+{
+    google::protobuf::StringValue req;
+    profile::Setting setting;
+
+    ProfileClient prof_client;
+    req.set_value( to );
+
+    // set push_without_detail as true when access profile fail
+    if( 0 != prof_client.Get( req, &setting ) ) {
+        setting.set_push_without_detail( true );
+    }
+
+    std::string channel;
+    PushClient::Username2Channel( to, &channel );
+
+    char push_msg[ 128 ] = { 0 };
+
+    if( setting.push_without_detail() ) {
+        snprintf( push_msg, sizeof( push_msg ), "%s newcount %d, last msg from %s",
+                to, new_count, from );
+    } else {
+        char digest[ 16 ] = { 0 };
+        strncpy( digest, content, sizeof( digest ) - 4 );
+        // filter special char "
+        for( size_t i = 0; i < sizeof( digest ); i++ ) if( '"' == digest[i] ) digest[i] = ' ' ;
+        strncat( digest, "...", sizeof( digest ) - 1 );
+
+        snprintf( push_msg, sizeof( push_msg ), "%s newcount %d, last msg from %s, digest %s",
+                to, new_count, from, digest );
+    }
+    PushClientFactory::GetDefault()->Get().Pub( channel.c_str(), push_msg );
+
+    return 0;
+}
+
 int CgiSendMsg :: Process( const logic::ReqHead & head,
         const std::string & req_buff, std::string * resp_buff )
 {
@@ -87,13 +128,8 @@ int CgiSendMsg :: Process( const logic::ReqHead & head,
 
         // push result.newcount() to receiver
         if( 0 == ret ) {
-            std::string channel;
-            PushClient::Username2Channel( msg.to().c_str(), &channel );
-
-            char push_msg[ 128 ] = { 0 };
-            snprintf( push_msg, sizeof( push_msg ), "%s newcount %d, last msg from %s",
-                    msg.to().c_str(), result.newcount(), head.username().c_str() );
-            PushClientFactory::GetDefault()->Get().Pub( channel.c_str(), push_msg );
+            NotifyReceiver( head.username().c_str(), msg.to().c_str(),
+                    result.newcount(), msg.content().c_str() );
         }
     }
 
