@@ -30,4 +30,5 @@ typedef struct tagBMArgs {
 } BMArgs_t;
 
 extern int benchmark( const BMArgs_t & args );
+void sendcmd(const char * cmd);
 

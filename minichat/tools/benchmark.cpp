@@ -51,10 +51,15 @@ public:
     int StartAuth();
 
     int StartLoad();
+    
+    int StartRecvCmd();
 
     int Stop();
 
 private:
+
+    void ParseCmd(Op * op);
+
     int LoadFunc(vector<MsgFromTo> & msg_from_to,
             phxrpc::UThreadSocket_t * socket,  
             double qps,
@@ -71,8 +76,11 @@ private:
     const BMArgs_t & args_;
     int auth_ok_count_;
 
-    enum { RUNNING = 0, STOPPING = 1, STOPPED = 2 };
+    enum { RUNNING = 0, STOPPING = 1, STOPPED = 2, WAITING_FOR_CMD = 3, };
     int status_;
+
+    char cmd_[128];
+    int cmd_seq_;
 };
 
 BMUThread :: BMUThread( int tag, phxrpc::UThreadEpollScheduler * scheduler,
@@ -91,6 +99,10 @@ BMUThread :: BMUThread( int tag, phxrpc::UThreadEpollScheduler * scheduler,
     }
 
     auth_ok_count_ = 0;
+
+    memset(cmd_, 0x0, sizeof(cmd_));
+    cmd_seq_ = 0;
+
     status_ = RUNNING;
 }
 
@@ -230,6 +242,69 @@ int BMUThread::LoadFunc(vector<MsgFromTo> & msg_from_to,
     return 0;
 }
 
+void BMUThread::ParseCmd(Op * op)
+{
+    char tmp_cmd[128];
+    snprintf(tmp_cmd, sizeof(tmp_cmd), "%s", cmd_);
+
+    char * str1 = tmp_cmd;
+    char * str2 = NULL;
+
+    int i = 0;
+    for(i = 0; i < 5;i++) {
+        str2 = strtok(str1," ");
+        if(NULL == str2) {
+            break;
+        }
+
+        if(0 == i) {
+            op->duration_sec = atoi(str2);
+        } else if(1 == i) {
+            op->begin_qps = strtod(str2, nullptr);
+        } else if(2 == i) {
+            op->end_qps = strtod(str2, nullptr);
+        } else if(3 == i) {
+            op->qps_variation = strtod(str2, nullptr);
+        } else {
+            op->qps_var_interval_sec = atoi(str2);
+        }
+
+        if(op->end_qps >= op->begin_qps) {
+            op->qps_var_direction = 0;
+        } else {
+            op->qps_var_direction = 1;
+        }
+        str1 = NULL;
+    }
+}
+
+int BMUThread :: StartRecvCmd()
+{
+    // waiting for cmd
+    phxrpc::__uthread( *scheduler_ ) - [=]( void * ) {
+        PushClient client( scheduler_ );
+
+        char channel[ 128 ] = { 0 };
+        snprintf( channel, sizeof( channel ), "%s", "tool_cmd_ch");
+        client.Sub( channel );
+
+        while(true) {
+            std::string msg;
+            client.Wait( channel, &msg );
+
+            if( 0 == strcasecmp( "exit", msg.c_str() ) ) break;
+
+            printf("recv cmd %s\n", msg.c_str());
+
+            snprintf(cmd_, sizeof(cmd_), "%s", msg.c_str());
+            ++cmd_seq_;
+        }
+
+        status_ = STOPPED;
+        printf("stop sync uthread\n");
+    };
+    return 0;
+}
 
 int BMUThread :: StartLoad()
 {
@@ -287,15 +362,25 @@ int BMUThread :: StartLoad()
         printf("msg_from_to size %zu\n", msg_from_to.size());
 
         double curr_qps = 0.0;
-
         int ret = 0;
-        vector<Op> op_vec;
+        int cmd_seq = 0;
 
-        for(auto & op : args_.op_vec) {
+        while(RUNNING == status_) {
 
+            if(cmd_seq == cmd_seq_) {
+                UThreadWait(*socket, 1000);
+                printf("no cmd cmd_seq %d\n", cmd_seq);
+                continue;
+            }
+
+            cmd_seq = cmd_seq_;
+
+            Op op;
+            ParseCmd(&op);
             printf("op: begin_qps %f end_qps %f duration_sec %d qps_variation %f qps_var_interval_sec %d\n",
                     op.begin_qps, op.end_qps, op.duration_sec, op.qps_variation,
                     op.qps_var_interval_sec);
+
 
             curr_qps = op.begin_qps;
             time_t begin_time = time(nullptr);
@@ -307,23 +392,31 @@ int BMUThread :: StartLoad()
                         op.qps_var_interval_sec,
                         op.duration_sec);
                 if(1 == ret) {
+
+                    if(cmd_seq != cmd_seq_) {
+                        printf("cmd_seq %d %d changeed \n", cmd_seq, cmd_seq_);
+                        break;
+                    }
+
                     if(0 == op.qps_var_direction) {
                         curr_qps += op.qps_variation;
                         if(curr_qps > op.end_qps) {
                             curr_qps = op.end_qps;
                         }
+                        printf("curr_qps %f\n", curr_qps);
                     } else {
                         curr_qps -= op.qps_variation;
                         if(curr_qps < op.end_qps) {
                             curr_qps = op.end_qps;
                         }
+                        printf("curr_qps %f\n", curr_qps);
                     }
-                    
+
                 } else {
                     break;
                 }
-
             }
+
         }
 
         free(socket);
@@ -366,6 +459,7 @@ int BMThread( int tag, int begin_index, const BMArgs_t & args )
             global_bm_stat.auth_ok_count, global_bm_stat.auth_fail_count );
 
     for( int i = 0; i < args.uthread_per_thread; i++ ) {
+        uthreads[i]->StartRecvCmd();
         uthreads[i]->StartLoad();
     }
 
@@ -381,6 +475,7 @@ int BMThread( int tag, int begin_index, const BMArgs_t & args )
             global_bm_stat.msg_ok_cout, global_bm_stat.msg_fail_count );
 
     free( uthreads );
+    return 0;
 }
 
 int benchmark( const BMArgs_t & args )
@@ -402,5 +497,13 @@ int benchmark( const BMArgs_t & args )
     }
 
     return 0;
+}
+
+void sendcmd(const char * cmd)
+{
+    PushClient client(nullptr);
+    char channel[ 128 ] = { 0 };
+    snprintf( channel, sizeof( channel ), "%s", "tool_cmd_ch");
+    client.Pub( channel, cmd );
 }
 
