@@ -68,7 +68,7 @@ int LogicClient :: PHXEcho( const google::protobuf::StringValue & req,
                 stub.SetConfig( config_ );
                 return stub.PHXEcho( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -123,7 +123,7 @@ int LogicClient :: Auth( const logic::MiniRequest & req,
                 stub.SetConfig( config_ );
                 return stub.Auth( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -145,7 +145,7 @@ int LogicClient :: Sync( const logic::MiniRequest & req,
                 stub.SetConfig( config_ );
                 return stub.Sync( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -167,7 +167,7 @@ int LogicClient :: SendMsg( const logic::MiniRequest & req,
                 stub.SetConfig( config_ );
                 return stub.SendMsg( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -189,7 +189,7 @@ int LogicClient :: FakeDoAll( const logic::MiniRequest & req,
                 stub.SetConfig( config_ );
                 return stub.FakeDoAll( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );

@@ -12,7 +12,7 @@ LDFLAGS += $(LOGIC_LDFLAGS)
 #choose to use boost for network
 #LDFLAGS := $(PLUGIN_BOOST_LDFLAGS) $(LDFLAGS)
 
-CGI_OBJS = cgi_base.o cgi_auth.o cgi_sendmsg.o cgi_sync.o
+CGI_OBJS = cgi_base.o cgi_auth.o cgi_sendmsg.o cgi_sync.o 
 
 SVR_OBJS = logic.pb.o \
 		   logic_service_impl.o \
@@ -31,7 +31,7 @@ TARGETS = liblogic_client.a logic-main logic_tool_main
 
 all: $(TARGETS)
 
-logic-main: $(SVR_OBJS)
+logic-main: $(SVR_OBJS) 
 	$(LINKER) $^ $(LDFLAGS) -o $@
 
 liblogic_client.a: $(CLI_OBJS)

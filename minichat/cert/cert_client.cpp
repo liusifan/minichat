@@ -68,7 +68,7 @@ int CertClient :: PHXEcho( const google::protobuf::StringValue & req,
                 stub.SetConfig( config_ );
                 return stub.PHXEcho( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -123,7 +123,7 @@ int CertClient :: RSADecrypt( const cert::CodecBuff & req,
                 stub.SetConfig( config_ );
                 return stub.RSADecrypt( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -145,7 +145,7 @@ int CertClient :: AESEncrypt( const cert::CodecBuff & req,
                 stub.SetConfig( config_ );
                 return stub.AESEncrypt( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -167,7 +167,7 @@ int CertClient :: AESDecrypt( const cert::CodecBuff & req,
                 stub.SetConfig( config_ );
                 return stub.AESDecrypt( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );

@@ -72,7 +72,7 @@ int main( int argc, char * argv[] )
 
     if( ! opt_map.Parse( argc, argv ) ) showUsage( argv[0] );
 
-    phxrpc::openlog( argv[0], "~/log", 7 );
+    phxrpc::openlog( argv[0], "~/log/error", 7 );
 
     AccountTool::ToolFunc_t targefunc = target->func;
 

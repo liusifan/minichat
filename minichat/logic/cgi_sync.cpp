@@ -7,6 +7,7 @@
 #include "seq/seq_client.h"
 #include "account/account_client.h"
 #include "addrbook/addrbook_client.h"
+#include "logic_monitor.h"
 
 CgiSync :: CgiSync()
 {
@@ -74,7 +75,14 @@ static int SyncMsg( const logic::ReqHead & head,
     get_by_seq_req.set_username( head.username() );
     get_by_seq_req.set_seq( client_sync_key.msg_seq() );
 
+    LogicMonitor::GetDefault()->ReportMsgClientCount();
     int ret = msgbox_client.GetBySeq( get_by_seq_req, &list );
+    if(0 == ret) {
+        LogicMonitor::GetDefault()->ReportMsgClientSuccCount();
+    } else {
+        LogicMonitor::GetDefault()->ReportMsgClientFailCount();
+    }
+
 
     for( int i = 0; i < list.msg_size(); i++ ) {
         const msgbox::MsgIndex & msg = list.msg( i );
@@ -102,6 +110,7 @@ static int SyncMsg( const logic::ReqHead & head,
 int CgiSync :: Process( const logic::ReqHead & head,
             const std::string & req_buff, std::string * resp_buff )
 {
+    LogicMonitor::GetDefault()->ReportCgiSyncCount();
     int ret = 0;
     logic::SyncRequest req_obj;
     logic::SyncResponse resp_obj;
@@ -121,7 +130,10 @@ int CgiSync :: Process( const logic::ReqHead & head,
         username.set_value( head.username() );
         ret = seq_client.Get( username, &last_sync_key );
 
-        if( 0 != ret ) return ret;
+        if( 0 != ret ) {
+            LogicMonitor::GetDefault()->ReportCgiSyncFailCount();
+            return ret;
+        }
     }
 
     //2. sync contact
@@ -138,6 +150,12 @@ int CgiSync :: Process( const logic::ReqHead & head,
     resp_sync_key.SerializeToString( resp_obj.mutable_new_sync_key() );
 
     resp_obj.SerializeToString( resp_buff );
+
+    if(0 == ret) {
+        LogicMonitor::GetDefault()->ReportCgiSyncSuccCount();
+    } else {
+        LogicMonitor::GetDefault()->ReportCgiSyncFailCount();
+    }
 
     return ret;
 }

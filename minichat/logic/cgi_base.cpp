@@ -70,7 +70,7 @@ int CgiBase :: Execute( const logic::MiniRequest & req, logic::MiniResponse * re
 
     resp->set_ret( ret );
 
-    phxrpc::log( LOG_INFO, "INFO: %s %d", req.head().username().c_str(), ret );
+    //phxrpc::log( LOG_INFO, "INFO: %s %d", req.head().username().c_str(), ret );
 
     return ret;
 }

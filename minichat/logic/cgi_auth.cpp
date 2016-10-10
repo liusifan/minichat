@@ -1,4 +1,5 @@
 
+
 #include "cgi_auth.h"
 
 #include "logic.pb.h"
@@ -11,6 +12,8 @@
 #include "phxrpc/file.h"
 
 #include "crypt/crypt_utils.h"
+#include "logic_monitor.h"
+
 
 CgiAuth :: CgiAuth()
 {
@@ -144,6 +147,9 @@ static int DoManualAuth( const logic::ReqHead & head,
 int CgiAuth :: Process( const logic::ReqHead & head,
             const std::string & req_buff, std::string * resp_buff )
 {
+
+    LogicMonitor::GetDefault()->ReportCgiAuthCount();
+
     int ret = -1;
     logic::AuthRequest req_obj;
     logic::AuthResponse resp_obj;
@@ -160,7 +166,10 @@ int CgiAuth :: Process( const logic::ReqHead & head,
         ret = DoManualAuth( head, req_obj, &rand_key );
     }
     
-    if( 0 != ret ) return ret;
+    if( 0 != ret ) {
+        LogicMonitor::GetDefault()->ReportCgiAuthFailCount();
+        return ret;
+    }
 
     // 3. create session
     PresenceClient pres_client;
@@ -174,6 +183,7 @@ int CgiAuth :: Process( const logic::ReqHead & head,
 
         if( 0 != ret ) {
             phxrpc::log( LOG_ERR, "ERR: Create Session %d, fail", ret );
+            LogicMonitor::GetDefault()->ReportCgiAuthFailCount();
             return ret;
         }
 
@@ -228,6 +238,11 @@ int CgiAuth :: Process( const logic::ReqHead & head,
         CryptUtils::AES128Encrypt( rand_key.c_str(), tmp_buff, resp_buff );
     }
 
+    if(0 != ret) {
+        LogicMonitor::GetDefault()->ReportCgiAuthFailCount();
+    } else {
+        LogicMonitor::GetDefault()->ReportCgiAuthSuccCount();
+    }
     return ret;
 }
 

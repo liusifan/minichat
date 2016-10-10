@@ -68,7 +68,7 @@ int AccountClient :: PHXEcho( const google::protobuf::StringValue & req,
                 stub.SetConfig( config_ );
                 return stub.PHXEcho( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -123,7 +123,7 @@ int AccountClient :: Set( const account::User & req,
                 stub.SetConfig( config_ );
                 return stub.Set( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -145,7 +145,7 @@ int AccountClient :: SetPwd( const account::PwdReq & req,
                 stub.SetConfig( config_ );
                 return stub.SetPwd( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -167,7 +167,7 @@ int AccountClient :: Get( const google::protobuf::StringValue & req,
                 stub.SetConfig( config_ );
                 return stub.Get( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -189,7 +189,7 @@ int AccountClient :: Auth( const account::PwdReq & req,
                 stub.SetConfig( config_ );
                 return stub.Auth( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );

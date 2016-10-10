@@ -68,7 +68,7 @@ int SeqClient :: PHXEcho( const google::protobuf::StringValue & req,
                 stub.SetConfig( config_ );
                 return stub.PHXEcho( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -123,7 +123,7 @@ int SeqClient :: Alloc( const seq::AllocReq & req,
                 stub.SetConfig( config_ );
                 return stub.Alloc( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -145,7 +145,7 @@ int SeqClient :: Get( const google::protobuf::StringValue & req,
                 stub.SetConfig( config_ );
                 return stub.Get( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );

@@ -36,6 +36,8 @@ class ClientMonitor_SK: public ClientMonitor {
 	virtual void GetEndpointFail();
 
 	virtual void ClientCall( int cmdid, const char * method_name );
+
+    virtual void ClientFastReject();
  private:
 	int32_t oss_id_;
 };

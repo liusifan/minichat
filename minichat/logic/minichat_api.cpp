@@ -334,7 +334,6 @@ int MiniChatAPI :: Call_L0( const char * uri, int cmd_id,
     caller.SetURI( uri, cmd_id );
     // TODO: construct a connection pool, use keep_alive
     caller.SetKeepAlive( false );
-    caller.SetIsEnableCliFr( config_->IsEnableClientFastReject() );
 
     int ret = caller.Call( req, resp );
 

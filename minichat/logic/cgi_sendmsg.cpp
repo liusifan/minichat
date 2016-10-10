@@ -11,6 +11,7 @@
 
 #include "common/push_client.h"
 #include "common/push_client_factory.h"
+#include "logic_monitor.h"
 
 #include <string.h>
 
@@ -64,7 +65,14 @@ static int AddOneMsg( const logic::ReqHead & head, const logic::MsgRequest & msg
 
     MsgBoxClient msgbox_client;
 
-    return msgbox_client.Add( index, result );
+    LogicMonitor::GetDefault()->ReportMsgClientCount();
+    ret = msgbox_client.Add( index, result );
+    if(0 == ret) {
+        LogicMonitor::GetDefault()->ReportMsgClientFailCount();
+    } else {
+        LogicMonitor::GetDefault()->ReportMsgClientSuccCount();
+    }
+    return ret;
 }
 
 int NotifyReceiver( const char * from, const char * to,
@@ -107,6 +115,8 @@ int NotifyReceiver( const char * from, const char * to,
 int CgiSendMsg :: Process( const logic::ReqHead & head,
         const std::string & req_buff, std::string * resp_buff )
 {
+
+    LogicMonitor::GetDefault()->ReportCgiSendmsgCount();
     logic::SendMsgRequest req_obj;
     logic::SendMsgResponse resp_obj;
 

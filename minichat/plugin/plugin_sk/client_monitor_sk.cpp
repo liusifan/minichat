@@ -60,6 +60,10 @@ void ClientMonitor_SK :: ClientCall( int cmdid, const char * method_name ) {
 	OssAttr4SvrClientCall( oss_id_, cmdid, 1 );
 }
 
+void ClientMonitor_SK :: ClientFastReject() {
+    OssAttr4SvrClientFastReject( oss_id_, 1);
+}
+
 void ClientMonitor_SK :: SetOssID( int32_t oss_id ) {
 	oss_id_ = oss_id;
 }

@@ -68,7 +68,7 @@ int AddrbookClient :: PHXEcho( const google::protobuf::StringValue & req,
                 stub.SetConfig( config_ );
                 return stub.PHXEcho( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -123,7 +123,7 @@ int AddrbookClient :: Set( const addrbook::ContactReq & req,
                 stub.SetConfig( config_ );
                 return stub.Set( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -145,7 +145,7 @@ int AddrbookClient :: GetAll( const google::protobuf::StringValue & req,
                 stub.SetConfig( config_ );
                 return stub.GetAll( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -167,7 +167,7 @@ int AddrbookClient :: GetOne( const addrbook::GetOneReq & req,
                 stub.SetConfig( config_ );
                 return stub.GetOne( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );
@@ -189,7 +189,7 @@ int AddrbookClient :: GetBySeq( const addrbook::GetBySeqReq & req,
                 stub.SetConfig( config_ );
                 return stub.GetBySeq( req, resp );
             },
-            [=]( phxrpc::ClientConfig config ) -> const phxrpc::Endpoint_t * {
+            [=]( phxrpc::ClientConfig & config ) -> const phxrpc::Endpoint_t * {
                 return config.GetRandom();
             }
     );

@@ -13,7 +13,7 @@
 #include "logic/minichat_api.h"
 
 #include "common/push_client.h"
-#include "ossattr_report.h"
+#include "logic_monitor.h"
 
 
 using namespace std;
@@ -57,9 +57,10 @@ public:
 private:
     int LoadFunc(vector<MsgFromTo> & msg_from_to,
             phxrpc::UThreadSocket_t * socket,  
-            int qps,
-            int & curr_cnt,
-            int total_req_cnt); 
+            double qps,
+            time_t begin_time,
+            int qps_var_interval_sec,
+            int duration_sec); 
 
 private:
     int tag_;
@@ -124,18 +125,18 @@ int BMUThread :: StartAuth()
                     snprintf( username, sizeof( username ), "user%d", begin_index_ + i );
 
                     ++global_bm_stat.auth_count;
-                    ReportAuthCount();
+                    LogicMonitor::GetDefault()->ReportAuthCount();
                     
 
                     logic::AuthResponse auth_resp;
                     if( 0 == apis_[i]->Auth( username, username, &auth_resp, args_.auth_use_rsa ) ) {
                         ++auth_ok_count_;
                         ++global_bm_stat.auth_ok_count;
-                        ReportAuthSuccCount();
+                        LogicMonitor::GetDefault()->ReportAuthSuccCount();
                     } else {
                         ++global_bm_stat.auth_fail_count;
                         //printf("auth %s failed\n", username);
-                        ReportAuthFailCount();
+                        LogicMonitor::GetDefault()->ReportAuthFailCount();
                     }
                 }
             }
@@ -147,25 +148,27 @@ int BMUThread :: StartAuth()
 
 int BMUThread::LoadFunc(vector<MsgFromTo> & msg_from_to,
         phxrpc::UThreadSocket_t * socket,  
-        int qps, int & curr_cnt, int total_req_cnt)
+        double qps,
+        time_t begin_time,
+        int qps_var_interval_sec,
+        int duration_sec)
 {
     if(0 == msg_from_to.size()) {
         return 0;
     }
 
-    double time_interval_ms = 1000.0 / (double)qps;
     int seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine generator(seed);
+    double time_interval_ms = 1000.0 / (double)qps;
     std::exponential_distribution<double> distribution((double)1.0/(double)time_interval_ms);
 
     struct timeval begin, end;
-    struct timeval begin_time;
+    struct timeval round_begin_time;
     int ret = 0;
-    gettimeofday(&begin_time, NULL);
+    gettimeofday(&round_begin_time, NULL);
 
-    for(; curr_cnt < total_req_cnt; ) {
+    while(true) {
 
-        curr_cnt += 1;
         gettimeofday(&begin, NULL);
 
         const MsgFromTo & item = msg_from_to[ generator() % msg_from_to.size() ];
@@ -173,22 +176,20 @@ int BMUThread::LoadFunc(vector<MsgFromTo> & msg_from_to,
         logic::SendMsgResponse resp;
         ret = apis_[item.from]->SendMsg( item.to.c_str(), "msg from ", &resp );
 
-
         if(0 == ret) {
-
             int msg_size = resp.msg_size();
             for(int i = 0; i < msg_size; i++) {
-
                 ++global_bm_stat.msg_count;
-                ReportMsgCount();
+                LogicMonitor::GetDefault()->ReportMsgCount();
+
 
                const ::logic::MsgResponse& msg_response =  resp.msg(i);
                if(0 == msg_response.ret()) {
                    ++global_bm_stat.msg_ok_cout;
-                   ReportMsgSuccCount();
+                   LogicMonitor::GetDefault()->ReportMsgSuccCount();
                } else {
                    ++global_bm_stat.msg_fail_count;
-                   ReportMsgFailCount();
+                   LogicMonitor::GetDefault()->ReportMsgFailCount();
                }
             }
         } else {
@@ -212,17 +213,20 @@ int BMUThread::LoadFunc(vector<MsgFromTo> & msg_from_to,
             interval = 0;
         }
 
-        unsigned long long use_time = (end.tv_sec - begin_time.tv_sec) * 1000000 + (end.tv_usec - begin_time.tv_usec);
-        if(use_time >= (unsigned long long)args_.qps_time_interval_per_uthread * 1000000) {
+        unsigned long long use_time = (end.tv_sec - round_begin_time.tv_sec) * 1000000 + (end.tv_usec - round_begin_time.tv_usec);
+        if(use_time >= (unsigned long long)qps_var_interval_sec * 1000000) {
             return 1;
         }
-
 
         if(interval > 0) {
             UThreadWait(*socket, interval);
         }
-    }
 
+        time_t curr_time = time(nullptr);
+        if((curr_time - begin_time) > (time_t)duration_sec) {
+            break;
+        }
+    }
     return 0;
 }
 
@@ -282,26 +286,47 @@ int BMUThread :: StartLoad()
 
         printf("msg_from_to size %zu\n", msg_from_to.size());
 
-        int curr_qps = args_.begin_qps_per_uthread;
-        int curr_cnt = 0;
-        int total_req_cnt = args_.user_per_uthread * args_.msg_per_user;
+        double curr_qps = 0.0;
 
         int ret = 0;
-        while(RUNNING == status_) {
-            ret =  LoadFunc(msg_from_to, socket,
-                    curr_qps, curr_cnt, total_req_cnt);
-            if(1 == ret) {
-                curr_qps += args_.qps_increment_per_uthread;
-                if(curr_qps > args_.max_qps_per_uthread) {
-                    curr_qps = args_.max_qps_per_uthread;
+        vector<Op> op_vec;
+
+        for(auto & op : args_.op_vec) {
+
+            printf("op: begin_qps %f end_qps %f duration_sec %d qps_variation %f qps_var_interval_sec %d\n",
+                    op.begin_qps, op.end_qps, op.duration_sec, op.qps_variation,
+                    op.qps_var_interval_sec);
+
+            curr_qps = op.begin_qps;
+            time_t begin_time = time(nullptr);
+
+            while(true) {
+                ret =  LoadFunc(msg_from_to, socket,
+                        curr_qps,
+                        begin_time,
+                        op.qps_var_interval_sec,
+                        op.duration_sec);
+                if(1 == ret) {
+                    if(0 == op.qps_var_direction) {
+                        curr_qps += op.qps_variation;
+                        if(curr_qps > op.end_qps) {
+                            curr_qps = op.end_qps;
+                        }
+                    } else {
+                        curr_qps -= op.qps_variation;
+                        if(curr_qps < op.end_qps) {
+                            curr_qps = op.end_qps;
+                        }
+                    }
+                    
+                } else {
+                    break;
                 }
-            } else {
-                break;
+
             }
         }
 
         free(socket);
-
         PushClient client( scheduler_ );
 
         char channel[ 128 ] = { 0 };
