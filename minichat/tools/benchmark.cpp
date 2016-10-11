@@ -277,6 +277,11 @@ int BMUThread::ParseCmd(Op * op)
         str1 = NULL;
     }
 
+    if(i != 5) {
+        printf("wrong cmd %s\n", cmd_);
+        return -1;
+    }
+
     if(op->end_qps >= op->begin_qps) {
         op->qps_var_direction = 0;
     } else {
@@ -307,7 +312,14 @@ int BMUThread :: StartRecvCmd()
 
             printf("recv cmd %s\n", msg.c_str());
 
+            if(0 == msg.size()) {
+                printf("empty cmd\n");
+                continue;
+            }
+
             snprintf(cmd_, sizeof(cmd_), "%s", msg.c_str());
+
+
             ++cmd_seq_;
         }
 
@@ -397,10 +409,10 @@ int BMUThread :: StartLoad()
                 break;
             }
 
-            printf("op: begin_qps %f end_qps %f duration_sec %d qps_variation %f qps_var_interval_sec %d\n",
+            printf("op: begin_qps %f end_qps %f duration_sec %d qps_variation %f qps_var_interval_sec %d qps_var_direction %d\n",
                     op.begin_qps, op.end_qps, op.duration_sec, op.qps_variation,
-                    op.qps_var_interval_sec);
-
+                    op.qps_var_interval_sec,
+                    op.qps_var_direction);
 
             curr_qps = op.begin_qps;
             time_t begin_time = time(nullptr);
@@ -417,7 +429,6 @@ int BMUThread :: StartLoad()
                         printf("cmd_seq %d %d changeed %s\n", cmd_seq, cmd_seq_, cmd_);
                         break;
                     }
-
 
                     if(0 == op.qps_var_direction) {
                         curr_qps += op.qps_variation;
