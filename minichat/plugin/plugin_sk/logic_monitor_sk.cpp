@@ -107,5 +107,48 @@ void LogicMonitorSK::ReportMsgClientFailCount()
     OssAttrInc(MMMINICHAT_ID, 17, 1);
 }
 
+void LogicMonitorSK::ReportToolsSendMsgRunTime(int runtime_ms)
+{
+    int key = 0;
+
+    if (runtime_ms < 5) {
+        key = 0;
+    } else if (runtime_ms < 10) {
+        key = 1;
+    } else if (runtime_ms < 15) {
+        key = 2;
+    } else if (runtime_ms < 20) {
+        key = 3;
+    } else if (runtime_ms < 25) {
+        key = 4;
+    } else if (runtime_ms < 30) {
+        key = 5;
+    } else if (runtime_ms < 35) {
+        key = 6;
+    } else if (runtime_ms < 40) {
+        key = 7;
+    } else if (runtime_ms < 50) {
+        key = 8;
+    } else if (runtime_ms < 60) {
+        key = 9;
+    } else if (runtime_ms < 70) {
+        key = 10;
+    } else if (runtime_ms < 100) {
+        key = 11;
+    } else if (runtime_ms < 200) {
+        key = 12;
+    } else if (runtime_ms < 300) {
+        key = 13;
+    } else if (runtime_ms < 400) {
+        key = 14;
+    } else {
+        key = 15;
+    }
+
+    key += 18;
+    OssAttrInc(MMMINICHAT_ID, key, 1);
+
+    OssAttrInc(MMMINICHAT_ID, 40, runtime_ms);
+}
 
 

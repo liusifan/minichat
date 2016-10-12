@@ -210,6 +210,7 @@ int BMUThread::LoadFunc(vector<MsgFromTo> & msg_from_to,
 
         gettimeofday(&end, NULL);
         unsigned long long run_time = (end.tv_sec - begin.tv_sec) * 1000000 + (end.tv_usec - begin.tv_usec);
+        LogicMonitor::GetDefault()->ReportToolsSendMsgRunTime(run_time / 1000);
 
         if( 0 == ( global_bm_stat.msg_count % 1000 ) ) {
             //printf( "send msg from %s to %s cost %lld run_time\n",

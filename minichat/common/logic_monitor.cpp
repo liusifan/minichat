@@ -102,4 +102,8 @@ void LogicMonitor::ReportMsgClientFailCount()
 {
 }
 
+void LogicMonitor::ReportToolsSendMsgRunTime(int runtime_ms)
+{
+
+}
 

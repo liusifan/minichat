@@ -34,6 +34,8 @@ public:
     virtual void ReportMsgClientSuccCount();
     virtual void ReportMsgClientFailCount();
 
+    virtual void ReportToolsSendMsgRunTime(int runtime_ms);
+
 };
 
 
