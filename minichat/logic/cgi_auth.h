@@ -5,7 +5,7 @@
 
 class CgiAuth : public CgiBase {
 public:
-    CgiAuth();
+    CgiAuth( LogicServerConfig & config );
     virtual ~CgiAuth();
 
     virtual int Process( const logic::ReqHead & head,

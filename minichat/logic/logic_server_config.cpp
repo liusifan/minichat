@@ -9,6 +9,7 @@
 
 LogicServerConfig :: LogicServerConfig()
 {
+    enable_session_based_ = false;
 }
 
 LogicServerConfig :: ~LogicServerConfig()
@@ -21,8 +22,17 @@ bool LogicServerConfig :: Read( const char * config_file )
 
     if ( strlen( ep_server_config_.GetPackageName() ) == 0 ) {
         ep_server_config_.SetPackageName( 
-logic::MiniRequest::default_instance().GetDescriptor()->file()->package().c_str() );
+            logic::MiniRequest::default_instance().GetDescriptor()->file()->package().c_str() );
     }
+
+    phxrpc::Config config;
+    config.InitConfig( config_file );
+
+    int tmp = 0;
+    config.ReadItem( "OverloadMgr", "EnableSessionBased", &tmp, 0 );
+    enable_session_based_ = ( 1 == tmp );
+
+    phxrpc::log( LOG_ERR, "INFO: EnableSessionBased %d", enable_session_based_ ? 1 : 0 );
 
     return ret;
 }
@@ -31,3 +41,9 @@ phxrpc::HshaServerConfig & LogicServerConfig :: GetHshaServerConfig()
 {
     return ep_server_config_;
 }
+
+bool LogicServerConfig :: EnableSessionBased()
+{
+    return enable_session_based_;
+}
+

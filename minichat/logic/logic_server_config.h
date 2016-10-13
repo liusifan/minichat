@@ -19,6 +19,9 @@ public:
 
     phxrpc::HshaServerConfig & GetHshaServerConfig();
 
+    bool EnableSessionBased();
+
 private:
     phxrpc::HshaServerConfig ep_server_config_;
+    bool enable_session_based_;
 };

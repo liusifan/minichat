@@ -5,7 +5,7 @@
 
 class CgiSendMsg : public CgiBase {
 public:
-    CgiSendMsg();
+    CgiSendMsg( LogicServerConfig & config );
     virtual ~CgiSendMsg();
 
     virtual int Process( const logic::ReqHead & head,

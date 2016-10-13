@@ -6,33 +6,23 @@
 
 #include "presence/presence_client.h"
 
+#include "logic_server_config.h"
+
 #include "crypt/crypt_utils.h"
 
-CgiBase :: CgiBase()
+CgiBase :: CgiBase( LogicServerConfig & config )
+    : config_( config )
 {
-    //PresenceClient::Init( "~/minichat/etc/client/presence_client.conf" );
 }
 
 CgiBase :: ~CgiBase()
 {
 }
 
-int CgiBase :: AESProcess( const logic::MiniRequest & req, logic::MiniResponse * resp )
+int CgiBase :: AESProcess( const presence::Session & session,
+        const logic::MiniRequest & req, logic::MiniResponse * resp )
 {
     phxrpc::log( LOG_INFO, "Call AESProcess" );
-
-    google::protobuf::StringValue username;
-    presence::Session session;
-
-    PresenceClient client;
-
-    username.set_value( req.head().username() );
-
-    int ret = client.Get( username, &session );
-
-    if( 0 != ret ) return ret;
-
-    session.mutable_session_key()->resize( 16 );
 
     std::string req_buff, resp_buff;
     {
@@ -40,7 +30,7 @@ int CgiBase :: AESProcess( const logic::MiniRequest & req, logic::MiniResponse *
                 req.req_buff(), &req_buff );
     }
 
-    ret = Process( req.head(), req_buff, &resp_buff );
+    int ret = Process( req.head(), req_buff, &resp_buff );
 
     if( resp_buff.size() > 0 ) {
         CryptUtils::AES128Encrypt( session.session_key().c_str(),
@@ -50,22 +40,46 @@ int CgiBase :: AESProcess( const logic::MiniRequest & req, logic::MiniResponse *
     return ret;
 }
 
+void SetQosInfo( const char * business_name, const char * key )
+{
+    std::string qos_info = business_name;
+    qos_info.append("_");
+    qos_info.append(key);
+    phxrpc::FastRejectQoSMgr::SetReqQoSInfo(qos_info.c_str());
+}
+
 int CgiBase :: Execute( const logic::MiniRequest & req, logic::MiniResponse * resp )
 {
     int ret = 0;
 
-    std::string qos_info = business_name_;
-    qos_info.append("_");
-    qos_info.append(req.head().username());
+    if( logic::ENC_RSA == req.head().enc_algo() ) {        // for auth cgi
+        // always use user-grouping for auth
+        SetQosInfo( business_name_.c_str(), req.head().username().c_str() );
 
-    phxrpc::FastRejectQoSMgr::SetReqQoSInfo(qos_info.c_str());
-
-    if( logic::ENC_AES == req.head().enc_algo() ) {         // for normal cgi
-        ret = AESProcess( req, resp );
-    } else if( ( logic::ENC_NONE == req.head().enc_algo() ) // WARNING: only for unit test
-            || ( logic::ENC_RSA  == req.head().enc_algo() ) // for auth cgi
-            ) {
         ret = Process( req.head(), req.req_buff(), resp->mutable_resp_buff() );
+    } else {
+        // always get presence, for enable_session_based
+        PresenceClient client;
+        presence::Session session;
+
+        google::protobuf::StringValue username;
+        username.set_value( req.head().username() );
+        ret = client.Get( username, &session );
+
+        if( 0 == ret ) {
+            session.mutable_session_key()->resize( 16 );
+            if( config_.EnableSessionBased() ) {
+                SetQosInfo( business_name_.c_str(), session.session_key().c_str() );
+            } else {
+                SetQosInfo( business_name_.c_str(), req.head().username().c_str() );
+            }
+
+            if( logic::ENC_AES == req.head().enc_algo() ) {    // for normal cgi
+                ret = AESProcess( session, req, resp );
+            } else {                                           // WARNING: only for unit test
+                ret = Process( req.head(), req.req_buff(), resp->mutable_resp_buff() );
+            }
+        }
     }
 
     resp->set_ret( ret );
