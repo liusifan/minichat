@@ -32,7 +32,7 @@ int LogicServiceImpl :: PHXEcho( const google::protobuf::StringValue & req,
 int LogicServiceImpl :: Auth( const logic::MiniRequest & req,
         logic::MiniResponse * resp )
 {
-    CgiAuth cgi;
+    CgiAuth cgi( * args_.config );
 
     return cgi.Execute( req, resp );
 }
@@ -40,7 +40,7 @@ int LogicServiceImpl :: Auth( const logic::MiniRequest & req,
 int LogicServiceImpl :: Sync( const logic::MiniRequest & req,
         logic::MiniResponse * resp )
 {
-    CgiSync cgi;
+    CgiSync cgi( * args_.config );
 
     return cgi.Execute( req, resp );
 }
@@ -48,7 +48,7 @@ int LogicServiceImpl :: Sync( const logic::MiniRequest & req,
 int LogicServiceImpl :: SendMsg( const logic::MiniRequest & req,
         logic::MiniResponse * resp )
 {
-    CgiSendMsg cgi;
+    CgiSendMsg cgi( * args_.config );
 
     return cgi.Execute( req, resp );
 }

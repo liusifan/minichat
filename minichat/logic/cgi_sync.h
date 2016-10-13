@@ -5,7 +5,7 @@
 
 class CgiSync : public CgiBase {
 public:
-    CgiSync();
+    CgiSync( LogicServerConfig & config );
     virtual ~CgiSync();
 
     virtual int Process( const logic::ReqHead & head,

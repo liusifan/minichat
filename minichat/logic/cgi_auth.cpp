@@ -15,7 +15,8 @@
 #include "logic_monitor.h"
 
 
-CgiAuth :: CgiAuth()
+CgiAuth :: CgiAuth( LogicServerConfig & config )
+    : CgiBase( config )
 {
     business_name_ = std::string("Auth");
 }

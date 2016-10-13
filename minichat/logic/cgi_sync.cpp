@@ -9,7 +9,8 @@
 #include "addrbook/addrbook_client.h"
 #include "logic_monitor.h"
 
-CgiSync :: CgiSync()
+CgiSync :: CgiSync( LogicServerConfig & config )
+    : CgiBase( config )
 {
     business_name_ = std::string("Sync");
 }

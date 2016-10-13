@@ -15,7 +15,8 @@
 
 #include <string.h>
 
-CgiSendMsg :: CgiSendMsg()
+CgiSendMsg :: CgiSendMsg( LogicServerConfig & config )
+    : CgiBase( config )
 {
     business_name_ = std::string("Sendmsg");
 }
