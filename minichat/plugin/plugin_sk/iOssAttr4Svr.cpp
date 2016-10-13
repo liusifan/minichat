@@ -281,6 +281,21 @@ void OssAttr4SvrSendBytes_limitK(int port, int count) {
     OssAttrInc(baseID, 59, count);
 }
 
+void OssAttr4SvrClientRetryCnt(int port, int cnt) {
+
+    int baseID = GetOssAttr4SvrClientID(port);
+    if(cnt == 0) {
+        OssAttrInc(baseID, 83, 1);
+    } else if(cnt == 1) {
+        OssAttrInc(baseID, 84, 1);
+    } else if(cnt == 2) {
+        OssAttrInc(baseID, 85, 1);
+    }
+
+
+}
+
+
 void OssAttr4SvrClientRuntime(int port, int msInterval) {
     if (0 > msInterval) {
         msInterval = 0;

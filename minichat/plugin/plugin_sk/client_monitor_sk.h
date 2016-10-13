@@ -38,6 +38,8 @@ class ClientMonitor_SK: public ClientMonitor {
 	virtual void ClientCall( int cmdid, const char * method_name );
 
     virtual void ClientFastReject();
+
+    virtual void RetryCnt(int cnt);
  private:
 	int32_t oss_id_;
 };

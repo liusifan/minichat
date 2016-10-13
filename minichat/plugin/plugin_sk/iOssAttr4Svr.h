@@ -134,6 +134,7 @@ void OssAttr4SvrSendBytes_4K(int port, int count);
 void OssAttr4SvrSendBytes_64K(int port, int count);
 void OssAttr4SvrSendBytes_limitK(int port, int count);
 
+void OssAttr4SvrClientRetryCnt(int port, int cnt);
 void OssAttr4SvrClientRuntime(int port, int msInterval);
 void OssAttr4SvrClientRuntime_all(int port, int msInterval);
 void OssAttr4SvrClientRuntime_10MS(int port, int msInterval);
